@@ -62,8 +62,13 @@ class DataBase:
 		except:
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a valid save path (current path is %s)" %self.save_path)
 
-	def AddEdges(self):
-		
+	def AddEdges(self, len_latest):
+		self.len_latest = len_latest
+		number_of_vertices = self.g.vcount()
+		for 
+		self.list_of_edges = 
+
+		pass
 
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
@@ -152,6 +157,8 @@ class DiagnosisCharterizationWindow:
 					self.DB.append_to_graph(entry, "diagnosis")
 				else:
 					self.DB.append_to_graph(entry, "symptom")
+
+			self.DB.es_length = len(es_split)
 			import pdb; pdb.set_trace()
 
 
