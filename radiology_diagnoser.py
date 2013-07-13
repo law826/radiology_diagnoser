@@ -3,6 +3,8 @@
 """
 radiology_diagnoser.py
 
+[] take care of capitalization
+
 Started by LN on 7/4/13
 """
 import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp
@@ -38,21 +40,32 @@ class DataBase:
 		self.g = igraph.Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
 
 
-	def append_to_graph(self, item, type):
+	def AddNode(self, item, type):
 		try:
-			self.g
-		except AttributeError:
-			self.g = igraph.Graph()
-			self.g.add_vertices(1)
-			self.g.es["weight"] = 1.0
-			self.g["name"] = "Ideas Graph"			
-			self.g.vs[0]["name"] = item
-			self.g.vs[0]["type"] = type
-		else:
-			self.g.add_vertices(1)
-			number_of_vertices = self.g.vcount()
-			self.g.vs[number_of_vertices-1]["name"] = item
-			self.g.vs[number_of_vertices-1]["type"] = types
+			"""
+			If node already exists, then add edges to existing node.
+
+			"""
+			self.g.vs.find(name=node)
+			pass
+		except ValueError:
+			"""
+			Do this if node does not already exist.
+			"""
+			try:
+				self.g
+			except AttributeError:
+				self.g = igraph.Graph()
+				self.g.add_vertices(1)
+				self.g.es["weight"] = 1.0
+				self.g["name"] = "Ideas Graph"			
+				self.g.vs[0]["name"] = item
+				self.g.vs[0]["type"] = type
+			else:
+				self.g.add_vertices(1)
+				number_of_vertices = self.g.vcount()
+				self.g.vs[number_of_vertices-1]["name"] = item
+				self.g.vs[number_of_vertices-1]["type"] = type
 		self.save_graph()
 
 				
@@ -65,10 +78,24 @@ class DataBase:
 	def AddEdges(self, len_latest):
 		self.len_latest = len_latest
 		number_of_vertices = self.g.vcount()
-		for 
-		self.list_of_edges = 
 
-		pass
+		for first_vertex_counter in range(1, len_latest):
+			for second_vertex_counter in range(1, len_latest):
+
+				first_index = number_of_vertices-first_vertex_counter
+				second_index = number_of_vertices-first_vertex_counter-second_vertex_counter
+
+				if second_index >= (number_of_vertices-len_latest):
+					self.g.add_edges((first_index, second_index))
+
+
+	def DoesNodeExist(self, node):
+		try: 
+			self.g.vs.find(name=node)
+		except ValueError:
+			pass
+
+
 
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
@@ -154,17 +181,18 @@ class DiagnosisCharterizationWindow:
 			
 			for i, entry in enumerate(es_split):
 				if i==0:
-					self.DB.append_to_graph(entry, "diagnosis")
+					self.DB.AddNode(entry, "diagnosis")
 				else:
-					self.DB.append_to_graph(entry, "symptom")
+					self.DB.AddNode(entry, "symptom")
 
-			self.DB.es_length = len(es_split)
+			self.DB.AddEdges(len(es_split))
 			import pdb; pdb.set_trace()
 
 
 
 
-		# 	self.DB.append_to_graph(self.entryWidget.get().strip())
+
+		# 	self.DB.AddNode(self.entryWidget.get().strip())
 		# 	self.DB.save_graph()
 		# 	tkMessageBox.showinfo("Confirmation", "%s has been added." % self.entryWidget.get().strip())
 		# 	self.entryWidget.delete(0, END)	
