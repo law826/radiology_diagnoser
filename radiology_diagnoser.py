@@ -4,6 +4,9 @@
 radiology_diagnoser.py
 
 [] take care of capitalization
+[] implement autofill
+[] manage database (delete edit)
+[] implement search (real use) of database
 
 Started by LN on 7/4/13
 """
@@ -46,8 +49,8 @@ class DataBase:
 			If node already exists, then add edges to existing node.
 
 			"""
-			self.g.vs.find(name=node)
-			pass
+			node_index = self.g.vs.find(name=item).index
+			return node_index
 		except ValueError:
 			"""
 			Do this if node does not already exist.
@@ -66,6 +69,8 @@ class DataBase:
 				number_of_vertices = self.g.vcount()
 				self.g.vs[number_of_vertices-1]["name"] = item
 				self.g.vs[number_of_vertices-1]["type"] = type
+
+			return number_of_vertices-1 #This is the node's index.
 		self.save_graph()
 
 				
@@ -75,27 +80,19 @@ class DataBase:
 		except:
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a valid save path (current path is %s)" %self.save_path)
 
-	def AddEdges(self, len_latest):
-		self.len_latest = len_latest
-		number_of_vertices = self.g.vcount()
+	def AddEdges(self, node_index_list):
+		"""
+		Add combinations of all nodes given a list of the nodes' indices.
 
-		for first_vertex_counter in range(1, len_latest):
-			for second_vertex_counter in range(1, len_latest):
+		"""
 
-				first_index = number_of_vertices-first_vertex_counter
-				second_index = number_of_vertices-first_vertex_counter-second_vertex_counter
-
-				if second_index >= (number_of_vertices-len_latest):
-					self.g.add_edges((first_index, second_index))
-
-
-	def DoesNodeExist(self, node):
-		try: 
-			self.g.vs.find(name=node)
-		except ValueError:
-			pass
-
-
+		for first_index_counter, first_vertex in enumerate(node_index_list):
+			for second_vertex_counter in range((len(node_index_list)-1)):
+				second_index = first_index_counter+second_vertex_counter+1
+				if second_index <= (len(node_index_list)-1):
+					second_vertex = node_index_list[second_index]
+					self.g.add_edges((first_vertex, second_vertex))
+		self.save_graph()
 
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
@@ -181,11 +178,15 @@ class DiagnosisCharterizationWindow:
 			
 			for i, entry in enumerate(es_split):
 				if i==0:
-					self.DB.AddNode(entry, "diagnosis")
+					node_index = self.DB.AddNode(entry, "diagnosis")
+					node_index_list = []
 				else:
-					self.DB.AddNode(entry, "symptom")
+					node_index = self.DB.AddNode(entry, "symptom")
 
-			self.DB.AddEdges(len(es_split))
+				node_index_list.append(node_index)
+
+			self.DB.AddEdges(node_index_list)
+
 			import pdb; pdb.set_trace()
 
 
