@@ -3,7 +3,6 @@
 """
 radiology_diagnoser.py
 
-[] add symptom to the rest of the diagnoses sy
 [] make sure redundant edges are ok
 [] take care of capitalization
 [] implement autofill
@@ -90,9 +89,6 @@ class DataBase:
 		Add combinations of all nodes given a list of the nodes' indices.
 
 		"""
-
-
-
 		for first_index_counter, first_vertex in enumerate(node_index_list):
 			for second_vertex_counter in range((len(node_index_list)-1)):
 				second_index = first_index_counter+second_vertex_counter+1
@@ -101,10 +97,23 @@ class DataBase:
 					self.g.add_edges((first_vertex, second_vertex))
 		self.save_graph()
 
+	def IndicesOfVertexNeighborsToo(self, node_index_list):
+		"""
+		Connect a symptom with the rest of the symptoms under a diagnosis.
+		"""
+		import pdb; pdb.set_trace()
+		diagnosis_vertex=self.g.vs[node_index_list[0]]
+		neighbor_list = [x.index for x in diagnosis_vertex.neighbors()]
+		merged_index_list = node_index_list + neighbor_list
+
+		return merged_index_list
+
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
 		self.user_settings[os.getcwd()] = self.save_path
-		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))		
+		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))	
+
+
 
 class MainWindow:
 	def __init__(self):
@@ -213,6 +222,8 @@ class DiagnosisCharterizationWindow:
 					node_index = self.DB.AddNode(entry, "symptom")
 
 				node_index_list.append(node_index)
+
+			node_index_list = self.DB.IndicesOfVertexNeighborsToo(node_index_list)
 
 			self.DB.AddEdges(node_index_list)
 			self.entryWidget.delete(0, END)
