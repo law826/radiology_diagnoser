@@ -3,6 +3,7 @@
 """
 radiology_diagnoser.py
 
+[] update listbox function
 [] figure out test for multiples for future developement
 [] take care of capitalization
 [] implement autofill
@@ -113,12 +114,16 @@ class DataBase:
 
 		return merged_index_list
 
+	def FindNodeWithName(self, nodename):
+		try:
+			self.g.find(name=nodename)
+		except ValueError:
+			pass
+
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
 		self.user_settings[os.getcwd()] = self.save_path
 		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))	
-
-
 
 class MainWindow:
 	def __init__(self):
@@ -158,7 +163,7 @@ class MainWindow:
 		DiagnosisCharterizationWindow(self)
 
 	def SearchButtonPressed(self):
-		pass
+		SearchWindow(self)
 
 	def ManageDatabaseButtonPressed(self):
 		ManageDatabaseWindow(self)
@@ -291,15 +296,111 @@ class ManageDatabaseWindow:
 			pass
 
 class SearchWindow:
-	def __init__(self):
+	def __init__(self, mainwindow):
+		self.mainwindow = mainwindow
+		self.DB = mainwindow.DB
 		self.MakeUI()
 
 	def MakeUI(self):
 		self.root = Tk()
 
+		self.LabelEntryUI()
+		self.AddButton()
+		self.DiagnosesListBox()
+		self.SymptomsListBox()
+
+
+	def LabelEntryUI(self):
+		# Create a text frame to hold the text Label and the Entry widget
+		self.textFrame = Frame(self.root)		
+				
+		# Create a Label in textFrame
+		self.entryLabel = Label(self.textFrame)
+		self.entryLabel["text"] = "Enter a diagnosis or symptom"
+		self.entryLabel.pack(side=LEFT)
+	
+		# Create an Entry Widget in textFrame
+		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
+		self.entryWidget.set_completion_list(['test', 'test2', 'list2'])
+		self.entryWidget["width"] = 50
+		self.entryWidget.pack(side=LEFT)
+		self.entryWidget.focus_set()
+		self.entryWidget.bind("<Return>", self.AddButtonPressed)
+		self.textFrame.grid(row=0, columnspan=2)
+	def AddButton(self):
+		self.b = Button(self.root, text="Add Diagnosis", default="normal", command=self.AddButtonPressed).grid(row=1, columnspan=2)
+
+
+	def DiagnosesListBox(self):	
+		self.diagnosisLabel = Label(self.root)
+		self.diagnosisLabel["text"] = "Diagnoses"
+		self.diagnosisLabel.grid(row=2,column=0)
+
+		self.listbox = Listbox(self.root)
+		self.listbox.grid(row=3,column=0)
+		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
+		self.b.grid(row=4, column=0)
+		try: 
+			for concept in self.DB.g.vs:
+				if concept["type"] == 'diagnosis':
+					self.listbox.insert(END, concept["name"])
+		except AttributeError:
+		# If there are no items yet.
+			pass
 
 
 
+	def SymptomsListBox(self):	
+		self.symptomsLabel = Label(self.root)
+		self.symptomsLabel["text"] = "Symptoms"
+		self.symptomsLabel.grid(row=2,column=1)
+
+
+		self.listbox = Listbox(self.root)
+		self.listbox.grid(row=3,column=1)
+		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
+		self.b.grid(row=4, column=1)
+		try: 
+			for concept in self.DB.g.vs:
+				if concept["type"] == 'symptom':
+					self.listbox.insert(END, concept["name"])
+		except AttributeError:
+		# If there are no items yet.
+			pass
+
+	def UpdateListBox(self, listbox, list):
+		listbox.grid_forget()
+		listbox.delete(0, END)
+
+		# Bookmark insert concepts
+
+
+	def AddButtonPressed(self, event=0):
+		if self.entryWidget.get().strip() == "":
+			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
+		else:
+			entrystring = self.entryWidget.get().strip()
+			try:
+				self.DB.g.vs.find(name=entrystring)
+
+
+
+
+
+
+
+
+
+
+
+				self.entryWidget.delete(0, END)
+			except:
+				tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
+
+
+
+	def PresentButtonPressed(self):
+		pass
 
 
 
