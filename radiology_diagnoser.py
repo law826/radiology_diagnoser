@@ -3,7 +3,7 @@
 """
 radiology_diagnoser.py
 
-[] make sure redundant edges are ok
+[] figure out test for multiples for future developement
 [] take care of capitalization
 [] implement autofill
 [] manage database (delete edit)
@@ -14,12 +14,13 @@ Started by LN on 7/4/13
 import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp
 from Tkinter import *
 from pdb import *
-import igraph
+from igraph import *
 
 
 
 class DataBase:
 	def __init__(self, mainwindow):
+
 		self.mainwindow = mainwindow
 		self.load_user_settings()
 		try:
@@ -41,14 +42,14 @@ class DataBase:
 			self.SetPath()
 
 	def load_graph(self):
-		self.g = igraph.Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
+		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
 
 
 	def AddNode(self, item, type):
 		try:
 			self.g
 		except AttributeError:
-			self.g = igraph.Graph()
+			self.g = Graph()
 			self.g.add_vertices(1)
 			self.g.es["weight"] = 1.0
 			self.g["name"] = "Ideas Graph"			
@@ -94,14 +95,18 @@ class DataBase:
 				second_index = first_index_counter+second_vertex_counter+1
 				if second_index <= (len(node_index_list)-1):
 					second_vertex = node_index_list[second_index]
-					self.g.add_edges((first_vertex, second_vertex))
+
+					# Only add edge if edge doesn't exist:
+					try:
+						self.g.get_eid(first_vertex, second_vertex)
+					except InternalError:
+						self.g.add_edges((first_vertex, second_vertex))
 		self.save_graph()
 
 	def IndicesOfVertexNeighborsToo(self, node_index_list):
 		"""
 		Connect a symptom with the rest of the symptoms under a diagnosis.
 		"""
-		import pdb; pdb.set_trace()
 		diagnosis_vertex=self.g.vs[node_index_list[0]]
 		neighbor_list = [x.index for x in diagnosis_vertex.neighbors()]
 		merged_index_list = node_index_list + neighbor_list
@@ -163,7 +168,8 @@ class MainWindow:
 		os.system("open "+"/Users/law826/github/radiology_diagnoser/graph.svg")
 
 	def DebugModeButtonPressed(self):
-		set_trace()
+		import pdb; pdb.set_trace()
+
 
 	def SetPath(self):
 		self.DB.save_path = tkFileDialog.askdirectory(title = 'Please choose a save directory')
@@ -260,8 +266,12 @@ class ManageDatabaseWindow:
 		self.listbox.pack()
 		self.b = Button(self.root, text = "Delete", command = self.DeleteItem)
 		self.b.pack()
-		for concept in self.DB.g.vs["name"]:
-			self.listbox.insert(END, concept)
+		try: 
+			for concept in self.DB.g.vs["name"]:
+				self.listbox.insert(END, concept)
+		except AttributeError:
+		# If there are no items yet.
+			pass
 
 
 	def DeleteItem(self):
@@ -303,3 +313,19 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+### Utility scripts
+
+## Delete all multiples
+		# for i, x in enumerate([self.DB.g.get_eid(*x.tuple) for x in self.DB.g.es]): 
+		# 	if self.DB.g.is_multiple()[i] == True: 
+		# 		if i == 0:
+		# 			list_edges_to_delete=[]
+		# 		else:
+		# 			list_edges_to_delete.append(x)
+		# 		self.DB.g.delete_edges(*list_edges_to_delete)
