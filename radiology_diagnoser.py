@@ -3,6 +3,8 @@
 """
 radiology_diagnoser.py
 
+[] add symptom to the rest of the diagnoses sy
+[] make sure redundant edges are ok
 [] take care of capitalization
 [] implement autofill
 [] manage database (delete edit)
@@ -45,32 +47,35 @@ class DataBase:
 
 	def AddNode(self, item, type):
 		try:
-			"""
-			If node already exists, then add edges to existing node.
+			self.g
+		except AttributeError:
+			self.g = igraph.Graph()
+			self.g.add_vertices(1)
+			self.g.es["weight"] = 1.0
+			self.g["name"] = "Ideas Graph"			
+			self.g.vs[0]["name"] = item
+			self.g.vs[0]["type"] = type
 
-			"""
-			node_index = self.g.vs.find(name=item).index
-			return node_index
-		except ValueError:
-			"""
-			Do this if node does not already exist.
-			"""
+			return 0
+		else:
 			try:
-				self.g
-			except AttributeError:
-				self.g = igraph.Graph()
-				self.g.add_vertices(1)
-				self.g.es["weight"] = 1.0
-				self.g["name"] = "Ideas Graph"			
-				self.g.vs[0]["name"] = item
-				self.g.vs[0]["type"] = type
-			else:
+				"""
+				If node already exists, then add edges to existing node.
+
+				"""
+				node_index = self.g.vs.find(name=item).index
+				return node_index
+			except ValueError:
+				"""
+				Do this if node does not already exist.
+				"""
 				self.g.add_vertices(1)
 				number_of_vertices = self.g.vcount()
 				self.g.vs[number_of_vertices-1]["name"] = item
 				self.g.vs[number_of_vertices-1]["type"] = type
 
-			return number_of_vertices-1 #This is the node's index.
+				return number_of_vertices-1 #This is the node's index.
+		
 		self.save_graph()
 
 				
@@ -86,6 +91,8 @@ class DataBase:
 
 		"""
 
+
+
 		for first_index_counter, first_vertex in enumerate(node_index_list):
 			for second_vertex_counter in range((len(node_index_list)-1)):
 				second_index = first_index_counter+second_vertex_counter+1
@@ -98,7 +105,6 @@ class DataBase:
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
 		self.user_settings[os.getcwd()] = self.save_path
 		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))		
-
 
 class MainWindow:
 	def __init__(self):
@@ -117,10 +123,18 @@ class MainWindow:
 	def ButtonsUI(self):
 		button_labels = [
 			'Add Diagnosis', 
+			'Search',
+			'Manage Database',
+			"View Graph",
+			"Debug Mode"
 			]
 
 		button_commands = [
-			self.AddDiagnosisButtonPressed
+			self.AddDiagnosisButtonPressed, 
+			self.SearchButtonPressed,
+			self.ManageDatabaseButtonPressed,
+			self.ViewGraphButtonPressed,
+			self.DebugModeButtonPressed
 			]
 
 		for button_number, label in enumerate(button_labels):
@@ -128,6 +142,19 @@ class MainWindow:
 
 	def AddDiagnosisButtonPressed(self):
 		DiagnosisCharterizationWindow(self)
+
+	def SearchButtonPressed(self):
+		pass
+
+	def ManageDatabaseButtonPressed(self):
+		ManageDatabaseWindow(self)
+
+	def ViewGraphButtonPressed(self):
+		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
+		os.system("open "+"/Users/law826/github/radiology_diagnoser/graph.svg")
+
+	def DebugModeButtonPressed(self):
+		set_trace()
 
 	def SetPath(self):
 		self.DB.save_path = tkFileDialog.askdirectory(title = 'Please choose a save directory')
@@ -172,9 +199,11 @@ class DiagnosisCharterizationWindow:
 	def AddButtonPressed(self, event=0):
 		if self.entryWidget.get().strip() == "":
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
-		else:			
+		else:
 			entrystring = self.entryWidget.get().strip()
-			es_split = entrystring.split(",")
+			es_split_pre = entrystring.split(",")
+			es_split = [x.lstrip() for x in es_split_pre]
+
 			
 			for i, entry in enumerate(es_split):
 				if i==0:
@@ -186,9 +215,7 @@ class DiagnosisCharterizationWindow:
 				node_index_list.append(node_index)
 
 			self.DB.AddEdges(node_index_list)
-
-			import pdb; pdb.set_trace()
-
+			self.entryWidget.delete(0, END)
 
 
 
@@ -199,6 +226,56 @@ class DiagnosisCharterizationWindow:
 		# 	self.entryWidget.delete(0, END)	
 		# self.SetGraphStatistics()
 		# self.entryWidget.focus_set()
+
+
+
+
+
+
+		self.root.mainloop()
+
+class ManageDatabaseWindow:
+	def __init__(self, mainwindow):
+
+		self.DB = mainwindow.DB
+		self.mainwindow = mainwindow
+		self.root = Tk()
+		self.root.title("Database Manager")
+		self.MakeListBox()
+		mainloop()
+
+	def MakeListBox(self):	
+		self.listbox = Listbox(self.root)
+		self.listbox.pack()
+		self.b = Button(self.root, text = "Delete", command = self.DeleteItem)
+		self.b.pack()
+		for concept in self.DB.g.vs["name"]:
+			self.listbox.insert(END, concept)
+
+
+	def DeleteItem(self):
+		selected_index = self.listbox.curselection()
+		selected_concept = self.listbox.get(selected_index)
+
+		result = tkMessageBox.askquestion("Delete", "Are you sure you want to delete %s?" %selected_concept, icon='warning')
+		if result == 'yes':
+			vertex_index = self.DB.g.vs.find(name=selected_concept).index
+			self.DB.g.delete_vertices(vertex_index)
+			self.listbox.pack_forget()
+			self.b.pack_forget()
+			self.MakeListBox()
+			self.DB.save_graph()
+			tkMessageBox.showinfo("Term deleted", "%s has been deleted." %selected_concept)
+		else:
+			pass
+
+class SearchWindow:
+	def __init__(self):
+		self.MakeUI()
+
+	def MakeUI(self):
+		self.root = Tk()
+
 
 
 
