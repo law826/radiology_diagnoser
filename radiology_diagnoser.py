@@ -3,10 +3,8 @@
 """
 radiology_diagnoser.py
 
-
-[] click on box
+[] clean up row management
 [] make larger entry box
-[] merge search box and add diagnosis box
 [] make a queue for stored dx and sx
 [] make a reset button
 [] make algorithm for stored dx and sx
@@ -23,10 +21,14 @@ from Tkinter import *
 from pdb import *
 from igraph import *
 
+global searched_term_row
+global listbox_row
+searched_term_row = 3
+listbox_row = 4
+
 
 class DataBase:
 	def __init__(self, mainwindow):
-
 		self.mainwindow = mainwindow
 		self.load_user_settings()
 		try:
@@ -102,11 +104,12 @@ class DataBase:
 				if second_index <= (len(node_index_list)-1):
 					second_vertex = node_index_list[second_index]
 
-					# Only add edge if edge doesn't exist:
-					try:
-						self.g.get_eid(first_vertex, second_vertex)
-					except InternalError:
-						self.g.add_edges((first_vertex, second_vertex))
+					# Only add edge if edge doesn't exist and prevent forming loops:
+					if first_vertex != second_vertex:
+						try:
+							self.g.get_eid(first_vertex, second_vertex)
+						except InternalError:
+							self.g.add_edges((first_vertex, second_vertex))
 		self.save_graph()
 
 	def IndicesOfVertexNeighborsToo(self, node_index_list):
@@ -125,7 +128,7 @@ class DataBase:
 		"""
 		try:
 			node = self.g.vs.find(name=nodename)
-		except ValueError:
+		except (NameError, ValueError):
 			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
 
 		dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
@@ -140,99 +143,52 @@ class DataBase:
 
 class MainWindow:
 	def __init__(self):
-
-		self.MakeUI()
-			
-	def MakeUI(self):
-		self.root = Tk()
-		self.root.title("Please give a rating")
-
-		self.ButtonsUI()
-
 		self.DB = DataBase(self) # Instantiated here at the end because of parent window issues for ask directory widget.
-		self.root.mainloop()
-
-	def ButtonsUI(self):
-		button_labels = [
-			'Add Diagnosis', 
-			'Search',
-			'Manage Database',
-			"View Graph",
-			"Debug Mode"
-			]
-
-		button_commands = [
-			self.AddDiagnosisButtonPressed, 
-			self.SearchButtonPressed,
-			self.ManageDatabaseButtonPressed,
-			self.ViewGraphButtonPressed,
-			self.DebugModeButtonPressed
-			]
-
-		for button_number, label in enumerate(button_labels):
-			b = Button(self.root, text=label, default="normal", command=button_commands[button_number]).pack()
-
-	def AddDiagnosisButtonPressed(self):
-		DiagnosisCharterizationWindow(self)
-
-	def SearchButtonPressed(self):
-		SearchWindow(self)
-
-	def ManageDatabaseButtonPressed(self):
-		ManageDatabaseWindow(self)
-
-	def ViewGraphButtonPressed(self):
-		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
-		os.system("open "+"/Users/law826/github/radiology_diagnoser/graph.svg")
-
-	def DebugModeButtonPressed(self):
-		import pdb; pdb.set_trace()
-
-
-	def SetPath(self):
-		self.DB.save_path = tkFileDialog.askdirectory(title = 'Please choose a save directory')
-
-class DiagnosisCharterizationWindow:
-	def __init__(self, mainwindow):
-		self.mainwindow = mainwindow
-		self.DB = mainwindow.DB
 		self.MakeUI()
 
 	def MakeUI(self):
-		self.root = Tk()
-		self.root.title("Diagnosis")
-		self.LabelEntryUI()
-		self.AddButton()
 
+		self.root = Tk()
+		self.root.title("Search")
+		self.DCWLabelEntryUI(startingrow=0)
+		self.LabelEntryUI(startingrow=1)
+		self.ResetButton(startingrow=2)
+		searched_term_row = 3
+		self.SearchedTermUI(startingrow=searched_term_row)
+		self.Listboxes()
+		self.ButtonsUI(startingrow=6)		
 		self.root.mainloop()
 
-	def LabelEntryUI(self):
+	def Listboxes(self):
+		listbox_row = 4
+		self.DiagnosesListBox(startingrow=listbox_row)
+		self.SymptomsListBox(startingrow=listbox_row)
+
+
+	def DCWLabelEntryUI(self, startingrow):
 		# Create a text frame to hold the text Label and the Entry widget
-		self.textFrame = Frame(self.root)		
+		self.DCWtextFrame = Frame(self.root)		
 				
-		# Create a Label in textFrame
-		self.entryLabel = Label(self.textFrame)
-		self.entryLabel["text"] = "Enter the diagnosis: followed by symptoms separated by commas"
-		self.entryLabel.pack(side=LEFT)
+		# Create a Label in DCWtextFrame
+		self.DCWentryLabel = Label(self.DCWtextFrame)
+		self.DCWentryLabel["text"] = "Enter new diagnosis: followed by symptoms separated by commas"
+		self.DCWentryLabel.pack()
 	
-		# Create an Entry Widget in textFrame
-		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
-		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
-		self.entryWidget["width"] = 50
-		self.entryWidget.pack(side=LEFT)
-		self.entryWidget.focus_set()
-		self.entryWidget.bind("<Return>", self.AddButtonPressed)
-		self.textFrame.pack()
+		# Create an Entry Widget in DCWtextFrame
+		self.DCWentryWidget = tkcomp.AutocompleteEntry(self.DCWtextFrame)
+		self.DCWentryWidget.set_completion_list(self.DB.g.vs["name"])
+		self.DCWentryWidget["width"] = 50
+		self.DCWentryWidget.pack()
+		self.DCWentryWidget.focus_set()
+		self.DCWentryWidget.bind("<Return>", self.DiagnosisCharacterizationSubmitted)
+		self.DCWtextFrame.grid(row=startingrow, columnspan=2)
 
-	def AddButton(self):
-		self.b = Button(self.root, text="Add Diagnosis", default="normal", command=self.AddButtonPressed).pack()
-
-	def AddButtonPressed(self, event=0):
-		if self.entryWidget.get().strip() == "":
+	def DiagnosisCharacterizationSubmitted(self, event=0):
+		if self.DCWentryWidget.get().strip() == "":
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
 		else:
-			entrystring = self.entryWidget.get().strip()
-			es_split_pre = entrystring.split(",")
+			DCWentrystring = self.DCWentryWidget.get().strip()
+			es_split_pre = DCWentrystring.split(",")
 			es_split = [x.lstrip() for x in es_split_pre]
 
 			
@@ -248,7 +204,13 @@ class DiagnosisCharterizationWindow:
 			node_index_list = self.DB.IndicesOfVertexNeighborsToo(node_index_list)
 
 			self.DB.AddEdges(node_index_list)
-			self.entryWidget.delete(0, END)
+			self.UpdateListBox(self.dlistbox, [es_split[0]], row=listbox_row+1, column=0)
+			pre_updated_symptom_list = [self.DB.g.vs[x]["name"] for x in node_index_list]
+			del pre_updated_symptom_list[0]
+			updated_symptom_list = list(set(pre_updated_symptom_list))
+			self.UpdateListBox(self.slistbox, updated_symptom_list, row=listbox_row+1, column=1)
+			self.DCWentryWidget.delete(0, END)
+
 
 		# 	self.DB.AddNode(self.entryWidget.get().strip())
 		# 	self.DB.save_graph()
@@ -257,7 +219,153 @@ class DiagnosisCharterizationWindow:
 		# self.SetGraphStatistics()
 		# self.entryWidget.focus_set()
 
-		self.root.mainloop()
+	def LabelEntryUI(self, startingrow=None):
+		# Create a text frame to hold the text Label and the Entry widget
+		self.textFrame = Frame(self.root)		
+				
+		# Create a Label in textFrame
+		self.entryLabel = Label(self.textFrame)
+		self.entryLabel["text"] = "Enter a diagnosis or symptom"
+		self.entryLabel.pack()
+	
+		# Create an Entry Widget in textFrame
+		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
+		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
+		self.entryWidget["width"] = 50
+		self.entryWidget.pack()
+		self.entryWidget.focus_set()
+		self.entryWidget.bind("<Return>", self.SearchEntrySubmitted)
+		self.textFrame.grid(row=startingrow, columnspan=2)
+
+	
+	def ResetButton(self, startingrow=None):
+		self.r = Button(self.root, text="Reset", default="normal", command=self.ResetButtonPressed).grid(row=startingrow, columnspan=2)
+
+	def UpdateSearchedTerm(self, startingrow=None):
+		startingrow = self.SearchTermUI_startingrow
+		try:
+			self.searched_term_label.grid_forget()
+		except:
+			pass
+		self.searched_term_label = Label(self.root, text=self.entrystring)
+		self.searched_term_label.grid(row=startingrow, columnspan=2)
+
+	def SearchedTermUI(self, startingrow=None):
+		self.SearchTermUI_startingrow=startingrow
+		self.searched_term_label = Label(self.root, text="")
+		self.searched_term_label.grid(row=startingrow, columnspan=2)
+
+	def DiagnosesListBox(self, startingrow=None):	
+		self.diagnosisLabel = Label(self.root)
+		self.diagnosisLabel["text"] = "Diagnoses"
+		self.diagnosisLabel.grid(row=startingrow,column=0)
+
+		self.dlistbox = Listbox(self.root, width=40)
+		self.dlistbox.grid(row=startingrow+1,column=0)
+		try: 
+			for concept in self.DB.g.vs:
+				if concept["type"] == 'diagnosis':
+					self.dlistbox.insert(END, concept["name"])
+		except AttributeError:
+		# If there are no items yet.
+			pass
+		self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
+
+	def SymptomsListBox(self, startingrow=None):	
+		self.symptomsLabel = Label(self.root)
+		self.symptomsLabel["text"] = "Symptoms"
+		self.symptomsLabel.grid(row=startingrow,column=1)
+		self.slistbox = Listbox(self.root, width=40)
+		self.slistbox.grid(row=startingrow+1,column=1)
+		try: 
+			for concept in self.DB.g.vs:
+				if concept["type"] == 'symptom':
+					self.slistbox.insert(END, concept["name"])
+		except AttributeError:
+		# If there are no items yet.
+			pass
+
+		self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
+
+	def UpdateListBox(self, listbox, list, row, column):
+		listbox.grid_forget()
+		listbox.delete(0, END)
+		try: 
+			for concept in list:
+				listbox.insert(END, concept)
+		except AttributeError:
+		# If there are no items yet.
+			pass
+		listbox.grid(row=row, column=column)
+
+	def SearchEntrySubmitted(self, event=0, list_clicked=False, selected_concept=None):
+		if list_clicked:
+			self.entrystring = selected_concept
+		else:
+			if self.entryWidget.get().strip() == "":
+				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
+			else:
+				self.entrystring = self.entryWidget.get().strip()
+		dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+
+		if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
+			dneighbors = [self.entrystring]
+
+		self.UpdateListBox(self.dlistbox, dneighbors, listbox_row+1, 0)
+		self.UpdateListBox(self.slistbox, sneighbors, listbox_row+1, 1)
+		self.UpdateSearchedTerm(startingrow=searched_term_row)
+		self.entryWidget.delete(0, END)
+
+	def ResetButtonPressed(self):
+		self.diagnosisLabel.grid_forget()
+		self.symptomsLabel.grid_forget()
+		self.dlistbox.grid_forget()
+		self.slistbox.grid_forget()
+		self.Listboxes()
+
+	def DiagnosisListPressed(self, event=0):
+		selected_index = self.dlistbox.curselection()
+		selected_concept = self.dlistbox.get(selected_index)
+		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+
+	def SymptomListPressed(self, event=0):
+		selected_index = self.slistbox.curselection()
+		selected_concept = self.slistbox.get(selected_index)
+		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+
+	def ButtonsUI(self, startingrow=None):
+		self.bottom_buttons_frame = Frame(self.root)
+		button_labels = [
+			'Manage Database',
+			"View Graph",
+			"Import",
+			"Debug Mode"
+			]
+
+		button_commands = [ 
+			self.ManageDatabaseButtonPressed,
+			self.ViewGraphButtonPressed,
+			self.ImportButtonPressed,
+			self.DebugModeButtonPressed
+			]
+
+		for button_number, label in enumerate(button_labels):
+			b = Button(self.bottom_buttons_frame, text=label, default="normal", command=button_commands[button_number]).pack()
+
+		self.bottom_buttons_frame.grid(row=startingrow, columnspan=2)
+
+	def ManageDatabaseButtonPressed(self):
+		ManageDatabaseWindow(self)
+
+	def ViewGraphButtonPressed(self):
+		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
+		os.system("open "+"/Users/law826/github/radiology_diagnoser/graph.svg")
+
+	def ImportButtonPressed(self):
+		importdata = ImportData(self)
+
+	def DebugModeButtonPressed(self):
+		import pdb; pdb.set_trace()
 
 class ManageDatabaseWindow:
 	def __init__(self, mainwindow):
@@ -298,158 +406,40 @@ class ManageDatabaseWindow:
 		else:
 			pass
 
-class SearchWindow:
+class ImportData:
 	def __init__(self, mainwindow):
 		self.mainwindow = mainwindow
-		self.DB = mainwindow.DB
-		self.MakeUI()
+		#self.import_file = tkFileDialog.askopenfile(parent = self.mainwindow.root, title = 'Please choose a file to import')
+		self.import_file = open('/Users/law826/Downloads/MSK.txt')
+		line_array = self.import_file_readlines()
+
+		for line in line_array:
+			diagnosis = line_array[0][line_array[0].find("[")+1:line_array[0].find("]")]
+			symptom = line_array[0][line_array[0].find("{")+1:line_array[0].find("}")]
 
 
-	def MakeUI(self):
-		self.root = Tk()
-		self.root.title("Search")
-		self.LabelEntryUI(startingrow=0)
-		self.AddButton(startingrow=1)
-		self.ResetButton(startingrow=2)
-		self.SearchedTermUI(startingrow=3)
-		self.DiagnosesListBox(startingrow=4)
-		self.SymptomsListBox(startingrow=4)
-		self.root.mainloop()
+
+		import pdb; pdb.set_trace()
 
 
-	def LabelEntryUI(self, startingrow=0):
-		# Create a text frame to hold the text Label and the Entry widget
-		self.textFrame = Frame(self.root)		
-				
-		# Create a Label in textFrame
-		self.entryLabel = Label(self.textFrame)
-		self.entryLabel["text"] = "Enter a diagnosis or symptom"
-		self.entryLabel.pack(side=LEFT)
-	
-		# Create an Entry Widget in textFrame
-		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
-		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
-		self.entryWidget["width"] = 50
-		self.entryWidget.pack(side=LEFT)
-		self.entryWidget.focus_set()
-		self.entryWidget.bind("<Return>", self.AddButtonPressed)
-		self.textFrame.grid(row=startingrow, columnspan=2)
-
-	def AddButton(self, startingrow=1):
-		self.b = Button(self.root, text="Search Diagnosis or Symptom", default="normal", command=self.AddButtonPressed).grid(row=startingrow, columnspan=2)
-
-	
-	def ResetButton(self, startingrow=2):
-		self.r = Button(self.root, text="Reset", default="normal", command=self.ResetButtonPressed).grid(row=startingrow, columnspan=2)
-
-	def UpdateSearchedTerm(self, startingrow=3):
-		try:
-			self.searched_term_label.grid_forget()
-		except:
-			pass
-		self.searched_term_label = Label(self.root, text=self.entrystring)
-		self.searched_term_label.grid(row=startingrow, columnspan=2)
-
-	def SearchedTermUI(self, startingrow=3):
-		self.searched_term_label = Label(self.root, text="")
-		self.searched_term_label.grid(row=startingrow, columnspan=2)
-
-	def DiagnosesListBox(self, startingrow=4):	
-		self.diagnosisLabel = Label(self.root)
-		self.diagnosisLabel["text"] = "Diagnoses"
-		self.diagnosisLabel.grid(row=startingrow,column=0)
-
-		self.dlistbox = Listbox(self.root)
-		self.dlistbox.grid(row=startingrow+1,column=0)
-		try: 
-			for concept in self.DB.g.vs:
-				if concept["type"] == 'diagnosis':
-					self.dlistbox.insert(END, concept["name"])
-		except AttributeError:
-		# If there are no items yet.
-			pass
-		self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
-
-	def SymptomsListBox(self, startingrow=4):	
-		self.symptomsLabel = Label(self.root)
-		self.symptomsLabel["text"] = "Symptoms"
-		self.symptomsLabel.grid(row=startingrow,column=1)
-		self.slistbox = Listbox(self.root)
-		self.slistbox.grid(row=startingrow+1,column=1)
-		try: 
-			for concept in self.DB.g.vs:
-				if concept["type"] == 'symptom':
-					self.slistbox.insert(END, concept["name"])
-		except AttributeError:
-		# If there are no items yet.
-			pass
-
-		self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
-
-	def UpdateListBox(self, listbox, list, row, column):
-		listbox.grid_forget()
-		listbox.delete(0, END)
-		try: 
-			for concept in list:
-				listbox.insert(END, concept)
-		except AttributeError:
-		# If there are no items yet.
-			pass
-		listbox.grid(row=row, column=column)
 
 
-	def AddButtonPressed(self, event=0, list_clicked=False, selected_concept=None):
-		if list_clicked:
-			self.entrystring = selected_concept
-		else:
-			if self.entryWidget.get().strip() == "":
-				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
-			else:
-				self.entrystring = self.entryWidget.get().strip()
-		dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
 
-		if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
-			dneighbors = [self.entrystring]
 
-		# Still in progress:
-		self.UpdateListBox(self.dlistbox, dneighbors, 4, 0)
-		self.UpdateListBox(self.slistbox, sneighbors, 4, 1)
-		self.UpdateSearchedTerm()
-		self.entryWidget.delete(0, END)
 
-	def ResetButtonPressed(self):
-		self.diagnosisLabel.grid_forget()
-		self.symptomsLabel.grid_forget()
-		self.dlistbox.grid_forget()
-		self.slistbox.grid_forget()
-		self.DiagnosesListBox()
-		self.SymptomsListBox()
 
-	def DiagnosisListPressed(self, event=0):
-		selected_index = self.dlistbox.curselection()
-		selected_concept = self.dlistbox.get(selected_index)
-		self.AddButtonPressed(list_clicked=True, selected_concept=selected_concept)
 
-	def SymptomListPressed(self, event=0):
-		selected_index = self.slistbox.curselection()
-		selected_concept = self.slistbox.get(selected_index)
-		self.AddButtonPressed(list_clicked=True, selected_concept=selected_concept)
 
 def main():
 	
-	mainwindow = MainWindow()
+	mainWindow = MainWindow()
 
 if __name__ == '__main__':
     main()
 
 
 ### Utility scripts
+## Delete all edges that are loops: STILL NEED TO TEST
+# list_to_delete = [x.index for i, x in enumerate(self.DB.g.es) if self.DB.g.is_loop()[i]==True]
+# self.DB.g.delete_edges(*list_to_delete)
 
-## Delete all multiples
-		# for i, x in enumerate([self.DB.g.get_eid(*x.tuple) for x in self.DB.g.es]): 
-		# 	if self.DB.g.is_multiple()[i] == True: 
-		# 		if i == 0:
-		# 			list_edges_to_delete=[]
-		# 		else:
-		# 			list_edges_to_delete.append(x)
-		# 		self.DB.g.delete_edges(*list_edges_to_delete)
