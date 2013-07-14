@@ -3,7 +3,9 @@
 """
 radiology_diagnoser.py
 
-[] update listbox function
+[] make a queue for stored dx and sx
+[] make a reset button
+[] make algorithm for stored dx and sx
 [] figure out test for multiples for future developement
 [] take care of capitalization
 [] implement autofill
@@ -114,11 +116,19 @@ class DataBase:
 
 		return merged_index_list
 
-	def FindNodeWithName(self, nodename):
+	def FindNeighborsOfNode(self, nodename):
+		"""
+		Take the name of a node and returns a list of the names of the neighboring nodes of type diagnosis and of type symptom. 
+		"""
 		try:
-			self.g.find(name=nodename)
+			node = self.g.vs.find(name=nodename)
 		except ValueError:
-			pass
+			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
+
+		dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
+		sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
+
+		return dneighbors, sneighbors
 
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
@@ -328,7 +338,7 @@ class SearchWindow:
 		self.entryWidget.bind("<Return>", self.AddButtonPressed)
 		self.textFrame.grid(row=0, columnspan=2)
 	def AddButton(self):
-		self.b = Button(self.root, text="Add Diagnosis", default="normal", command=self.AddButtonPressed).grid(row=1, columnspan=2)
+		self.b = Button(self.root, text="Search Diagnosis or Symptom", default="normal", command=self.AddButtonPressed).grid(row=1, columnspan=2)
 
 
 	def DiagnosesListBox(self):	
@@ -336,19 +346,17 @@ class SearchWindow:
 		self.diagnosisLabel["text"] = "Diagnoses"
 		self.diagnosisLabel.grid(row=2,column=0)
 
-		self.listbox = Listbox(self.root)
-		self.listbox.grid(row=3,column=0)
+		self.dlistbox = Listbox(self.root)
+		self.dlistbox.grid(row=3,column=0)
 		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
 		self.b.grid(row=4, column=0)
 		try: 
 			for concept in self.DB.g.vs:
 				if concept["type"] == 'diagnosis':
-					self.listbox.insert(END, concept["name"])
+					self.dlistbox.insert(END, concept["name"])
 		except AttributeError:
 		# If there are no items yet.
 			pass
-
-
 
 	def SymptomsListBox(self):	
 		self.symptomsLabel = Label(self.root)
@@ -356,23 +364,28 @@ class SearchWindow:
 		self.symptomsLabel.grid(row=2,column=1)
 
 
-		self.listbox = Listbox(self.root)
-		self.listbox.grid(row=3,column=1)
+		self.slistbox = Listbox(self.root)
+		self.slistbox.grid(row=3,column=1)
 		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
 		self.b.grid(row=4, column=1)
 		try: 
 			for concept in self.DB.g.vs:
 				if concept["type"] == 'symptom':
-					self.listbox.insert(END, concept["name"])
+					self.slistbox.insert(END, concept["name"])
 		except AttributeError:
 		# If there are no items yet.
 			pass
 
-	def UpdateListBox(self, listbox, list):
+	def UpdateListBox(self, listbox, list, row, column):
 		listbox.grid_forget()
 		listbox.delete(0, END)
-
-		# Bookmark insert concepts
+		try: 
+			for concept in list:
+				listbox.insert(END, concept)
+		except AttributeError:
+		# If there are no items yet.
+			pass
+		listbox.grid(row=row, column=column)
 
 
 	def AddButtonPressed(self, event=0):
@@ -380,22 +393,16 @@ class SearchWindow:
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
 		else:
 			entrystring = self.entryWidget.get().strip()
-			try:
-				self.DB.g.vs.find(name=entrystring)
+			import pdb; pdb.set_trace()
 
+			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(entrystring)
 
+			# Still in progress:
+			self.UpdateListBox(self.dlistbox, dneighbors, 3, 0)
+			self.UpdateListBox(self.slistbox, sneighbors, 3, 1)
 
+			self.entryWidget.delete(0, END)
 
-
-
-
-
-
-
-
-				self.entryWidget.delete(0, END)
-			except:
-				tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
 
 
 
