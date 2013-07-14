@@ -3,6 +3,7 @@
 """
 radiology_diagnoser.py
 
+[] finish import
 [] clean up row management
 [] make larger entry box
 [] make a queue for stored dx and sx
@@ -16,7 +17,7 @@ radiology_diagnoser.py
 
 Started by LN on 7/4/13
 """
-import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp
+import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp, re
 from Tkinter import *
 from pdb import *
 from igraph import *
@@ -211,14 +212,6 @@ class MainWindow:
 			self.UpdateListBox(self.slistbox, updated_symptom_list, row=listbox_row+1, column=1)
 			self.DCWentryWidget.delete(0, END)
 
-
-		# 	self.DB.AddNode(self.entryWidget.get().strip())
-		# 	self.DB.save_graph()
-		# 	tkMessageBox.showinfo("Confirmation", "%s has been added." % self.entryWidget.get().strip())
-		# 	self.entryWidget.delete(0, END)	
-		# self.SetGraphStatistics()
-		# self.entryWidget.focus_set()
-
 	def LabelEntryUI(self, startingrow=None):
 		# Create a text frame to hold the text Label and the Entry widget
 		self.textFrame = Frame(self.root)		
@@ -409,17 +402,28 @@ class ManageDatabaseWindow:
 class ImportData:
 	def __init__(self, mainwindow):
 		self.mainwindow = mainwindow
+		self.DB = mainwindow.DB
 		#self.import_file = tkFileDialog.askopenfile(parent = self.mainwindow.root, title = 'Please choose a file to import')
 		self.import_file = open('/Users/law826/Downloads/MSK.txt')
-		line_array = self.import_file_readlines()
-
+		line_array = self.import_file.readlines()
 		for line in line_array:
-			diagnosis = line_array[0][line_array[0].find("[")+1:line_array[0].find("]")]
-			symptom = line_array[0][line_array[0].find("{")+1:line_array[0].find("}")]
+			diagnoses = [m.group(1) for m in re.finditer(r"\[(\w+)\]", line)]
+			symptoms = [m.group(1) for m in re.finditer(r"\{(\w+)\}", line)]
+
+			if diagnoses != []:
+				import pdb; pdb.set_trace()
+
+			for diagnosis in diagnoses:
+				node_index_list=[]
+				node_index = self.DB.AddNode(diagnosis, "diagnosis")
+				node_index_list.append(node_index)
+				for symptom in symptoms:
+					node_index = self.DB.AddNode(symptom, "symptom")
+					node_index_list.append(node_index)
+				self.DB.AddEdges(node_index_list)
 
 
-
-		import pdb; pdb.set_trace()
+		
 
 
 
