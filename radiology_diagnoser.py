@@ -24,7 +24,6 @@ from pdb import *
 from igraph import *
 
 
-
 class DataBase:
 	def __init__(self, mainwindow):
 
@@ -202,8 +201,6 @@ class DiagnosisCharterizationWindow:
 	def MakeUI(self):
 		self.root = Tk()
 		self.root.title("Diagnosis")
-
-
 		self.LabelEntryUI()
 		self.AddButton()
 
@@ -220,7 +217,7 @@ class DiagnosisCharterizationWindow:
 	
 		# Create an Entry Widget in textFrame
 		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
-		self.entryWidget.set_completion_list(['test', 'test2', 'list2'])
+		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
 		self.entryWidget["width"] = 50
 		self.entryWidget.pack(side=LEFT)
 		self.entryWidget.focus_set()
@@ -438,25 +435,12 @@ class SearchWindow:
 		selected_concept = self.slistbox.get(selected_index)
 		self.AddButtonPressed(list_clicked=True, selected_concept=selected_concept)
 
-
-
-
-
-
-	
-
-
-
 def main():
 	
 	mainwindow = MainWindow()
 
 if __name__ == '__main__':
     main()
-
-
-
-
 
 
 ### Utility scripts
