@@ -5,6 +5,7 @@ radiology_diagnoser.py
 
 
 [] click on box
+[] make larger entry box
 [] merge search box and add diagnosis box
 [] make a queue for stored dx and sx
 [] make a reset button
@@ -252,20 +253,12 @@ class DiagnosisCharterizationWindow:
 			self.DB.AddEdges(node_index_list)
 			self.entryWidget.delete(0, END)
 
-
-
-
 		# 	self.DB.AddNode(self.entryWidget.get().strip())
 		# 	self.DB.save_graph()
 		# 	tkMessageBox.showinfo("Confirmation", "%s has been added." % self.entryWidget.get().strip())
 		# 	self.entryWidget.delete(0, END)	
 		# self.SetGraphStatistics()
 		# self.entryWidget.focus_set()
-
-
-
-
-
 
 		self.root.mainloop()
 
@@ -314,14 +307,17 @@ class SearchWindow:
 		self.DB = mainwindow.DB
 		self.MakeUI()
 
+
 	def MakeUI(self):
 		self.root = Tk()
-
+		self.root.title("Search")
 		self.LabelEntryUI(startingrow=0)
 		self.AddButton(startingrow=1)
-		self.SearchedTermUI(startingrow=2)
-		self.DiagnosesListBox(startingrow=3)
-		self.SymptomsListBox(startingrow=3)
+		self.ResetButton(startingrow=2)
+		self.SearchedTermUI(startingrow=3)
+		self.DiagnosesListBox(startingrow=4)
+		self.SymptomsListBox(startingrow=4)
+		self.root.mainloop()
 
 
 	def LabelEntryUI(self, startingrow=0):
@@ -342,11 +338,14 @@ class SearchWindow:
 		self.entryWidget.bind("<Return>", self.AddButtonPressed)
 		self.textFrame.grid(row=startingrow, columnspan=2)
 
-	def AddButton(self, startingrow=2):
+	def AddButton(self, startingrow=1):
 		self.b = Button(self.root, text="Search Diagnosis or Symptom", default="normal", command=self.AddButtonPressed).grid(row=startingrow, columnspan=2)
 
 	
-	def UpdateSearchedTerm(self, startingrow=2):
+	def ResetButton(self, startingrow=2):
+		self.r = Button(self.root, text="Reset", default="normal", command=self.ResetButtonPressed).grid(row=startingrow, columnspan=2)
+
+	def UpdateSearchedTerm(self, startingrow=3):
 		try:
 			self.searched_term_label.grid_forget()
 		except:
@@ -354,19 +353,17 @@ class SearchWindow:
 		self.searched_term_label = Label(self.root, text=self.entrystring)
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
-	def SearchedTermUI(self, startingrow=2):
+	def SearchedTermUI(self, startingrow=3):
 		self.searched_term_label = Label(self.root, text="")
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
-	def DiagnosesListBox(self, startingrow=3):	
+	def DiagnosesListBox(self, startingrow=4):	
 		self.diagnosisLabel = Label(self.root)
 		self.diagnosisLabel["text"] = "Diagnoses"
 		self.diagnosisLabel.grid(row=startingrow,column=0)
 
 		self.dlistbox = Listbox(self.root)
 		self.dlistbox.grid(row=startingrow+1,column=0)
-		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
-		self.b.grid(row=startingrow+2, column=0)
 		try: 
 			for concept in self.DB.g.vs:
 				if concept["type"] == 'diagnosis':
@@ -374,17 +371,14 @@ class SearchWindow:
 		except AttributeError:
 		# If there are no items yet.
 			pass
+		self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
 
-	def SymptomsListBox(self, startingrow):	
+	def SymptomsListBox(self, startingrow=4):	
 		self.symptomsLabel = Label(self.root)
 		self.symptomsLabel["text"] = "Symptoms"
 		self.symptomsLabel.grid(row=startingrow,column=1)
-
-
 		self.slistbox = Listbox(self.root)
 		self.slistbox.grid(row=startingrow+1,column=1)
-		self.b = Button(self.root, text = "Present", command = self.PresentButtonPressed)
-		self.b.grid(row=startingrow+2, column=1)
 		try: 
 			for concept in self.DB.g.vs:
 				if concept["type"] == 'symptom':
@@ -392,6 +386,8 @@ class SearchWindow:
 		except AttributeError:
 		# If there are no items yet.
 			pass
+
+		self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
 
 	def UpdateListBox(self, listbox, list, row, column):
 		listbox.grid_forget()
@@ -405,33 +401,49 @@ class SearchWindow:
 		listbox.grid(row=row, column=column)
 
 
-	def AddButtonPressed(self, event=0):
-		if self.entryWidget.get().strip() == "":
-			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
+	def AddButtonPressed(self, event=0, list_clicked=False, selected_concept=None):
+		if list_clicked:
+			self.entrystring = selected_concept
 		else:
-			self.entrystring = self.entryWidget.get().strip()
-			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+			if self.entryWidget.get().strip() == "":
+				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
+			else:
+				self.entrystring = self.entryWidget.get().strip()
+		dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
 
-			if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
-				dneighbors = [self.entrystring]
+		if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
+			dneighbors = [self.entrystring]
 
-			# Still in progress:
-			self.UpdateListBox(self.dlistbox, dneighbors, 4, 0)
-			self.UpdateListBox(self.slistbox, sneighbors, 4, 1)
-			self.UpdateSearchedTerm()
-			self.entryWidget.delete(0, END)
-			
+		# Still in progress:
+		self.UpdateListBox(self.dlistbox, dneighbors, 4, 0)
+		self.UpdateListBox(self.slistbox, sneighbors, 4, 1)
+		self.UpdateSearchedTerm()
+		self.entryWidget.delete(0, END)
+
+	def ResetButtonPressed(self):
+		self.diagnosisLabel.grid_forget()
+		self.symptomsLabel.grid_forget()
+		self.dlistbox.grid_forget()
+		self.slistbox.grid_forget()
+		self.DiagnosesListBox()
+		self.SymptomsListBox()
+
+	def DiagnosisListPressed(self, event=0):
+		selected_index = self.dlistbox.curselection()
+		selected_concept = self.dlistbox.get(selected_index)
+		self.AddButtonPressed(list_clicked=True, selected_concept=selected_concept)
+
+	def SymptomListPressed(self, event=0):
+		selected_index = self.slistbox.curselection()
+		selected_concept = self.slistbox.get(selected_index)
+		self.AddButtonPressed(list_clicked=True, selected_concept=selected_concept)
 
 
 
 
-	def PresentButtonPressed(self):
-		selected_index = self.listbox.curselection()
-		selected_concept = self.listbox.get(selected_index)
 
 
-
-		self.root.mainloop()
+	
 
 
 
