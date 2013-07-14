@@ -3,6 +3,7 @@
 """
 radiology_diagnoser.py
 
+[] selection of listbox item
 [] make a queue for stored dx and sx
 [] make a reset button
 [] make algorithm for stored dx and sx
@@ -331,7 +332,7 @@ class SearchWindow:
 	
 		# Create an Entry Widget in textFrame
 		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
-		self.entryWidget.set_completion_list(['test', 'test2', 'list2'])
+		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
 		self.entryWidget["width"] = 50
 		self.entryWidget.pack(side=LEFT)
 		self.entryWidget.focus_set()
@@ -393,8 +394,6 @@ class SearchWindow:
 			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
 		else:
 			entrystring = self.entryWidget.get().strip()
-			import pdb; pdb.set_trace()
-
 			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(entrystring)
 
 			# Still in progress:
@@ -407,7 +406,8 @@ class SearchWindow:
 
 
 	def PresentButtonPressed(self):
-		pass
+		selected_index = self.listbox.curselection()
+		selected_concept = self.listbox.get(selected_index)
 
 
 
