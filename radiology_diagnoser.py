@@ -3,16 +3,14 @@
 """
 radiology_diagnoser.py
 
-[] finish import
 [] clean up row management
 [] make larger entry box
 [] make a queue for stored dx and sx
-[] make a reset button
 [] make algorithm for stored dx and sx
 [] figure out test for multiples for future developement
 [] take care of capitalization
 [] implement autofill
-[] manage database (delete edit)
+[] manage database (edit)
 [] implement search (real use) of database
 
 Started by LN on 7/4/13
@@ -320,26 +318,28 @@ class MainWindow:
 		selected_index = self.dlistbox.curselection()
 		selected_concept = self.dlistbox.get(selected_index)
 		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+		self.ListFocus = "diagnosis"
 
 	def SymptomListPressed(self, event=0):
 		selected_index = self.slistbox.curselection()
 		selected_concept = self.slistbox.get(selected_index)
 		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+		self.ListFocus = "symptom"
 
 	def ButtonsUI(self, startingrow=None):
 		self.bottom_buttons_frame = Frame(self.root)
 		button_labels = [
-			'Manage Database',
 			"View Graph",
 			"Import",
-			"Debug Mode"
+			"Debug Mode", 
+			"Delete Item"
 			]
 
 		button_commands = [ 
-			self.ManageDatabaseButtonPressed,
 			self.ViewGraphButtonPressed,
 			self.ImportButtonPressed,
-			self.DebugModeButtonPressed
+			self.DebugModeButtonPressed, 
+			self.DeleteItem
 			]
 
 		for button_number, label in enumerate(button_labels):
@@ -360,44 +360,19 @@ class MainWindow:
 	def DebugModeButtonPressed(self):
 		import pdb; pdb.set_trace()
 
-class ManageDatabaseWindow:
-	def __init__(self, mainwindow):
-
-		self.DB = mainwindow.DB
-		self.mainwindow = mainwindow
-		self.root = Tk()
-		self.root.title("Database Manager")
-		self.MakeListBox()
-		mainloop()
-
-	def MakeListBox(self):	
-		self.listbox = Listbox(self.root)
-		self.listbox.pack()
-		self.b = Button(self.root, text = "Delete", command = self.DeleteItem)
-		self.b.pack()
-		try: 
-			for concept in self.DB.g.vs["name"]:
-				self.listbox.insert(END, concept)
-		except AttributeError:
-		# If there are no items yet.
-			pass
-
-
 	def DeleteItem(self):
-		selected_index = self.listbox.curselection()
-		selected_concept = self.listbox.get(selected_index)
-
+		selected_concept = self.entrystring
 		result = tkMessageBox.askquestion("Delete", "Are you sure you want to delete %s?" %selected_concept, icon='warning')
 		if result == 'yes':
 			vertex_index = self.DB.g.vs.find(name=selected_concept).index
 			self.DB.g.delete_vertices(vertex_index)
-			self.listbox.pack_forget()
-			self.b.pack_forget()
-			self.MakeListBox()
 			self.DB.save_graph()
+			self.ResetButtonPressed()
 			tkMessageBox.showinfo("Term deleted", "%s has been deleted." %selected_concept)
 		else:
 			pass
+
+
 
 class ImportData:
 	def __init__(self, mainwindow):
@@ -407,11 +382,8 @@ class ImportData:
 		self.import_file = open('/Users/law826/Downloads/MSK.txt')
 		line_array = self.import_file.readlines()
 		for line in line_array:
-			diagnoses = [m.group(1) for m in re.finditer(r"\[(\w+)\]", line)]
-			symptoms = [m.group(1) for m in re.finditer(r"\{(\w+)\}", line)]
-
-			if diagnoses != []:
-				import pdb; pdb.set_trace()
+			diagnoses = [m.group(1) for m in re.finditer(r"\[([A-Za-z0-9_ \(\)]+)\]", line)]
+			symptoms = [m.group(1) for m in re.finditer(r"\{([A-Za-z0-9_ \(\)]+)\}", line)]
 
 			for diagnosis in diagnoses:
 				node_index_list=[]
@@ -421,6 +393,9 @@ class ImportData:
 					node_index = self.DB.AddNode(symptom, "symptom")
 					node_index_list.append(node_index)
 				self.DB.AddEdges(node_index_list)
+
+		self.DB.save_graph()
+		self.mainwindow.ResetButtonPressed()
 
 
 		
