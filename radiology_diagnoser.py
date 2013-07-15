@@ -3,6 +3,15 @@
 """
 radiology_diagnoser.py
 
+[] handle old matches from the merge window
+[] connect higher order term to everything
+[] order symptoms in terms of best algorithm to get to specific diagnosis
+[] expand width of windows
+[] entry box to merge two nodes in particular
+[] figure out brackets
+[] edit entry
+[] fuzzy search
+[] auto update diagnoses and symptoms list upon keystroke (implement fuzzy search)
 [] clean up row management
 [] make larger entry box
 [] make a queue for stored dx and sx
@@ -15,10 +24,13 @@ radiology_diagnoser.py
 
 Started by LN on 7/4/13
 """
-import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp, re
+from __future__ import division
+import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp, re, nltk
 from Tkinter import *
 from pdb import *
 from igraph import *
+
+import basefunctions as bf
 
 global searched_term_row
 global listbox_row
@@ -29,13 +41,13 @@ listbox_row = 4
 class DataBase:
 	def __init__(self, mainwindow):
 		self.mainwindow = mainwindow
-		self.load_user_settings()
+		self.LoadUserSettings()
 		try:
-			self.load_graph()
+			self.LoadGraph()
 		except (cPickle.UnpicklingError):
 			pass
 
-	def load_user_settings(self):
+	def LoadUserSettings(self):
 		try: 
 			self.user_settings = cPickle.load(open('user_settings.p', 'rb'))
 			if os.getcwd() in self.user_settings:
@@ -48,9 +60,8 @@ class DataBase:
 			tkMessageBox.showinfo("New User/Computer Detected", "Please choose a save directory.")
 			self.SetPath()
 
-	def load_graph(self):
+	def LoadGraph(self):
 		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
-
 
 	def AddNode(self, item, type):
 		try:
@@ -83,10 +94,9 @@ class DataBase:
 
 				return number_of_vertices-1 #This is the node's index.
 		
-		self.save_graph()
-
+		self.SaveGraph()
 				
-	def save_graph(self):
+	def SaveGraph(self):
 		try:
 			self.g.write_pickle(os.sep.join([self.save_path, "graph.p"]))
 		except:
@@ -103,17 +113,17 @@ class DataBase:
 				if second_index <= (len(node_index_list)-1):
 					second_vertex = node_index_list[second_index]
 
-					# Only add edge if edge doesn't exist and prevent forming loops:
+					# Only add edge if edge doesn't exist (prevent multiples) and prevent forming loops:
 					if first_vertex != second_vertex:
 						try:
 							self.g.get_eid(first_vertex, second_vertex)
 						except InternalError:
 							self.g.add_edges((first_vertex, second_vertex))
-		self.save_graph()
+		self.SaveGraph()
 
 	def IndicesOfVertexNeighborsToo(self, node_index_list):
 		"""
-		Connect a symptom with the rest of the symptoms under a diagnosis.
+		Take a list of node indices and connect a symptom with the rest of the symptoms under a diagnosis.
 		"""
 		diagnosis_vertex=self.g.vs[node_index_list[0]]
 		neighbor_list = [x.index for x in diagnosis_vertex.neighbors()]
@@ -140,15 +150,55 @@ class DataBase:
 		self.user_settings[os.getcwd()] = self.save_path
 		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))	
 
+	def IdentifySimilarNodes(self, inlist, threshold=0.25):
+		"""
+		Take a list of items and identifies similar nodes based upon Levenshtein distance.
+		Returns a list of tuples of similar items.
+		"""
+		tuple_combos = [(x,y) for x in inlist for y in inlist if x!=y]
+		similar_nodes_tuples = []
+		for entry in tuple_combos:
+			if (entry[1], entry[0]) in tuple_combos:
+				tuple_combos.remove((entry[1], entry[0])) 
+
+			total_length = len(entry[0]) + len(entry[0])
+			normed_LD = (nltk.metrics.edit_distance(*entry))/total_length
+
+			if normed_LD < threshold:
+				similar_nodes_tuples.append(entry)
+
+		return similar_nodes_tuples
+
+	def MergeNodes(self, nodename1, nodename2):
+		"""
+		Merge two nodes such that node1 is the remaining node and inherits all of the edges of node 2.
+		"""
+
+		# Find neighbors of node 2.
+		dneighbors, sneighbors = self.FindNeighborsOfNode(nodename2)
+		everyone = dneighbors+sneighbors+[nodename1]
+
+		everyone_indices = [self.g.vs.find(name=nodename).index for nodename in everyone]
+		
+		# Make edges from node 2 to node 1.
+		self.AddEdges(everyone_indices)
+
+		# Delete node 2.
+		self.g.delete_vertices(self.g.vs.find(name=nodename2).index)
+
+		"""
+		Query whether a merge should take place and 
+		"""
+
 class MainWindow:
 	def __init__(self):
-		self.DB = DataBase(self) # Instantiated here at the end because of parent window issues for ask directory widget.
 		self.MakeUI()
 
 	def MakeUI(self):
 
 		self.root = Tk()
 		self.root.title("Search")
+		self.DB = DataBase(self) # Instantiated here at the end because of parent window issues for ask directory widget.
 		self.DCWLabelEntryUI(startingrow=0)
 		self.LabelEntryUI(startingrow=1)
 		self.ResetButton(startingrow=2)
@@ -168,29 +218,16 @@ class MainWindow:
 		# Create a text frame to hold the text Label and the Entry widget
 		self.DCWtextFrame = Frame(self.root)		
 				
-		# Create a Label in DCWtextFrame
-		self.DCWentryLabel = Label(self.DCWtextFrame)
-		self.DCWentryLabel["text"] = "Enter new diagnosis: followed by symptoms separated by commas"
-		self.DCWentryLabel.pack()
-	
-		# Create an Entry Widget in DCWtextFrame
-		self.DCWentryWidget = tkcomp.AutocompleteEntry(self.DCWtextFrame)
-		self.DCWentryWidget.set_completion_list(self.DB.g.vs["name"])
-		self.DCWentryWidget["width"] = 50
-		self.DCWentryWidget.pack()
-		self.DCWentryWidget.focus_set()
-		self.DCWentryWidget.bind("<Return>", self.DiagnosisCharacterizationSubmitted)
+		self.DCWentryLabel = bf.Label(self.DCWtextFrame, "Enter a new diagnosis followed by a comma and then symptoms separated by commas.")
+		set_trace()
+		self.DCWentry = bf.Entry(self.DCWtextFrame, self.DiagnosisCharacterizationSubmitted, completion_list=self.DB.g.vs["name"])
+
 		self.DCWtextFrame.grid(row=startingrow, columnspan=2)
 
 	def DiagnosisCharacterizationSubmitted(self, event=0):
-		if self.DCWentryWidget.get().strip() == "":
-			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
-		else:
-			DCWentrystring = self.DCWentryWidget.get().strip()
-			es_split_pre = DCWentrystring.split(",")
-			es_split = [x.lstrip() for x in es_split_pre]
-
-			
+		es_split = bf.ParseEntryCommaSeparated(self.DCWentry, "Enter a diagnosis")
+		
+		if es_split != []:
 			for i, entry in enumerate(es_split):
 				if i==0:
 					node_index = self.DB.AddNode(entry, "diagnosis")
@@ -208,24 +245,15 @@ class MainWindow:
 			del pre_updated_symptom_list[0]
 			updated_symptom_list = list(set(pre_updated_symptom_list))
 			self.UpdateListBox(self.slistbox, updated_symptom_list, row=listbox_row+1, column=1)
-			self.DCWentryWidget.delete(0, END)
+			self.DCWentry.delete(0, END)
 
 	def LabelEntryUI(self, startingrow=None):
 		# Create a text frame to hold the text Label and the Entry widget
 		self.textFrame = Frame(self.root)		
 				
-		# Create a Label in textFrame
-		self.entryLabel = Label(self.textFrame)
-		self.entryLabel["text"] = "Enter a diagnosis or symptom"
-		self.entryLabel.pack()
-	
-		# Create an Entry Widget in textFrame
-		self.entryWidget = tkcomp.AutocompleteEntry(self.textFrame)
-		self.entryWidget.set_completion_list(self.DB.g.vs["name"])
-		self.entryWidget["width"] = 50
-		self.entryWidget.pack()
-		self.entryWidget.focus_set()
-		self.entryWidget.bind("<Return>", self.SearchEntrySubmitted)
+		self.entryLabel = bf.Label(self.textFrame, "Enter a diagnosis or symptom")
+		self.DCWentry = bf.Entry(self.textFrame, self.SearchEntrySubmitted, completion_list=self.DB.g.vs["name"])
+
 		self.textFrame.grid(row=startingrow, columnspan=2)
 
 	
@@ -331,6 +359,7 @@ class MainWindow:
 		button_labels = [
 			"View Graph",
 			"Import",
+			"Merge Items",
 			"Debug Mode", 
 			"Delete Item"
 			]
@@ -338,6 +367,7 @@ class MainWindow:
 		button_commands = [ 
 			self.ViewGraphButtonPressed,
 			self.ImportButtonPressed,
+			self.MergeButtonPressed,
 			self.DebugModeButtonPressed, 
 			self.DeleteItem
 			]
@@ -346,16 +376,15 @@ class MainWindow:
 			b = Button(self.bottom_buttons_frame, text=label, default="normal", command=button_commands[button_number]).pack()
 
 		self.bottom_buttons_frame.grid(row=startingrow, columnspan=2)
-
-	def ManageDatabaseButtonPressed(self):
-		ManageDatabaseWindow(self)
-
 	def ViewGraphButtonPressed(self):
 		self.DB.g.write_svg("graph.svg", labels = "name", layout = self.DB.g.layout_kamada_kawai())
-		os.system("open "+"/Users/law826/github/radiology_diagnoser/graph.svg")
+		os.system("open "+self.DB.save_path+os.sep+"graph.svg")
 
 	def ImportButtonPressed(self):
 		importdata = ImportData(self)
+
+	def MergeButtonPressed(self):
+		mergewindow = MergeWindow(self)
 
 	def DebugModeButtonPressed(self):
 		import pdb; pdb.set_trace()
@@ -366,13 +395,11 @@ class MainWindow:
 		if result == 'yes':
 			vertex_index = self.DB.g.vs.find(name=selected_concept).index
 			self.DB.g.delete_vertices(vertex_index)
-			self.DB.save_graph()
+			self.DB.SaveGraph()
 			self.ResetButtonPressed()
 			tkMessageBox.showinfo("Term deleted", "%s has been deleted." %selected_concept)
 		else:
 			pass
-
-
 
 class ImportData:
 	def __init__(self, mainwindow):
@@ -394,18 +421,73 @@ class ImportData:
 					node_index_list.append(node_index)
 				self.DB.AddEdges(node_index_list)
 
-		self.DB.save_graph()
+		self.DB.SaveGraph()
 		self.mainwindow.ResetButtonPressed()
 
 
+class MergeWindow:
+	def __init__(self, mainwindow):
+		self.DB = mainwindow.DB
+		self.mainwindow = mainwindow
+		self.root = Tk()
+		self.root.title("Merge Items")
+		self.MergeInputBox()
+		self.MakeListBox()
+		mainloop()
+
+	def MergeInputBox(self):
+		# Create a Label in textFrame
+		self.textFrame = Frame(self.root)
+
+		self.entryLabel = bf.Label(self.textFrame, "Enter terms to merge, separated by commas (keep first term)")
+		self.entry = Entry(self.textFrame, MergeInputBoxSubmitted, completion_list=self.DB.g.vs["name"])
+
+		self.textFrame.pack()
+
+	def MakeListBox(self):	
+		self.listbox = Listbox(self.root, width=80)
+		self.listbox.pack()
+		self.buttonFrame = Frame(self.root)
+		self.b0 = Button(self.buttonFrame, text = "Keep First: Merge Second", command = lambda: self.MergeButtonPressed(0))
+		self.b0.pack(side = LEFT)
+		self.b1 = Button(self.buttonFrame, text = "Keep Second: Merge First", command = lambda: self.MergeButtonPressed(1))
+		self.b1.pack(side = LEFT)
+
+		self.buttonFrame.pack()
+		self.similar_node_tuples = self.DB.IdentifySimilarNodes(self.DB.g.vs["name"], threshold=0.25)
+		try: 
+			for pair in self.similar_node_tuples:
+				self.listbox.insert(END, pair)
+		except AttributeError:
+		# If there are no items yet.
+			pass
+
+	def MergeInputBoxSubmitted(self, event=0):
+		es_split = bf.ParseEntryCommaSeparated(self.entryWidget, "Please Enter Items to Merge")
+		print es_split
+		return es_split
+
+	def MergeButtonPressed(self, button_index):
+		selected_index = self.listbox.curselection()
+		selected_concept = self.listbox.get(selected_index)
 		
+		result = tkMessageBox.askquestion("Merge", "Are you sure you want to merge '%s' and '%s'?" %(selected_concept[0], selected_concept[1]), icon='warning')
+		if result == 'yes':
+			if button_index==0:
+				self.DB.MergeNodes(selected_concept[0], selected_concept[1])
+				kept_node = selected_concept[0]
+			elif button_index == 1:
+				self.DB.MergeNodes(selected_concept[1], selected_concept[0])
+				kept_node = selected_concept[1]
 
-
-
-
-
-
-
+			self.listbox.pack_forget()
+			self.b0.pack_forget()
+			self.b1.pack_forget()
+			self.MakeListBox()
+			self.DB.SaveGraph()
+			tkMessageBox.showinfo("Merged", "'%s' and '%s' have been merged, keeping '%s'." %(selected_concept[0], selected_concept[1], kept_node))
+		else:
+			pass
 
 
 
