@@ -5,7 +5,6 @@ from pdb import *
 from igraph import *
 
 import basefunctions as bf
-import database 
 
 class MergeWindow:
 	def __init__(self, mainwindow):

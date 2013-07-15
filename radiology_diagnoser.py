@@ -31,7 +31,7 @@ from pdb import *
 from igraph import *
 
 import basefunctions as bf
-import database 
+import database_for_gui
 import mergewindow
 import importdata
 
@@ -49,7 +49,7 @@ class MainWindow:
 
 		self.root = Tk()
 		self.root.title("Search")
-		self.DB = database.DataBase(self) # Instantiated here at the end because of parent window issues for ask directory widget.
+		self.DB = database_for_gui.DataBaseForGUI(self) # Instantiated here at the end because of parent window issues for ask directory widget.
 		self.DCWLabelEntryUI(startingrow=0)
 		self.LabelEntryUI(startingrow=1)
 		self.ResetButton(startingrow=2)
@@ -250,7 +250,7 @@ class MainWindow:
 			tkMessageBox.showinfo("Term deleted", "%s has been deleted." %selected_concept)
 		else:
 			pass
-			
+
 def main():
 	
 	mainWindow = MainWindow()

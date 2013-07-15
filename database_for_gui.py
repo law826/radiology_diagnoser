@@ -5,7 +5,8 @@ from pdb import *
 from igraph import *
 
 import basefunctions as bf
-class DataBase:
+
+class DataBaseForGUI:
 	def __init__(self, mainwindow):
 		self.mainwindow = mainwindow
 		self.LoadUserSettings()
