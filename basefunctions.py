@@ -1,7 +1,4 @@
 from __future__ import division
-
-__all__ = ['Label', 'ParseEntryCommaSeparated']
-
 import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np, getpass, tkentrycomplete as tkcomp, re, nltk
 import Tkinter as tk
 from pdb import *
@@ -36,7 +33,6 @@ def ParseEntryCommaSeparated(entryWidget, emptyErrorMessage):
 
 	"""
 	if entryWidget.get().strip() == "":
-		set_trace()
 		tkMessageBox.showerror("Tkinter Entry Widget", emptyErrorMessage)
 		es_split = []
 	else:
