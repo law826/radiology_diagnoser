@@ -7,9 +7,13 @@ from igraph import *
 import basefunctions as bf
 
 class MergeWindow:
-	def __init__(self, mainwindow):
+	def __init__(self):
+		pass
+
+	def ExecuteMerge(self, mainwindow):
 		self.DB = mainwindow.DB
 		self.mainwindow = mainwindow
+		self.id = mainwindow.id
 		self.root = Tk()
 		self.root.title("Merge Items")
 		self.MergeInputBox()
@@ -56,16 +60,20 @@ class MergeWindow:
 		if result == 'yes':
 			if button_index==0:
 				self.DB.MergeNodes(selected_concept[0], selected_concept[1])
-				kept_node = selected_concept[0]
+				self.kept_node = selected_concept[0]
+				self.deleted_node = selected_concept[1]
+
 			elif button_index == 1:
 				self.DB.MergeNodes(selected_concept[1], selected_concept[0])
-				kept_node = selected_concept[1]
+				self.kept_node = selected_concept[1]
+				self.deleted_node = selected_concept[0]
 
 			self.listbox.pack_forget()
 			self.b0.pack_forget()
 			self.b1.pack_forget()
 			self.MakeListBox()
 			self.DB.SaveGraph()
-			tkMessageBox.showinfo("Merged", "'%s' and '%s' have been merged, keeping '%s'." %(selected_concept[0], selected_concept[1], kept_node))
+			tkMessageBox.showinfo("Merged", "'%s' and '%s' have been merged, keeping '%s'." %(selected_concept[0], selected_concept[1], self.kept_node))
+			self.id.SearchReplaceImportFile()
 		else:
 			pass

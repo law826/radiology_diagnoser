@@ -3,6 +3,7 @@
 """
 radiology_diagnoser.py
 
+[] handle import file and merging
 [] handle old matches from the merge window
 [] connect higher order term to everything
 [] order symptoms in terms of best algorithm to get to specific diagnosis
@@ -50,6 +51,8 @@ class MainWindow:
 		self.root = Tk()
 		self.root.title("Search")
 		self.DB = database_for_gui.DataBaseForGUI(self) # Instantiated here at the end because of parent window issues for ask directory widget.
+		self.mw = mergewindow.MergeWindow()
+		self.id = importdata.ImportData()
 		self.DCWLabelEntryUI(startingrow=0)
 		self.LabelEntryUI(startingrow=1)
 		self.ResetButton(startingrow=2)
@@ -235,10 +238,10 @@ class MainWindow:
 		os.system("open "+self.DB.save_path+os.sep+"graph.svg")
 
 	def ImportButtonPressed(self):
-		id = importdata.ImportData(self)
+		self.id.executeimport(self)
 
 	def MergeButtonPressed(self):
-		mw = mergewindow.MergeWindow(self)
+		self.mw.ExecuteMerge(self)
 
 	def DebugModeButtonPressed(self):
 		import pdb; pdb.set_trace()
