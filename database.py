@@ -5,154 +5,135 @@ from pdb import *
 from igraph import *
 
 import basefunctions as bf
-class DataBase:
-	def __init__(self, mainwindow):
-		self.mainwindow = mainwindow
-		self.LoadUserSettings()
+
+def AddNode(nodename, type, graph=None):
+	"""
+	Takes: (1) the name of the node (attribute='name') (2) the type (attribute='type') (3) an optional graph.
+
+	- Adds a new node and creates a new graph if no graph is provided. 
+	- It does not do anything if the node name already exists.
+
+	Returns: (1) updated graph (2) node index.
+	"""
+	if graph == None:
+		graph = Graph()
+		graph.add_vertices(1)
+		graph.es["weight"] = 1.0
+		graph["name"] = "Ideas Graph"			
+		graph.vs[0]["name"] = nodename
+		graph.vs[0]["type"] = type
+		node_index = 0
+	else:
 		try:
-			self.LoadGraph()
-		except (cPickle.UnpicklingError):
-			pass
+			"""
+			If node already exists, then don't add a new node.
+			"""
+			node_index = graph.vs.find(name=nodename).index
+		except ValueError:
+			"""
+			Add a node if the node does not already exist.
+			"""
+			graph.add_vertices(1)
+			number_of_vertices = graph.vcount()
+			graph.vs[number_of_vertices-1]["name"] = nodename
+			graph.vs[number_of_vertices-1]["type"] = type
+			node_index = number_of_vertices-1 #This is the node's index.
+	
+	return graph, node_index
+			
+def AddAllEdges(graph, node_index_list):
+	"""
+	Takes: (1) a graph (2) a list of all relevant node indices.
 
-	def LoadUserSettings(self):
-		try: 
-			self.user_settings = cPickle.load(open('user_settings.p', 'rb'))
-			if os.getcwd() in self.user_settings:
-				self.save_path = self.user_settings[os.getcwd()]
-			else:
-				tkMessageBox.showinfo("New User/Computer Detected. Please choose a save directory.")	
-				self.SetPath()
-		except (IOError, cPickle.UnpicklingError):
-			self.user_settings = dict()
-			tkMessageBox.showinfo("New User/Computer Detected", "Please choose a save directory.")
-			self.SetPath()
+	Add combinations of all possible edges for a group of nodes while 
+	preventing the formation of multiples and loops.
 
-	def LoadGraph(self):
-		self.g = Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
+	Returns: updated graph. 
+	"""
+	for first_index_counter, first_vertex in enumerate(node_index_list):
+		for second_vertex_counter in range((len(node_index_list)-1)):
+			second_index = first_index_counter+second_vertex_counter+1
+			if second_index <= (len(node_index_list)-1):
+				second_vertex = node_index_list[second_index]
 
-	def AddNode(self, item, type):
-		try:
-			self.g
-		except AttributeError:
-			self.g = Graph()
-			self.g.add_vertices(1)
-			self.g.es["weight"] = 1.0
-			self.g["name"] = "Ideas Graph"			
-			self.g.vs[0]["name"] = item
-			self.g.vs[0]["type"] = type
+				# Only add edge if edge doesn't exist (prevent multiples) and prevent forming loops:
+				if first_vertex != second_vertex:
+					try:
+						graph.get_eid(first_vertex, second_vertex)
+					except InternalError:
+						graph.add_edges((first_vertex, second_vertex))
+	
+	return graph
 
-			return 0
-		else:
-			try:
-				"""
-				If node already exists, then add edges to existing node.
+def IdentifySimilarNodes(inlist, threshold=0.25):
+	"""
+	Takes: (1) takes a list of the names of nodes (2) optional threshold for
+	Levenshtein distance (normalized by the sum of the number of letters in a pair) - 
+	smaller threshold means more stringent.
 
-				"""
-				node_index = self.g.vs.find(name=item).index
-				return node_index
-			except ValueError:
-				"""
-				Do this if node does not already exist.
-				"""
-				self.g.add_vertices(1)
-				number_of_vertices = self.g.vcount()
-				self.g.vs[number_of_vertices-1]["name"] = item
-				self.g.vs[number_of_vertices-1]["type"] = type
+	Returns: (1) a list of unique list of tuples of similar nodenames. 
+	"""
+	tuple_combos = [(x,y) for x in inlist for y in inlist if x!=y]
+	similar_nodes_tuples = []
+	for entry in tuple_combos:
+		if (entry[1], entry[0]) in tuple_combos:
+			tuple_combos.remove((entry[1], entry[0])) 
 
-				return number_of_vertices-1 #This is the node's index.
-		
-		self.SaveGraph()
-				
-	def SaveGraph(self):
-		try:
-			self.g.write_pickle(os.sep.join([self.save_path, "graph.p"]))
-		except:
-			tkMessageBox.showerror("Tkinter Entry Widget", "Enter a valid save path (current path is %s)" %self.save_path)
+		total_length = len(entry[0]) + len(entry[0])
+		normed_LD = (nltk.metrics.edit_distance(*entry))/total_length
 
-	def AddEdges(self, node_index_list):
-		"""
-		Add combinations of all nodes given a list of the nodes' indices.
+		if normed_LD < threshold:
+			similar_nodes_tuples.append(entry)
 
-		"""
-		for first_index_counter, first_vertex in enumerate(node_index_list):
-			for second_vertex_counter in range((len(node_index_list)-1)):
-				second_index = first_index_counter+second_vertex_counter+1
-				if second_index <= (len(node_index_list)-1):
-					second_vertex = node_index_list[second_index]
+	return similar_nodes_tuples
 
-					# Only add edge if edge doesn't exist (prevent multiples) and prevent forming loops:
-					if first_vertex != second_vertex:
-						try:
-							self.g.get_eid(first_vertex, second_vertex)
-						except InternalError:
-							self.g.add_edges((first_vertex, second_vertex))
-		self.SaveGraph()
+def MergeNodes(graph, nodename1, nodename2):
+	"""
+	Takes: (1) name of first node (2) name of second node
 
-	def IndicesOfVertexNeighborsToo(self, node_index_list):
-		"""
-		Take a list of node indices and connect a symptom with the rest of the symptoms under a diagnosis.
-		"""
-		diagnosis_vertex=self.g.vs[node_index_list[0]]
-		neighbor_list = [x.index for x in diagnosis_vertex.neighbors()]
-		merged_index_list = node_index_list + neighbor_list
+	Merge two nodes such that node1 is the remaining node and inherits all of the edges of node 2.
 
-		return merged_index_list
+	Returns: an updated graph.
+	"""
 
-	def FindNeighborsOfNode(self, nodename):
-		"""
-		Take the name of a node and returns a list of the names of the neighboring nodes of type diagnosis and of type symptom. 
-		"""
-		try:
-			node = self.g.vs.find(name=nodename)
-		except (NameError, ValueError):
-			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
+	# Find neighbors of node 2.
+	pre_everyone = [node.index for node in graph.vs.find(name=nodename2).neighbors()]
+	everyone = pre_everyone + [graph.vs.find(name=nodename1).index]
+	
+	# Make edges from node 2 to node 1.
+	AddAllEdges(graph, everyone)
 
-		dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
-		sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
+	# Delete node 2.
+	graph.delete_vertices(graph.vs.find(name=nodename2).index)
 
-		return dneighbors, sneighbors
+def IsolateSubGraph(graph, nodename_list):
+	"""
+	Takes: (1) graph (2) list of names of nodes that should be matched. (where attribute='name')
 
-	def SetPath(self):
-		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
-		self.user_settings[os.getcwd()] = self.save_path
-		cPickle.dump(self.user_settings, open('user_settings.p', 'wb'))	
+	This will keep the interconnections between those members on the list, but ignore edges and nodes not in the list.
 
-	def IdentifySimilarNodes(self, inlist, threshold=0.25):
-		"""
-		Take a list of items and identifies similar nodes based upon Levenshtein distance.
-		Returns a list of tuples of similar items.
-		"""
-		tuple_combos = [(x,y) for x in inlist for y in inlist if x!=y]
-		similar_nodes_tuples = []
-		for entry in tuple_combos:
-			if (entry[1], entry[0]) in tuple_combos:
-				tuple_combos.remove((entry[1], entry[0])) 
+	Returns: (1) a new subgraph
+	"""
+	nodeindex_list = [graph.vs.find(name=nodename) for nodename in nodename_list]
+	sub_graph = graph.subgraph(nodeindex_list)
+	return sub_graph
 
-			total_length = len(entry[0]) + len(entry[0])
-			normed_LD = (nltk.metrics.edit_distance(*entry))/total_length
+def NodesInOrderOfCentrality(graph, type):
+	"""
+	Takes: (1) graph (2) type of centrality desired.
+	Returns: A list of tuples of node name and centrality statistic.
+	"""
+	if type == 'degree':
 
-			if normed_LD < threshold:
-				similar_nodes_tuples.append(entry)
+		pre_list_of_tuples = [(node["name"], node.degree()) for node in graph.vs]
 
-		return similar_nodes_tuples
+	elif type == 'betweenness':
+		pre_list_of_tuples = [(node["name"], node.betweenness()) for node in graph.vs]
 
-	def MergeNodes(self, nodename1, nodename2):
-		"""
-		Merge two nodes such that node1 is the remaining node and inherits all of the edges of node 2.
-		"""
+	list_of_tuples = sorted(pre_list_of_tuples, key=lambda pair: pair[1])
+	list_of_tuples.reverse()
 
-		# Find neighbors of node 2.
-		dneighbors, sneighbors = self.FindNeighborsOfNode(nodename2)
-		everyone = dneighbors+sneighbors+[nodename1]
+	return list_of_tuples
 
-		everyone_indices = [self.g.vs.find(name=nodename).index for nodename in everyone]
-		
-		# Make edges from node 2 to node 1.
-		self.AddEdges(everyone_indices)
 
-		# Delete node 2.
-		self.g.delete_vertices(self.g.vs.find(name=nodename2).index)
 
-		"""
-		Query whether a merge should take place and 
-		"""
