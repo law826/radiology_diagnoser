@@ -14,8 +14,8 @@ class ImportData:
 		self.import_file = open('/Users/law826/Downloads/MSK.txt')
 		line_array = self.import_file.readlines()
 		for line in line_array:
-			diagnoses = [m.group(1) for m in re.finditer(r"\[([A-Za-z0-9_ \(\)]+)\]", line)]
-			symptoms = [m.group(1) for m in re.finditer(r"\{([A-Za-z0-9_ \(\)]+)\}", line)]
+			diagnoses = [m.group(1) for m in re.finditer(r"\[([A-Za-z0-9_ \(\)\-]+)\]", line)]
+			symptoms = [m.group(1) for m in re.finditer(r"\{([A-Za-z0-9_ \(\)\-]+)\}", line)]
 
 			for diagnosis in diagnoses:
 				node_index_list=[]

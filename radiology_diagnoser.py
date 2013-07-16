@@ -170,20 +170,24 @@ class MainWindow:
 	def SearchEntrySubmitted(self, event=0, list_clicked=False, selected_concept=None):
 		if list_clicked:
 			self.entrystring = selected_concept
+			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
 		else:
 			if self.entryWidget.get().strip() == "":
-				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a diagnosis")
+				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a term")
 			else:
 				self.entrystring = self.entryWidget.get().strip()
-		dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+				dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+				
 
-		if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
-			dneighbors = [self.entrystring]
-
-		self.UpdateListBox(self.dlistbox, dneighbors, listbox_row+1, 0)
-		self.UpdateListBox(self.slistbox, sneighbors, listbox_row+1, 1)
-		self.UpdateSearchedTerm(startingrow=searched_term_row)
-		self.entryWidget.delete(0, END)
+		if (dneighbors == None) and (sneighbors == None):
+			pass
+		else:
+			if self.DB.g.vs.find(name=self.entrystring)['type']=='diagnosis':
+				dneighbors = [self.entrystring]
+			self.UpdateListBox(self.dlistbox, dneighbors, listbox_row+1, 0)
+			self.UpdateListBox(self.slistbox, sneighbors, listbox_row+1, 1)
+			self.UpdateSearchedTerm(startingrow=searched_term_row)
+			self.entryWidget.delete(0, END)
 
 	def ResetButtonPressed(self):
 		self.diagnosisLabel.grid_forget()

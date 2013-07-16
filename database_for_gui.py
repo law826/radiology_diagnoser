@@ -105,11 +105,12 @@ class DataBaseForGUI:
 		"""
 		try:
 			node = self.g.vs.find(name=nodename)
+			dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
+			sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
 		except (NameError, ValueError):
-			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" % entrystring)
-
-		dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
-		sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
+			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" %nodename)
+			dneighbors = None
+			sneighbors = None
 
 		return dneighbors, sneighbors
 
