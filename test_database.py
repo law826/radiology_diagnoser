@@ -56,6 +56,39 @@ class TestDatabase(unittest.TestCase):
 		self.assertEqual([node["name"] for node in self.g.vs.find(name='e').neighbors()], ['b', 'c'])
 		self.assertRaises(ValueError, self.g.vs.find, name='a') 
 
+	def test_MergeWeightedNodes(self):
+		self.g.es["weight"] = 1.0
+		self.g['a', 'c'] = 2
+		self.g['b', 'c'] = 3
+
+		# If a (keep) is merged with b, then it should inherit 3 edge from c.
+		database.MergeWeightedNodes(self.g, 'a', 'b')
+		self.assertEqual(self.g['a', 'c'], 3)
+		self.assertEqual(self.g.es['weight'], [3,1.0])
+
+		# B should have been deleted.
+		self.assertRaises(ValueError, self.g.vs.find, name='b')
+
+		self.setUp()
+		self.g.es["weight"] = 1.0
+		self.g['a', 'c'] = 2
+		self.g['b', 'c'] = 3
+
+		# If b (keep) is merged with a, then it should then it should keep its 3 edge with c.
+		database.MergeWeightedNodes(self.g, 'b', 'a')
+		#self.assertEqual(self.g['b', 'c'], 3)
+		#self.assertEqual(self.g.es['weight'], None)
+
+		self.setUp()
+		self.g.es["weight"] = 1.0
+		self.g['a', 'c'] = 2
+		self.g['b', 'c'] = 3
+		self.g['b', 'e'] = 4
+
+		# Existent edge should be kept.
+		database.MergeWeightedNodes(self.g, 'a', 'b')
+		self.assertEqual(self.g['a', 'e'], 4)
+
 	def test_IsolateSubGraph(self):
 		self.g_sub = database.IsolateSubGraph(self.g, ['a', 'b', 'e'])
 
@@ -80,14 +113,11 @@ class TestDatabase(unittest.TestCase):
 		list_of_tuples = database.NodesInOrderOfCentrality(self.g, 'betweenness')
 		self.assertEqual(list_of_tuples, [('a', 8.0), ('h', 0.0), ('g', 0.0), ('f', 0.0), ('e', 0.0), ('d', 0.0), ('c', 0.0), ('b', 0.0)])
 
-
 	def tearDown(self):
 		"""
 		If this method is defined, the test runner will invoke this after each test. 
 		"""
 		pass
-
-
 
 if __name__ == '__main__':
 	unittest.main()

@@ -3,8 +3,11 @@ import os, sys, random as rand, tkMessageBox, tkFileDialog, cPickle, numpy as np
 from Tkinter import *
 from pdb import *
 from igraph import *
-
 import basefunctions as bf
+
+"""
+
+"""
 
 def AddNode(nodename, type, graph=None):
 	"""
@@ -89,7 +92,7 @@ def IdentifySimilarNodes(inlist, threshold=0.25):
 
 def MergeNodes(graph, nodename1, nodename2):
 	"""
-	Takes: (1) name of first node (2) name of second node
+	Takes: (1) graph (2) name of first node (3) name of second node
 
 	Merge two nodes such that node1 is the remaining node and inherits all of the edges of node 2.
 
@@ -105,6 +108,29 @@ def MergeNodes(graph, nodename1, nodename2):
 
 	# Delete node 2.
 	graph.delete_vertices(graph.vs.find(name=nodename2).index)
+
+def MergeWeightedNodes(graph, nodename1, nodename2):
+	"""
+	Similar to MergeNodes except for weighted edges such that the new node retains the highest weighted edges.
+	"""
+
+	# Find neighbors of node 2.
+	everyone_name = [node['name'] for node in graph.vs.find(name=nodename2).neighbors()]
+
+	for neighbor in everyone_name:
+		try:
+			graph[nodename1, neighbor]
+			if graph[nodename1, neighbor] >= graph[nodename2, neighbor]:
+				pass
+			else:
+				graph[nodename1, neighbor] = graph[nodename2, neighbor]
+		except ValueError:
+			graph[nodename1, neighbor] = graph[nodename2, neighbor]
+
+	# Delete node 2.
+	graph.delete_vertices(graph.vs.find(name=nodename2).index)
+
+	return graph
 
 def IsolateSubGraph(graph, nodename_list):
 	"""
@@ -134,6 +160,4 @@ def NodesInOrderOfCentrality(graph, type):
 	list_of_tuples.reverse()
 
 	return list_of_tuples
-
-
 
