@@ -16,10 +16,13 @@ class TestDatabase(unittest.TestCase):
 		pass
 
 
-	def test_main(self):
-		INLP = importnlp.ImportNLP('/Users/law826/Desktop/MSK.txt', 'fibroma', 'fibromas')
-		INLP.main()
-		self.assertEqual(INLP.raw, None)
+	def test_SearchReplace(self):
+		INLP = importnlp.ImportNLP('/Users/law826/Desktop/MSK.txt')
+		INLP.SearchReplace(INLP.raw, 'fibromas', 'fibroma')
+		INLP.SearchReplace(INLP.replaced, 'Fibroma', 'fibroma')
+		self.assertEqual(INLP.replaced.count('fibromas'), 0)
+		self.assertEqual(INLP.replaced.count('fibroma'), 36)
+
 
 
 	def tearDown(self):
