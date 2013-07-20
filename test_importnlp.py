@@ -11,19 +11,27 @@ import basefunctions as bf
 
 class TestDatabase(unittest.TestCase):
 
-
 	def setUp(self):
-		pass
-
+		self.INLP = importnlp.ImportNLP('/Users/law826/Desktop/MSK.txt')
 
 	def test_SearchReplace(self):
-		INLP = importnlp.ImportNLP('/Users/law826/Desktop/MSK.txt')
-		INLP.SearchReplace(INLP.raw, 'fibromas', 'fibroma')
-		INLP.SearchReplace(INLP.replaced, 'Fibroma', 'fibroma')
-		self.assertEqual(INLP.replaced.count('fibromas'), 0)
-		self.assertEqual(INLP.replaced.count('fibroma'), 36)
+		self.INLP.SearchReplace(self.INLP.raw, 'fibromas', 'fibroma')
+		self.INLP.SearchReplace(self.INLP.replaced, 'Fibroma', 'fibroma')
+		self.assertEqual(self.INLP.replaced.count('fibromas'), 0)
+		self.assertEqual(self.INLP.replaced.count('fibroma'), 36)
+
+	def test_FindWordsInBrackets(self):
+		self.INLP.FindWordsInBrackets(self.INLP.raw)
+
+	def test_ExtendBrackets(self):
+		list_of_terms = ['fibroma', 'apple']
+		target_body = 'fibroma apple orange'
+		self.INLP.ExtendBrackets(list_of_terms, target_body)
+		self.assertEqual(self.INLP.eboutput, ' [fibroma] [apple] orange ')
 
 
+		#self.assertEqual(self.INLP.diagnoses, None)
+		#self.assertEqual(self.INLP.symptoms, None)
 
 	def tearDown(self):
 		"""
