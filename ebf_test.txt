@@ -1,0 +1,357 @@
+  mneumonic for benign, cystic lesion in bone	FEGNOMASHIC
+F in FEGNOMASHIC	Fibrous dysplasia
+E in FEGNOMASHIC	enchondroma and [eosinophilic granuloma] nbsp;
+G in FEGNOMASHIC [giant cell tumor] N in FEGNOMASHIC	Nonossifying fibroma
+O in FEGNOMASHIC	Osteoblastoma
+M in FEGNOMASHIC [metastatic disease] or [myeloma] A in FEGNOMASHIC	Aneurysmal bone cyst
+S in FEGNOMASHIC	Solitary Bone cyst
+H in FEGNOMASHIC	Hyperparathyroidism (Brown tumors)
+I in FEGNOMASHIC	Infection
+C in FEGNOMASHIC	Chondroblastoma and [chondromyxoid] fibroma
+Discriminator of [fibrous dysplasia] no periosteal reaction
+Discriminator of enchondroma	calcification present (except in phalanges) and {pain} ess (no periostitis)
+Discriminator of [eosinophilic granuloma]	{less than age 30}
+Discriminator of [giant cell tumor]	{epiphyses closed}, {abuts the articular surface (in long bones)}, {well defined with a nonsclerotic margin (in long bones)}
+Discriminator of [nonossifying fibroma]	{younger than age 30}, {painless (no periostitis)}, {cortically based}
+Discriminator of [osteoblastoma]	mentioned when {similar to [aneurysmal bone cyst]  is mentioned (especially in posterior elements of the spine)
+Discriminator of [metatstatic disease] and [myeloma]	{older than age 40}
+Discriminator of [aneurysmal bone cyst] {expansile}  {younger than age 30} Discriminator of [solitary bone cyst]	central, {younger than age 30}
+Discriminator of hyperparathyroidism (brown tumor)	must have other evidence of hyperparathyroidism
+Discriminator of infection	none- always mention it
+Discriminator of chondroblastoma {younger than age 30}  epiphyseal
+Discriminator of [chondromyxoid]	{no calcified matrix}
+does [fibrous dysplasia] undergo {no malignant degeneration}	virtually never
+will you have {no pain} with [fibrous dysplasia]?	no, not unless there is a fx associated with it
+what are the most common bones to see [fibrous dysplasia]?	{pelvis}, {ribs} and {skull}
+if the {pelvis} has [fibrous dysplasia]  will the hip be involved to? Visa versa?	yes- usually the ipsilateral femur; if in the femur, the {pelvis} is not always affected
+appearance of [fibrous dysplasia] in the {ribs} {posterior {ribs}  appears {expansile} and lytic}; {anterior {ribs}  sclerotic appearance}
+[adamantinoma]	malignant tumor in {tibia} and {jaw} that {resembles [fibrous dysplasia] 
+[McCune-Albright syndrome]: trio of &nbsp;sx	{polyostotic [fibrous dysplasia] , {cafe au lait spots}, {precocious puberty}
+distribution of [fibrous dysplasia] in McCune Albright	{unilateral in McCune Albright}
+what is the one place where [enchondromas] {don't have calcified chondroid matrix in phalanges}
+condition of multiple [enchondromas]	{multiple [enchondromas] is [Ollier disease] 
+[Ollier disease] {multiple [enchondromas] 
+[Maffucci syndrome]	{multiple [enchondromas]  and {soft tissue hemangiomas}
+three types of hystiocytosis X	EG, Letterer-Siwe disease and Hand-Schuller-Christian disease
+what are 4 things that should come to mind if there is a {bony sequestration}	[eosinophillic granuloma], [osteomyelitis], [lymphoma], [fibrosarcoma]
+what allows you to determine if a [giant cell tumor] is benign or malignant on plain film?	nothing- you can't tell based on radiographic appearance
+what are the 4 radiographic criteria for diagnosing [giant cell tumors]. Do you have to have all 4 to include this in the DDx?	1. only in pts with {closed epiphyses}<div>2. lesion is epiphyseal and abuts the articular surface</div><div>3. eccentrically located</div><div>4. sharply defined zone of transition that is not sclerotic</div><div>- yes you must have all of them to include it in the DDx</div>
+what is the main caveat for the 4 criteria of [giant cell tumor] ?	it only applies to the long bones- not the {pelvis} or calcaneous (which are common locations for GCT)&nbsp;
+what is a synonym for a {small is called [fibrous cortical defect]  [nonossifying fibroma]?	fibrous cortical defec
+what is the size cut off to distinguish between a [nonossifying fibroma] {less than 2 cm}
+[fibrous cortical defect] {greater than 2 cm}	
+in what age group are [nonossifying fibromas] seen? what is their natural history?	they are seen in {20% of children} and usually spontaneously regress so they are {rare after age 30}
+describe the location of [nonossifying fibromas]	{metaphysis of long bone, emanating from the cortex}
+describe the border of [nonossifying fibromas]	{border is thin, sclerotic, scalloped and slightly expansile}
+what do [nonossifying fibromas] look like on CT or MR?	{interruption of the cortex, which can be misinterpreted as cortical destruction- rather it is just cortical replacement with benign fibrous tissue}
+are [nonossifying fibromas] symptomatic and have periostitis?	they are {asymptomatic} and there is {no periostitis unless there is a history of trauma}.&nbsp;
+what do [nonossifying fibromas] look like {as they are healing sclerotic then disappear}
+how do healing [nonossifying fibromas] appear on 	{hot on radionucleide bone scan because there is osteoblastic activity}
+what is the most common location for a [nonossifying fibroma]	the knee, but can be in {any long bone}
+what are the two types of appearances of [osteoblastomas]	1. look like [aneurysmal bone cyst]  {expansile}  {soap bubble appearance}<div>2. {look like large osteoid osteomas}- {sclerotic and not lytic} (this appearance is not part of FEGNOMASHIC)</div>
+what is the most common location for [osteoblastoma]	{posterior elements of the vertebral bodies}
+DDX for {expansile {lytic} lesion of the posterior elements of the spine}	[osteoblastoma], [aneurysmal bone cyst]  [aneurysmal bone cyst]  and [tuberculosis]
+half of [osteoblastomas] have this imaging characteristic	{speckled calcifications}
+what does [metastatic disease] look like on radiograph- benign or malignant?	can look either way
+what age cutoff is used for including or excluding [metastatic disease] in the differential for FEGNOMASHIC	{older than 40}
+how does [myeloma] most commonly present	{diffuse} and {permeative}, although it {solitary lesion} or {multiple {lytic} lesions}
+what are [plasmacytomas]?	{bubbly} {lytic} {bone lesions of [myeloma] 
+when do you see [plasmacytomas] relative to hematologic evidence of [myeloma] 	{3-5 years before hematologic evidence}
+what cancer creates the only metastatic lesion that is always {lytic metastatic lesion}	[renal cell carcinoma]
+what are the two types of cancers often associated with {lytic} {expansile} lesions&nbsp;	[renal metastasis] and [thyroid metastasis] [metastatic disease] what is the typical age group for an [aneurysmal bone cyst]	{less than 30}
+what is one nonspecific finding on CT or MR for [aneurysmal bone cyst] nbsp;	fluid fluid levels
+what are the two types of [aneurysmal bone cyst]?	1- {primary- no association with other lesions}<div>2- {secondary- in conjunction with another lesion  [osteoblastoma]  [giant cell tumor] , etc) or from trauma}</div>
+do [aneurysmal bone cyst] cause {pain}	yes- this is the most common presentation
+where are [aneurysmal bone cyst] usually seen in the skeleton	{anywhere in the skeleton}
+what are the characteristic appearances of [aneurysmal bone cyst] {expansile} and aneurysmal
+what are two synonyms for [solitary bone cyst] simple bone cyst and unicameral bone cysts
+what does unicameral mean?	one compartment
+what is the general bone location of all [solitary bone cyst] 	they must be central
+where are [solitary bone cyst]  most commonly found?	2/3 to 3/4 of [solitary bone cyst]  appear in the proximal humerus and proximal femur, also calcaneous (most in long bones but can be anywhere in the body)
+are [solitary bone cyst]  {pain} ul?	no, not unless they are fractured (which is common)
+what is the classic radiographic sign of a [solitary bone cyst] fallen fragment sign- when a piece of cortex breaks off after a fracture in a [solitary bone cyst] and the piece of cortical bone sinks to the gravity dependent portion of the lesion
+what age group are [solitary bone cyst]  seen in?	les than 30yo
+where do [solitary bone cyst]  start growning and where do they grow?	they start at the physeal plate and grow into the shaft of the bone- therefore they are not epiphyseal lesions but can extend there is the physis is closed
+do [solitary bone cyst]  cause periostitis?	&nbsp;no
+what happens to brown tumors as the patients hyperparathyroidism is treated&nbsp;	they usually become sclerotic and then disappear
+what are other radiographic findings of hyperparathyroidism?	subperiosteal bone resorption (pathognomonic)
+what bones is subperiosteal bone resorption seen in most commonly?	phalanges (radial aspect of the middle phalanges), distal clavicle, medial aspect of the proximal {tibia}  and sacroiliac joints
+what do the physes look like in hyperparathyroidism?	frayed, ragged (as in rickets)
+why is infection always included in the DDX of {lytic} lesions [osteomyelitis] can be in any location, have a sclerotic or nonsclerotic border and can be found in a patient of any age- it is also very common
+are soft tissue findings like obliteration of adjacent fat planes helpful for [osteomyelitis] 	no- they are unreliable because tumors and EG can also do this
+what findings will be seen with [osteomyelitis] near a joint and the articular surface is abutted?	cartilage loss, effusion or both
+what lesion can mimic {bony sequestration} osteoid osteoma
+what imaging should be considered if there is a bony sequestrum?	CT because this piece of bone is avascular and abx wont get to it - surgery would be necesary
+where are chondroblastomas found?	epiphyses (very rarely metaphyses)
+what is the most common age group for chondroblastoma? {less than 30} o
+do chondroblastomas have calcification?	half do, half don't
+DDx for {lytic} lesion in the epiphysis in pt &lt; 30yo	infection (most common), chondroblastoma, [giant cell tumor]  this accounts for 98% of epiphyseal lesions
+what 4 disease processes can you see a subchondral cyst or geode	- DJD (degenerative joint disease- must see joint space narrowing, sclerosis and osteophytes)<div>- rheumatoid arthritis</div><div>- calcium pyrophoshate dihydrate crystal disposition disease (pseudogout)</div><div>- avascular necrosis</div>
+apophyses	bony outgrowth or swelling, serve as ligamentous attachments (like greater trochanter)
+what is a geode	bone cyst, only occur adjacent to articular surfaces
+what bones tend to behave like epiphyses in the Ddx?	carpal bones, tarsal bones, patella
+what other lesion do chrondromyxoid fibromas resemble? [nonossifying fibroma] , but can be seen in pts of any age
+what are some differences b/w [nonossifying fibroma]  and [chondromyxoid] fibromas? [nonossifying fibroma]  seen in pts &lt;30yo, plainless and they do not extend into the epiphyses; [chondromyxoid] fibromas can be seen in pts of any age, can have {pain} and often extend into the epiphyses
+do [chondromyxoid] fibromas degenerate into an aggressive and malignant lesion?	they can, but rare
+do [chondromyxoid] fibromas have a calcified cartilage matrix?	no
+lesions in patients younger than 30yo	- EG<div>- [aneurysmal bone cyst] /div><div>- NOF</div><div>- chondroblastoma</div><div>- Solitary bone cyst</div>
+automatic inclusions in the DDx for pts &lt;30yo that do not have any other good discriminators	infection, EG
+automatic inclusions in the DDx for pts &gt;40yo that do not have any other good discriminators	infection, [metastatic disease] and [myeloma] lesions that have {no pain} or periostitis [fibrous dysplasia] div>enchondroma</div><div>NOF</div><div [solitary bone cyst] /div>
+DDx for epiphyseal lesions	infection<div [giant cell tumor] /div><div>chondroblastoma</div><div>geode</div>
+what is the meaning of protean	versatile, inconsistent
+what is the Ddx for an apophysis most similar to?	epiphyses- they are considered equivalents except epiphyses contribute to the length of the bone but apophyses are ligamentous attachments
+DDx for benign cystic rib lesions	FAME- [fibrous dysplasia]  [aneurysmal bone cyst]  metastasis [myeloma]  enchondroma/EG
+what is the mneumonic for the DDx of {multiple {lytic} lesions} FEEMHI- [fibrous dysplasia]  enchondroma, EG, metastatic dz [myeloma]  hyperparathyroidism (brown tumor), infection
+the only {lytic} lesion that must exhibit calcified matrix	enchondroma (except in the phalanges)
+DDX for sclerotic focus in 20-40yo asymtomatic pt	NOF, EG, [aneurysmal bone cyst]  [solitary bone cyst]  chondroblastoma- all resolve but fill in with new bone and can have a sclerotic/blastic appearance
+other lesions that can appear sclerotic but are not necessarily in {asymptomatic}  young patients [fibrous dysplasia]  osteoid osteoma, infection, brown tumor (healing), giant bone island
+number one disease in pt &gt;40 yo and has sclerotic lesions [metastatic disease] what are some characteristic appearances for a gian bone island	slightly feathered margins of the trabeculae that blend in with normal bone, and long axis of the lesion is oriented in the direction of primary weight bearing
+what are the four aspects of a lesion that suggest malignant vs benign on plain film?	cortical destruction, periostitis, orientation/axis of the lesion, zone of transition
+what are some benign processes that can cause cortical destruction	infection, EG, [aneurysmal bone cyst] characteristics of benign periostitis	thick, dense and wavy (from slow, chronic irritation)
+characteristics of malignant periostitis	lamellated (onion-skinned), amorphous, sunburst
+when can a malignant bone tumor cause benign periostitis?	with concomitant fracture or infection
+what are some examples of benign bone lesions that can cause aggressive periostitis	EG, infection, [aneurysmal bone cyst] osteoid osteomas and trauma
+what is the general rule of thumb about the axis of a lesion and if it is benign or malignant?	if the lesion grows in the long axis of the bone, rather than circular, it is benign. However, there are a LOT of exceptions to this, so it isn't very helpful
+what is the most reliable plain film indicator that a lesion is benign vs malignant	zone of transition
+what is the zone of transition	the border of the lesion with normal bone
+what is a narrow zone of transition? what does it suggest?	well defined, drawn with fine-point pen, could be sclerotic; suggests benign
+what is a wide zone of transition? what does it suggest?	if the border is imperceptible and cannot be clearly drawn at all; it suggests an aggressive lesion (not necessarily malignant)
+what are two nonmalignant processes that can cause a wide zone of transition?	EG and infection
+meaning of {permeative} lesion consisting of multiple small holes; no perceptible border and wide zone of transition
+what are some disease processes that have a {permeative} appearance	multiple [myeloma]  reticulum cell sarcoma (primary [lymphoma] of the bone), Ewing sarcoma, infection, EG
+what are the only childhood primary malignant tumors of bone? (ages 1-30yo)	osteosarcoma and Ewings sarcoma
+what are the common malignant bone tumors in adults &gt; 40yo [metastatic disease]  [myeloma] and chondrosarcoma
+what primary malignant bone tumors are common in patients 30-40yo [giant cell tumor]  parosteal sarcoma, [fibrosarcoma]  malignant fibrous histiocytoma, primary [lymphoma] of bone
+signal pattern on MRI for hemangiomas and AVMs	mixed high and low signal on both T1 and T2 signal (b/c mixed fatty and vascular tissue). low signal serpiginous vessels are visible
+what is the best modality for characterizing a bony lesion	plain films
+what is the best modality for determining the extent of a lesion (skeletal and soft tissue)?	MR
+characteristics of benign lesions on MR	well marginated, uniform and homogeneous signal, does not encase neurovascular structures and does not invade bone
+characteristics of malignant lesions on MR	irregular margins, inhomogeneous signal, may encase neurovascular structures or invade bone
+what MR signal pattern do most tumors have?	low signal on T1W1 and high signal intensity on T2 weighting
+what are a few exceptions to the rule that most tumors will have low T1 signal and high T2 signal? What are their signal patterns on MR? [fibrosarcoma] , malignant fibrous histiocytomas, desmoid tumors<div>- low signal on T1W and T2W (as will any tumor with calcification)</div>
+what is the MR signal pattern for lipomas	homogeneous high signal on T1W and sharp margins
+what is benign lesion that can mimic soft tissue tumors on MR (low T1 signal, high T2 signal)	intramuscular injection sites and any area of soft tissue trauma
+how will solid masses enhance with gadolinium on MR? {diffuse} y
+how will fluid collections enhance with gadolinium on MR?	rim enhancement
+what is the terminology for bright spot on T1/T2WI and with gadolinium?	T1/T2: high signal<div>Gadolinium: enhancement</div>
+common appearance for osteosarcoma on radiograph and a favorite location in kids	sclerotic or mixed {lytic} sclerotic; seen commonly towards end of a long bone (not always)
+age group affected by osteosarcomas	children and adults &lt;30yo
+what is the most common malignant primaru bone tumor?	osteosarcoma
+common appearance of osteosarcoma on MR&nbsp;	large soft tissue component with heterogeneous high and low signal on T1WI and T2WIs
+what is a parosteal osteosarcoma?	originates from periosteum of the bone and grows outside the bone, often wrapping around the diaphysis without breaking through cortex at all
+long term prognosis of&nbsp;parosteal osteosarcoma compared to central osteosarcomas	parosteal osteosarcomas are not as aggressive or deadly as long as it has not extended into the medullary cavity (if it has or if it invades the cortex of an adjacent bone, it has the same prognosis and is treated the same)
+common location for&nbsp;parosteal osteosarcomas	posterior femur, near the knee
+what lesions mimic an early parosteal osteosarcoma	cortical desmoid tumor, myositis ossificans
+what is a&nbsp;cortical desmoid tumor	avulsion injury that is benign but can appear aggressive
+classic appearance of ewings sarcoma {permeative}  patchy appearance; onion skin, sunburst-like or amorphous periostitis- it will not appear benign
+age group affected by ewings sarcoma	children and adolescents, a significant number also occur in pts in 20s in the flat bones
+classic location of ewings sarcoma	diaphysis/metaphysis/diametaphysis of a long bone, or flat bones
+age group affected by chondrosarcomas	&gt; 40yo; rarely children who had degeneratino of an osteochondroma
+what imaging modality can be helpful to distinguish between a chondrosarcoma and an enchondroma? how?&nbsp;	MR- if soft tissue mass or edema is present, enchondroma is unlikely
+are chondrosarcomas {pain} ul?	&nbsp;yes
+what are the imaging characterisitics &nbsp;of chondrosarcoma?&nbsp;	bony or soft tissue mass with amorphous, snowflake calcification in an older pt (&gt;40yo)
+how can you tell benign vs malignant [giant cell tumor] on imaging?	you can't- they look the same
+what is one place that a malignant [giant cell tumor] will metastasize to?	&nbsp;lungs
+age group in which malignant [giant cell tumor]  are seen	30-40s
+what are [fibrosarcoma]  {lytic} malignant tumors that do not produce osteoid or chondroid matrix- they are very uncommon and most were misclassified (they are actually malignant fibrous histiocytomas)
+characteristic appearance of [fibrosarcoma]  {lytic} (because they do not cause reactive new bone formation)- can appear {permeative}  moth-eaten, or well defined
+what are two malignant tumors that can cause a bony sequestrum [fibrosarcoma] and malignant fibrous histiocytoma
+what is the typical age group for a [fibrosarcoma] 	30-40s, although age range can range&nbsp;
+what are malignant fibrous histiocytomas? {lytic} malignant tumors that do not produce osteoid or chondroid matrix; formerly known as [fibrosarcoma] 
+what is a desmoid tumor	half grade [fibrosarcoma]  aka desmoplastic fibroma or aggressive fibromatosis
+where do desmoid tumors arise from usually?	soft tissue; uncommon in the bony skeleton
+what do bone desmoid tumors look like? {lytic}  fairly well defined b/c of slow growth; benign periostitis with thick spicules or spikes, multilocular with thick bony septa
+do desmoid tumors metastasize?	no but they can have impressive tumor extension into surrounding tissue
+what is the new name for reticulum cell sarcoma?	primary [lymphoma] of bone
+what does a primary [lymphoma] of bone look like?	identical to Ewings sarcoma radiographically- {permeative} or moth-eaten pattern
+what age group do you see primary [lymphoma] of bone?	older age group than Ewings
+are patients with ewings systemically symptomatic? are patients with primary [lymphoma] of bone symptomatic?	Ewings- symptomatic; Primary [lymphoma] of bone- {asymptomatic} what is the only malignant tumor that can involve a large amount of bone while the patient is {asymptomatic} 	primary [lymphoma] of bone
+what is the appearance of [metastatic disease] bone lesions?	it can look like anything
+what age cutoff is used for [metastatic disease] 	40yo
+what type of cancer in men produce mets that look like multiple sclerotic foci?	prostate most characteristically, although lung, bowel or any other type of cancer can too
+what type of cancer in women produce mets that look like multiple sclerotic foci?	breast most commonly but could be any cancer
+what is the only primary bone tumor that virtually never presents with blastic [metastatic disease]  [renal cell carcinoma] what is the classic DDx for an {expansile}  {lytic} metastasis?	renal cell or thyroid cancer
+what percentage of [renal cell carcinoma]  present with bony metastasis?	1/3
+what is the age cutoff used for [myeloma] 	40
+what is the appearance of [myeloma]  {diffuse} and {permeative} what other malignancies can [myeloma] mimic?	Ewings and primary [lymphoma] of bone
+why are Ewings and [myeloma] not included in the same differential?	age
+what is one location commonly affected by [myeloma] 	calvarium
+what is one of the only malignant bone lesions that is not hot on radionuclide bone scan? [myeloma]  instead bone surveys are done with radiographs
+what is the appearance of a plasmacytoma in a vertebral body called?	"mini-brain"
+what are the two most common soft tissue tumors?	MFH and liposarcoma; now collectively called pleomorphic undifferentiated sarcomas (they are indistinguishable when high grade for pathologists and radiologists)
+what are some MR imaging characterisitics of pleomarphic undifferentiated sarcomas?	hemorrhage (which can resemble fat of T1), may or may not have fatty elements
+typical location of origin for synovial sarcoma	adjacent to joints (rarely originate in joint)
+typical appearance of synovial sarcoma on MR	homogenously bright on T2WI- can be confused with fluid collection, so gadolinium must be given to help distinguish
+what is a synovial osteochondromatosis	benign joint lesion that occurs from metaplasia of the synovium and leads to mulitple calcific loose bodies in a joint
+what percentage of loose bodies in synovial osteochondromatosis do not calcify? if this happens, what is it indistinguishable from?	20%, PVNS (pigmented villonodular synovitis)
+what is pigmented villonodular synovitis (PVNS)	benign soft tissue process that causes joint swelling, {pain} and occasionally joint erosions
+Does&nbsp;pigmented villonodular synovitis have calcifications?	no- virtually never
+what is the appearance of&nbsp;pigmented villonodular synovitis (PVNS) on MR?	marked low signal lining the synovium on T1WI and T2WI because of hemosiderin deposits
+what appears similar to&nbsp;pigmented villonodular synovitis?	hemosiderotic arthritis- aka chronic bleeding into a joint- althought this is uncommon
+what is the appearance of hemangiomas on plain film?	phleboliths associated with them and can cause cortical holes in adjacent bone that can mimic a {permeative} or moth-eaten pattern
+what is the difference b/w a pseud {permeative} and true {permeative} pattern?	true {permeative} pattern occurs intramedullary or endosteal part of bone; can be differentiated from a pseud {permeative} pattern by the intact cortex
+example of an atypical synovial cyst	bakers cyst (for knee)
+what is the appearance of atypical synovial cyst on CT?	may not appear fluid filled and association with joint can be easily overlooked
+what is the appearance of a atypical synovial cyst on MR	very high signal on T2 that is homogeneous and often septated- need gad to help distinguish from solid masses like synovial sarcomas and neural tumors
+<img src="figure_40.1.jpg" />	Fibrous Dysplasia. This patient has polyostotic [fibrous dysplasia] with {diffuse} involvement of the {pelvis} as well as the proximal femurs.
+<img src="figure_40.3.jpg" />	Fibrous Dysplasia. This patient has a well-defined {lytic} lesion with a hazy, ground-glass appearance in the neck of the right femur. The {pelvis} was uninvolved. It is not unusual for monostotic [fibrous dysplasia] to involve the proximal femur and spare the {pelvis} 
+<img src="figure_40.4.jpg" />	Fibrous Dysplasia. When [fibrous dysplasia] affects the {ribs}  the posterior {ribs} often demonstrate a {lytic} {expansile} appearance, as in this example. When the anterior {ribs} are involved, they are most often sclerotic in appearance. Note also the involvement of the thoracic spine.
+<img src="figure_40.5.jpg" />	Fibrous Dysplasia. Polyostotic [fibrous dysplasia] is seen in the radius in this child. Parts of this lesion have a hazy, ground-glass appearance, whereas others are more {lytic} appearing. A hazy, ground-glass appearance is often present in [fibrous dysplasia]  but just as often, the appearance can be purely {lytic} or even sclerotic.
+<img src="figure_40.6.jpg" />	Adamantinoma. This mixed {lytic} and sclerotic process in the midshaft of the {tibia} is characteristic of [fibrous dysplasia]  An [adamantinoma] has an identical appearance and should be considered in any {tibia}  lesion that resembles [fibrous dysplasia]  Biopsy showed this to be an [adamantinoma] 
+<img src="figure_40.7.jpg" />	Enchondroma. A {lytic} lesion in the phalanges is most commonly an enchondroma. This is the only location in the skeleton where an enchondroma does not contain calcified chondroid matrix. These most often present with pathologic fractures, as in this example.
+<img src="figure_40.8.jpg" />	Bone Infarct. These {lytic} lesions in the distal femurs with calcified, serpiginous borders are typical of bone infarcts. Occasionally, the differential between a bone infarct and an enchondroma can be difficult on plain films; however, in this example, infarcts are easily diagnosed.
+<img src="figure_40.2.jpg" />	Fibrous Dysplasia. This patient has polyostotic [fibrous dysplasia] with the involvement of the right femur as well as the supra-acetabular portion of the ilium. When the {pelvis} is involved with [fibrous dysplasia]  the ipsilateral femur on the affected side is invariably also involved.
+what is the first thing to check for on a lateral c-spine?<div><br /></div>	all 7 cervical vertebrae are visualized<div><br /></div>
+what are the five lines on the lateral c-spine that one should draw?	1. prevertebral soft tissue<div>2. anterior vertebral body</div><div>3. posterior vertebral body</div><div>4. spinolaminar line</div><div>5. tips of the spinous processes</div>
+what is the width cut-off for pre-vertebral soft tissue swelling?	several mm for first three or four vertebral bodies and less than one vertebral body for C4-C7
+what is the maximum separation between the anterior arch of C1 and the dens?	2.5 mm in adults and 5 mm in kids
+what does an enlarged space between the anterior arch of C1 and the dens suggest?	disruption of the transverse ligament between C1 and C2
+to call disc space narrowing secondary to degenerative disease, what other findings must you have?	osteophytosis and sclerosis
+what is a Jefferson fracture?	multiple fractures of the bony ring of C1 caused by blow to the top of the head
+what is rotary fixation of the atlantoaxial joint?	what when the atlantoaxial joint becomes fixed and the C1 and C2 move en masse instead of rotating on one another
+what is the best way to diagnose rotary fixation of the atlantoaxial joint?<div><br /></div>	an open mouth odontoid view
+what does odontoid mean?	aka dens of C2
+what must you see to diagnose a jefferson fracture on plain film?	lateral masses of C1 must extend beyond the margins of C2 body
+what will you see on an open mouth odontoid view if there is rotary fixation of the atlantoaxial joint?	fixed enlarged space lateral to the odontoid that does not change with rotation of the head (normally, the spaces lateral to the dens should be equal when in neutral position and then the left side will increase with leftward rotation and right side will increases with rightward rotation)
+how is a rotation fixation of the atlantoaxial joint treated?	with soft cervical collar, traction or both unless there is also disruption of the transverse ligaments at c1-c2 (then its much worse)
+<img src="Gray306.png" />	transverse ligament holds C1 and dens together
+clay-shoveler fracture	C6 or C7 spinous process avulsion (caused by supraspinous ligaments pulling up on the spinous process and avulsing it, apparently when clay-shovelers throw a full shovel of clay over their shoulder)
+how serious is a Hangman fracture and what is the mechanism of injury	unstable, serious fracture of the upper cervical spine caused by hyperextension and distraction (like hitting one's head on a dashboard)
+what is a hangman fracture	posterior elements of C2 and usually displacement of C2 body anterior to C3
+flexion teardrop fracture	disruption of the posterior ligaments with anterior compression of a vertebral body caused by severe flexion
+do you see spinal cord injury from flexion teardrop fractures?	yes 2/2 posterior portion of vertebral body being displaced into the central canal
+unilateral locked facets	rupture of the apophyseal joint ligaments and facet joint dislocation that results in locking of the facets in an overriding position
+what is the mechanism of injury that causes a unilateral locked facet	severe flexion associated with some rotation
+seatbelt injury MOA	secondary to hyperflexion at the waist&nbsp;
+seatbelt injury&nbsp;	involves T12, L1, L2; distraction of the posterior elements and ligaments and anterior compression of the vertebral body
+definition of distraction&nbsp;	separation between fragments of bone ; caused by tendon/ligament pull
+what are some variations of a seatbelt injury?	Smith fracture, Chance fx, and horizontal fxs of pedicles, laminae and transverse processes
+Smith fracture of spine	fracture of posterior body of vertebrae (type of seatbelt injury)
+Chance fracture	fracture through the spinous process of vertebrae (type of seatbelt injury)
+what is spondylolysis?	break of defect in the pars interarticularis portion of the lamina
+what forms the nose of the scottie dog	transverse process
+what forms the eye of the scottie dog?	pedicle
+what forms the front leg of the scottie dog?	inferior articular facet
+what forms the ear of the scottie dog?	superior articular facet
+what forms the neck of the scottie dog?	pars interarticularis
+what does spondylolysis look like on the scottie dog	like he has a collar on
+what is the pars interarticularis?	portion of the lamina that lies b/w the facets
+what is the cause of spondylolysis?	thought to be congenital and/or posttraumatic (although this is controversial)- possibly from toddlers falling on their butts a lot
+what is the clinical significance of spondylolysis?	controversial but may be incidental; can have sx associated with it but many don't
+what is the preferred plain film orientation to eval for spondylolysis?	oblique of lumbar spine
+is CT or MRI preferred to eval for spondylolysis?	CT because it can also show disc disease; MRI can show it but is often overlooked
+what is spondylolisthesis	when there is b/l spondylolysis and the vertebral body slips forward more on the caudal vertebral body
+is spondylolisthesis symptomatic?	it can be, not always; if severe, it can cause neuroforaminal stenosis and nerve impingement and would need to be stabilized surgically
+Kummell disease	when a wedge compression fracture can lead to delayed further collapse and severe neurological deficits; usually occurs 2 weeks after initial trauma
+what are the different grades of spondylolisthesis?	Grade 1: offset of vertebral body is &lt; 25% of the endplate<div>Grade 2: offset of vertebral body b/w 25-50% of the length of the inferior endplate</div>
+how does one know if an anterior wedges compression fracture is new or old?	based on sx- if {pain} is present, consider it acute; if not, likely old
+what are two conditions that predispose one to having spinal fractures 2/2 minor trauma	ankylosing spondylitis and DISH  {diffuse} idiopathic skeletal hyperostosis)
+if a patient had back {pain} after spinal trauma, how should you treat him and should you do any more imaging if xrays are normal?	you should treat him like he has a fx and you should obtain a CT or MRI
+<img src="figure_40.9.jpg" />	Enchondroma. This lesion in the distal right femur shows the stippled punctate calcification typical of chondroid matrix seen in an enchondroma.
+<img src="figure_40.10.jpg" />	Ollier Disease. Multiple [enchondromas] are present throughout the hand. This is a typical example of [Ollier disease] 
+<img src="figure_40.11.jpg" />	Maffucci Syndrome. Multiple [enchondromas] associated with phleboliths are present in the phalanges. This combination of findings invariably represents hemangiomas and [enchondromas] in [Maffucci syndrome] 
+<img src="figure_40.12.jpg" />	Eosinophilic Granuloma (EG). A well-defined {lytic} lesion is seen involving the mid-femur in this 20-year-old patient. Biopsy showed this to be EG.
+<img src="figure_40.13.jpg" />	Eosinophilic Granuloma (EG). Well-defined {lytic} lesions are present throughout the {pelvis} in this 24-year-old patient. In addition to the lesion around the right hip, a lesion is seen at the right sacroiliac joint. Biopsy showed this to be EG.
+<img src="figure_40.14.jpg" />	Eosinophilic Granuloma (EG). This well-defined {lytic} lesion contains a bony sequestrum (arrow), which is typical of [osteomyelitis] or EG. Biopsy revealed this to be EG.
+<img src="figure_40.15.jpg" />	Giant Cell Tumor. A well-defined {lytic} lesion without a sclerotic margin is seen abutting the articular surface of the distal femur in a patient who has {closed epiphyses}  These are all characteristics of a [giant cell tumor] 
+<img src="figure_40.16.jpg" />	Giant Cell Tumor. This well-defined {lytic} lesion that does not have a sclerotic margin completely involves the greater trochanter. The apophyses have the same differential diagnosis as lesions in the epiphyses, which makes [giant cell tumor] a strong possibility in this example. Biopsy showed this to be a [giant cell tumor] 
+<img src="figure_40.17.jpg" />	Giant Cell Tumor. A large, well-defined {lytic} lesion in the iliac wing is seen, which does contain a sclerotic margin and does not appear to abut any articular surface. The {pelvis} is a good location for [giant cell tumor]  which this proved to be at biopsy. The usual rules for [giant cell tumor]  such as the presence of a nonsclerotic margin do not apply in flat bones.
+<img src="figure_40.18.jpg" />	Fibrous Cortical Defect. A well-defined {lytic} lesion is seen in the medial metaphysis of this {tibia} (arrows), which is typical of a [fibrous cortical defect] 
+<img src="figure_40.19.jpg" />	Nonossifying Fibroma (NOF). A large, well-defined {lytic} lesion, which is slightly {expansile} with scalloped sclerotic margins, is seen in the distal {tibia} in this young patient. This is a characteristic appearance of an NOF. The examination was obtained for a sprained ankle and not for this {asymptomatic} lesion.
+<img src="figure_40.20.jpg" />	Nonossifying Fibroma (NOF). A well-defined, {expansile} {lytic} lesion in the distal fibula is noted in this {asymptomatic} patient, which is characteristic of an NOF.
+what is a bennett fracture?	fx at the base of the thumb into the carpometacarpal joint, metacarpal usually slides out of alignment
+how to treat a bennett fx	internal fixation
+Rolando fracture	comminuted fracture of the base of the thumb the extends into the joint- type of severe bennett fx
+pseudo-Bennett fx	comminuted fracture of the base of the thumb that does not extend into the joint
+mallet or baseball finger	avulsion injury at base of distal phalanx where the extensor digitorum tendon inserts; can't &nbsp;extend the distal phalanx; caused by baseball hitting the distal phalanx
+meaning of volar	relating to the side of the palm or sole of foot
+how to treat a volar fracture at the base of the interphalangeal and metacarpophalangeal joints	surgically b/c volar plate (dense fibrocartilaginous band that covers the volar aspect of the joint can get stuck in there if torn)
+gamekeeper's thumb	avulsion on the ulnar aspect of the first metacarpophalangeal jiont
+treatment of gamekeeper's thumb fx	internal fixation
+mechanism of action to cause gamekeeper's thumb	breaking rabbit's neck b/w thumb and forefinger; also falling on a ski pole in the webbing b/w thumb and forefinger
+where is the ulnar collateral ligment of the thumb and what is the injury known as?	<img src="012911-skierThumb.01.jpg" /><div>Gamekeepers thumb or skiers thumb; on the ulnar side of the thumb and connects the metacarpal and phalanges</div>
+lunate/perilunate dislocation	ligaments b/w capitate and lunate are disrupted allowing the capitate to dislocate from the cup shaped articulation of the lunate
+what view is dislocation of the lunate seen&nbsp;	lateral view or AP view of wrist
+what is a complication of missed lunate dislocation	permanent median nerve impairment (from impingement of the volarly placed lunate)
+what line do you draw to tell if the lunate is dislocated?	on lateral film, draw line through radius and lunate; if capitate is dorsal to this line, it is dislocated; alternatively, the line may go through the capitate but the lunate is volarly displaced
+what does a lunate/perilunate dislocation look like on AP wrist films	lunate appears triangular or pie-shaped; normally it should look rhomboid with upper and lower borders parallel
+carpal bones	<img src="carpals.jpg" />
+what other fractures are associated with perilunate dislocation	transscaphoid fx, capitate, radial styloid, triquetrum
+meaning of comminuted	broken or crushed into small pieces
+where is the origin and insertion of extensor digitorum	lateral epicondyle of humerus and distal phalanges&nbsp;
+what is the difference b/w a lunate and perilunate dislocation?	perilunate: lunate is still in line with radius, capitate is not<div>lunate: capitate is still in line with radius, lunate is not</div>
+what view is needed to look for fx of the hook of hamate	carpal tunnel view
+what is the carpal tunnel view	wrist is palm down, flat on xray plate and fingers pulled dorsally; xray beam angled at 45* parallel to palm of hand
+MOA for hook of hamate fx	FOOSH or butt of handle levering off the hook with overswinging (tennis, golf, baseball)
+MOA for rotary subluxation of the navicular	FOOSH
+what is another name for the scaphoid	navicular
+injury to what structure causes rotary subluxation of the navicular?	rupture of the scapholunate ligament, which allows the scaphoid to rotate dorsally
+what does rotary subluxation of the navicular look like on AP view of the wrist	space b/w navicular and lunate; normally they are closely opposed; aka the "Terry Thomas" sign b/c he has a gap b/w his tow front teeth
+what is the trouble with a navicular fx?	high rate of avascular necrosis
+how to treat a navicular/scaphoid fx	surgery with metallic screw and bone grafting
+where will one have {pain} if there is a fx of the scaphoid?	over the anatomic snuffbox
+how should a suspected fracture of the navicular be treated	casted and repeat xrays in 1 wk; or MRI (which is actually cheaper)
+if the scaphoid develops avascular necrosis, which section is affected?	the proximal- the blood supply begins distally and runs proximally
+what does avascular necrosis of the scaphoid look like?	increased density of the proximal pole of the navicular compared to the other carpal bones
+what is the second most common carpal bone to develop avascular necrosis?	lunate
+what is avascular necrosis of the lunate called?	Keinbock malacia
+what is the MOA to cause avascular necrosis of the lunate	trauma or idiopathic
+what is associated with length discrepancy of the ulna and radius?	avascular necrosis of the lunate
+what is negative ulnar variance	ulna is shorter than the radius, associated with increased risk of Keinbock malacia
+what is positive ulnar deviance	ulna is longer than the radius,&nbsp;associated with increased incidence of triangular fibrocartilage tears
+what view is best to see avulsion of the triquetrum?	lateral; will show small chip off the dorsum of the wrist
+what is a colles fracture?	fracture of the distal radius and ulna after a foosh that results in dorsal angulation of the distal forearm and wrist
+what is a smith fracture of wrist?	similar to colles fracture except it angulates volarly
+which fracture is more common: colles or smith?	colles
+what is the plastic bowing deformity of the forearm?	occurs after traumatic insult to the radius and ulna which results in bending instead of frank fracture of the bones
+how do you treat plastic bowing of the forearm?	break the bones and reset them
+what is monteggia fracture?	fracture of the ulna with dislocation of the proximal radius
+what can occur if a radial head dislocation is missed?	avascular necrosis and subsequent elbow disfunction
+what is a galeazzi fracture?	fracture of the radius with dislocation of the distal ulna
+what is one great indicator of an elbow fracture?	a displaced posterior fat pad; normally the fat pad is not visible but when the joint becomes distended, the fat pad is displaced
+in an adult, if you can see the posterior fat pad, where is the fracture?	radial medial head
+in an child, if you can see the posterior fat pad, where is the fracture?	supracondylar fracture
+what are two other reasons you might see the posterior fat pad of the elbow besides trauma?	infection or artritide
+what else would you see on lateral view of elbow if there is an effusion?	anterior fat pad becomes displaced and is called the sail sign because it resembles the spinnaker sail
+what is the most common type of shoulder dislocation?	anterior (more than 10x)&nbsp;
+what is the MOA for an anterior shoulder dislocation	forcible external rotation and abducted (arm tackle in football)
+what is an anterior shoulder dislocation look like on AP film?	humeral head lies inferiorly and medially to the glenoid
+what is a hillsachs deformity?	indentation in the posterosuperior portion of the humeral head caused by anterior dislocation when the humeral head impacts the inferior lip of the glenoid
+what is a bankert deformity?	bony irregularity or fragment off the inferior glenoid, which occurs via the same mechanism as the hillsachs deformity
+what is the crescent sign?	slight overlap of the humeral head with the glenoid on AP view - this is normalz
+what does a posterior shoulder dislocation look like on AP radiograph?	crescent sign is usually absent, and there is a small space between the glenoid and humural head; nah mean?
+what is the best view to diagnose a dislocated shoulder	transcapular view
+where does the glenoid sit in relation to other anatomical landmarks on transcapular view?	sits at the center of a Y formed by the coracoid, spine of the acromion, and blade of the scapula
+what is one common entity that is mistaken for a dislocated shoulder?	traumatic hemarthrosis because it displaces the humeral head inferolaterally
+compare the displacement of the humeral head with traumatic hemarthrosis and anterior dislocation	hemarthrosis: inferolaterally<div>anterior dislocation: inferiomedially</div>
+what is a pseudodislocation?	when the humeral head appears to be dislocated but is actually caused by traumatic hemarthrosis
+ddx for bladder mass	transitional cell ca &gt; squamous cell ca &gt; adenocarcinoma &gt; bladder pheochromocytoma
+ex of infiltratative renal mass the originates in the medullary and maintains the renal cortical shape	TCC, or renal medullary carcinoma in teenagers
+ex of&nbsp;infiltratative&nbsp;renal mass the originates in the cortex and destroys the renal cortical shape	renal cell ca
+bellini duct carcioma imaging characterisitic	reniform shape maintained, grows in central sinus, infiltrative, minimal enhancement (hypovascular), mets to lymph nodes and bone at the time of dx
+what is a bellini duct carcinoma	type of [renal cell carcinoma] what is an example of a mass that goes around the kidney	renal [lymphoma] adrenal mass with unusual calcifications	adrenal hemangioma
+what is the cutoff for concern of carcinoma	4cm
+<img src="figure_40.21.jpg" />	Nonossifying Fibroma. A. A well-defined, {lytic} lesion that is minimally {expansile} is seen in the distal {tibia} in this child who was examined for a sprained ankle. B. A CT examination showed apparent cortical destruction (arrow), which was believed to be suggestive of an aggressive lesion. Biopsy showed this to be a [nonossifying fibroma]  Both CT and MR will often show apparent cortical destruction, which is merely cortical replacement by benign fibrous tissue.
+<img src="figure_40.22.jpg" />	Healing Nonossifying Fibroma (NOF). A predominantly sclerotic lesion, which is minimally {expansile} and well defined, is seen in the proximal humerus in this child who is {asymptomatic}  This is a typical appearance of a disappearing or healing NOF. With time, this lesion will melt into the normal bone and essentially disappear.
+<img src="figure_40.23.jpg" />	Nonossifying Fibroma (NOF). This large, well-defined {lytic} lesion with faint sclerotic margins is seen in the distal femur. Because of its size, many thought it was not an NOF. The lesion underwent biopsy and was found to be an NOF.
+<img src="figure_40.24.jpg" />	Osteoblastoma. A {lytic} {expansile} lesion involving the right T-12 pedicle (arrow) and transverse process is seen on this anteroposterior plain film in (A) which is seen on the CT scan (B) to extend into the vertebral body. It has intact cortices and contains some calcified matrix. This is a classic example of an [osteoblastoma] of the spine.
+<img src="figure_40.25.jpg" />	Metastatic Disease. A well-defined {lytic} lesion is seen in the proximal femur in this 50-year-old patient who has {pain} associated with this lesion. Biopsy showed this to be a [renal metastasis]  A significant number of metastatic lesions can have a completely benign appearance, as in this example.
+<img src="figure_40.26.jpg" />	Multiple Myeloma. A. A {diffuse} {permeative} pattern is present throughout the femur in this patient with multiple [myeloma]  B. A lateral {skull} film shows a typical presentation of multiple [myeloma] in the {skull} with multiple small holes throughout the calvarium, which are well defined.
+<img src="figure_40.27.jpg" />	Plasmacytoma. A large, well-defined {lytic} lesion is seen in the left ilium (arrows) in this patient with multiple [myeloma]  This is a common location for a plasmacytoma. Like metastases, [plasmacytomas] often have a completely benign appearance.
+<img src="figure_40.28.jpg" />	Metastatic Disease. An {expansile} lesion with a soap-bubble appearance is present in the proximal radius in a patient with [renal cell carcinoma]  An {expansile} {lytic} lesion is a common finding with renal or thyroid [metastatic disease] 
+<img src="figure_40.29.jpg" />	Plasmacytoma. (A) An axial MRI and (B) a CT through the L5 vertebral body reveal a “mini-brain” appearance, with the remaining bony struts resembling cerebral gyri and sulci in an anatomic cut brain section. This is characteristic of a plasmacytoma.
+<img src="figure_40.30.jpg" />	Aneurysmal Bone Cyst  [aneurysmal bone cyst] . An {expansile} {lytic} lesion is present in the distal femur in this 24-year-old patient who presents with {pain}  This is a fairly typical appearance of an [aneurysmal bone cyst] 
+<img src="figure_40.31.jpg" />	Aneurysmal Bone Cyst  [aneurysmal bone cyst] . A well-defined {expansile} lesion is seen in the midshaft of the ulna in a child who presents with {pain} in this region. This is a characteristic appearance of an [aneurysmal bone cyst] 
+<img src="figure_40.32.jpg" />	Aneurysmal Bone Cyst  [aneurysmal bone cyst] . An axial T2-weighted image through a thoracic vertebral body shows an {expansile} lesion involving the posterior elements which has several fluid/fluid levels (arrows). This is a typical appearance of an [aneurysmal bone cyst] 
+<img src="figure_40.33.jpg" />	Solitary Bone Cyst. A well-defined {lytic} lesion is present in the proximal humerus in this child who suffered a fracture through the lesion. The location and central appearance, as well as the age of the patient, are characteristic of a [solitary bone cyst]  A piece of cortical bone has broken off and descended through the serous fluid contained within the lesion and can be seen in the dependent portion of the lesion (arrow) as a fallen fragment sign. A fallen fragment sign is said to be pathognomonic for a unicameral bone cyst.
+<img src="figure_40.34.jpg" />	Solitary Bone Cyst. A well-defined {lytic} lesion, which is central in location, is seen in the proximal femur in this child. This is characteristic of a [solitary bone cyst] 
+<img src="figure_40.35.jpg" />	Solitary Bone Cyst. A well-defined {lytic} lesion is seen in the calcaneus abutting the inferior surface, which is typical in location and appearance for a [solitary bone cyst]  A [solitary bone cyst] in the calcaneus occurs almost exclusively in this location and is not subject to pathologic fracture as readily as when one occurs in the proximal femur and humerus.
+<img src="figure_40.36.jpg" />	Brown Tumor. (A) An {expansile} {lytic} lesion is seen in the fifth metacarpal (arrows), and a second, smaller {lytic} lesion is seen in the proximal portion of the fourth proximal phalanx. This patient can be noted to have subperiosteal bone resorption, best seen in the radial aspect of the middle phalanges (B) (arrows) as indistinct, interrupted cortex. This makes the diagnosis of hyperparathyroidism with multiple brown tumors most likely.
+<img src="figure_40.37.jpg" />	Brodie Abscess. A. A plain film of the proximal humerus in this child with shoulder {pain} reveals a well-defined {lytic} lesion in the medial metaphysis. B. A T2-weighted MR of the humerus shows the lesion to have high signal and an associated joint effusion. The probable site of connection to the joint can be seen (arrow), which likely represents a draining abscess. Aspiration of the joint fluid revealed pus. This is a large focus of [osteomyelitis] or Brodie abscess.
+<img src="figure_40.38.jpg" />	Osteomyelitis. A. A {lytic} lesion is present in the proximal humerus, which has some associated periostitis laterally. B. A CT scan through this area reveals a {lytic} lesion that contains a calcific density within (arrow), which is a bony sequestrum. This is an area of [osteomyelitis] with a {bony sequestration} 
+<img src="figure_40.39.jpg" />	Chondroblastoma. A plain film in this young patient shows a well-defined {lytic} lesion in the greater tuberosity of the humerus. Biopsy showed this to be a chondroblastoma.
+<img src="figure_40.40.jpg" />	Geode. A large, well-defined {lytic} lesion in the proximal humerus is present, which is associated with marked degenerative disease of the glenohumeral joint. When definite degenerative joint disease is present and associated with a {lytic} lesion, the {lytic} lesion should be considered to be a geode. A biopsy was performed, which confirmed this to be a geode, or subchondral cyst; however, the biopsy could have been avoided.
+<img src="figure_40.41.jpg" />	Chondromyxoid Fibroma. A well-defined {lytic} lesion in the distal {tibia} that extends slightly into the epiphysis is noted on this anteroposterior plain film. A [nonossifying fibroma] (NOF) could certainly have this appearance; however, this underwent biopsy and was found to be a [chondromyxoid] fibroma. Chondromyxoid fibromas often will extend into the epiphysis, as in this example, whereas [nonossifying fibroma]  usually will not.
+<img src="figure_40.42.jpg" />	Healing Nonossifying Fibroma. A plain film of the knee in this 25-year-old patient reveals a sclerotic lesion in the proximal {tibia} which is a healing or resolving [nonossifying fibroma] 
+<img src="figure_40.43.jpg" />	Giant Bone Island. A large sclerotic lesion is present in the right supra-acetabular region of the ilium (arrow), which represents a giant bone island. The slightly feathered margins of the trabeculae blending in with the normal bone, and the long axis of the lesion being in the direction of primary weight bearing, are characteristic for a bone island.
+  
