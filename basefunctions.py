@@ -13,7 +13,7 @@ def Label(parent, text):
 	label["text"] = text
 	label.pack()
 
-def Entry(parent, action, completion_list=None, width = 50, binding = "<Return>", focus=True):
+def Entry(parent, action, completion_list=[], width = 50, binding = "<Return>", focus=True):
 	"""
 	Tkinter entry that simply packs into a frame and autocompletes from a list.
 	"""
@@ -42,3 +42,8 @@ def ParseEntryCommaSeparated(entryWidget, emptyErrorMessage):
 
 	return es_split
 
+def InitiateOrLoadPickle(pickle_name, pickle_file_name):
+	try:
+		pickle_name = Graph.Read_Pickle(os.sep.join([self.save_path, "graph.p"]))
+	except (cPickle.UnpicklingError):
+		pass

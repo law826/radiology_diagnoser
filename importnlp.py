@@ -14,10 +14,15 @@ class ImportNLP:
 		self.f = open(self.file, 'r')
 		self.raw = self.f.read()
 
-	def SearchReplace(self, body, string1, string2):
+	def SearchReplace(self, string1, string2):
+		"""
+		Assign to self.raw a replaced string where string 1 is kept is string 2 is replaced.
+		"""
 		self.string1 = string1
 		self.string2 = string2
-		self.replaced = body.replace(self.string1, self.string2)
+
+		regex = re.compile(r'\b%s\b' % self.string2, re.IGNORECASE)
+		self.raw, self.number_replaced = re.subn(regex, string1, self.raw); #print self.eboutput
 
 	def FindWordsInBracketsAndCurlies(self, body):
 		"""
@@ -31,14 +36,27 @@ class ImportNLP:
 		Run FindWordsInBracketsAndCurlies first.
 		Adds brackets to the same words if they have not yet received brackets.
 		"""
-		target_body = ' ' + target_body + ' '
+		self.target_body = target_body
+		self.target_body = ' ' + self.target_body + ' '
+
+		self.dbrackets = [m.span(1) for m in re.finditer(r"\[([\w \(\)\-]+)\]", target_body, re.IGNORECASE)]
+		self.sbrackets = [m.span(1) for m in re.finditer(r"\{([\w \(\)\-]+)\}", target_body, re.IGNORECASE)]
+		self.allbrackets = self.dbrackets + self.sbrackets
+
+
+		def repl(matchobj):
+			for span in self.allbrackets:
+				if matchobj.start(0) in range(*span):
+					return matchobj.group(0)
+			return (matchobj.group(1) + self.bracketed_term + matchobj.group(2))	
 
 		for i, term in enumerate(list_of_terms):
-			bracketed_term = ' [' + term + '] '
+			self.bracketed_term = '[' + term + ']'
 			if i ==0:
-				self.eboutput = re.sub(r"[^[]%s[^]]" %term, bracketed_term, target_body); #print self.eboutput
+				self.eboutput = re.sub(r"([^\[\w])%s([^\]\w])" %term, repl, self.target_body, re.IGNORECASE); #print self.eboutput
 			else:
-				self.eboutput = re.sub(r"[^[]%s[^]]" %term, bracketed_term, self.eboutput); #print self.eboutput
+				self.eboutput = re.sub(r"([^\[\w])%s([^\]\w])" %term, repl, self.eboutput, re.IGNORECASE); #print self.eboutput
+
 
 	def ExtendCurlys(self, list_of_terms, target_body):
 		"""
@@ -47,23 +65,43 @@ class ImportNLP:
 		"""
 		target_body = ' ' + target_body + ' '
 
+		self.dbrackets = [m.span(1) for m in re.finditer(r"\[([\w \(\)\-]+)\]", target_body, re.IGNORECASE)]
+		self.sbrackets = [m.span(1) for m in re.finditer(r"\{([\w \(\)\-]+)\}", target_body, re.IGNORECASE)]
+		self.allbrackets = self.dbrackets + self.sbrackets
+
+		def repl(matchobj):
+			for span in self.allbrackets:
+				if matchobj.start(0) in range(*span):
+					return matchobj.group(0)			
+			return (matchobj.group(1) + self.curly_term + matchobj.group(2))
+
 
 		for i, term in enumerate(list_of_terms):
-			curly_term = ' {' + term + '} '
+			self.curly_term = '{' + term + '}'
 			if i ==0:
-				self.ecoutput = re.sub(r"[^{]%s[^}]" %term, curly_term, target_body); #print self.ecoutput
+				self.ecoutput = re.sub(r"([^\{\w])%s([^\}\w])" %term, repl, target_body, re.IGNORECASE); #print self.ecoutput
 			else:
-				self.ecoutput = re.sub(r"[^{]%s[^}]" %term, curly_term, self.ecoutput); #print self.ecoutput
+				self.ecoutput = re.sub(r"([^\{\w])%s([^\}\w])" %term, repl, self.ecoutput, re.IGNORECASE); #print self.ecoutput
 
 
-	def ExtendBracketsInFile(self, file_name):
+	def ExtendBracketsInFile(self):
 		"""
 		"""
 		self.FindWordsInBracketsAndCurlies(self.raw)
 		self.ExtendBrackets(self.diagnoses, self.raw)
 		self.ExtendCurlys(self.symptoms, self.eboutput)
-		text_file = open(file_name, 'w')
+		text_file = open(self.file, 'w')
 		text_file.write(self.ecoutput)
 		text_file.close()
 
+	def FindPictures(self):
+		line_array = self.file.readlines()
+		for line in line_array:
+			diagnoses = [m.group(1) for m in re.finditer(r"\[([\w \(\)\-]+)\]", line)]
+			symptoms = [m.group(1) for m in re.finditer(r"\{([\w \(\)\-]+)\}", line)]
+
+
+if __name__ == '__main__':
+	inlp = ImportNLP('/Users/law826/Desktop/MSK (1).txt')
+	inlp.ExtendBracketsInFile()
 

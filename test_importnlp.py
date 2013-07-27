@@ -28,19 +28,20 @@ class TestDatabase(unittest.TestCase):
 
 	def test_ExtendBrackets(self):
 		list_of_terms = ['fibroma', 'apple']
-		target_body = '[fibroma] apple orange'
+		target_body = '[fibroma] apple orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} Fibroma'
 		self.INLP.ExtendBrackets(list_of_terms, target_body)
-		self.assertEqual(self.INLP.eboutput, ' [fibroma] [apple] orange ')
+		self.assertEqual(self.INLP.eboutput, 
+			' [fibroma] [apple] orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} ')
 
 	def test_ExtendCurlys(self):
 		list_of_terms = ['fibroma', 'apple']
-		target_body = 'fibroma {apple} orange'
+		target_body = 'fibroma {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there]'
 		self.INLP.ExtendCurlys(list_of_terms, target_body)
-		self.assertEqual(self.INLP.ecoutput, ' {fibroma} {apple} orange ')
+		self.assertEqual(self.INLP.ecoutput, ' {fibroma} {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma] ')
 
-	def test_ExtendBracketsInFile(self):
-		self.INLP.ExtendBracketsInFile(self.file_name)
-		os.system("open " + self.file_name)
+	# def test_ExtendBracketsInFile(self):
+	# 	self.INLP.ExtendBracketsInFile()
+	# 	os.system("open " + self.file_name)
 
 	def tearDown(self):
 		"""
