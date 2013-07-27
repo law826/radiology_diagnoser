@@ -32,7 +32,6 @@ class SearchReplaceGUI:
 		self.root.title('Search and Replace Terms')
 
 		self.LoadUserSettings()
-		self.inlp = ImportNLP(self.doc_path)
 
 		gui_elements = [self.EntryUI,
 						self.CurrentFileUI,
@@ -137,6 +136,7 @@ class SearchReplaceGUI:
 		self.buttons_frame.grid(row=startingrow, columnspan = 2)
 
 	def UpdateFileButtonPressed(self):
+		self.inlp = ImportNLP(self.doc_path)
 		self.full_count = 0
 		for pair in self.sd.replacement_tuples:
 			self.inlp.SearchReplace(pair[0], pair[1])
@@ -151,7 +151,8 @@ class SearchReplaceGUI:
 			pass
 
 	def ExtendBracketsButtonPressed(self):
-		
+		self.inlp = ImportNLP(self.doc_path)
+		self.inlp.ExtendBracketsInFile()
 
 	def DebugModeButtonPressed(self):
 		import pdb; pdb.set_trace()

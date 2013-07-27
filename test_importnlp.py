@@ -16,10 +16,10 @@ class TestDatabase(unittest.TestCase):
 		self.INLP = importnlp.ImportNLP('/Users/law826/Desktop/MSK.txt')
 
 	def test_SearchReplace(self):
-		self.INLP.SearchReplace(self.INLP.raw, 'fibromas', 'fibroma')
-		self.INLP.SearchReplace(self.INLP.replaced, 'Fibroma', 'fibroma')
-		self.assertEqual(self.INLP.replaced.count('fibromas'), 0)
-		self.assertEqual(self.INLP.replaced.count('fibroma'), 36)
+		self.INLP.SearchReplace('fibroma', 'fibromas')
+		self.INLP.SearchReplace('fibroma', 'Fibroma')
+		self.assertEqual(self.INLP.raw.count('fibromas'), 0)
+		self.assertEqual(self.INLP.raw.count('fibroma'), 36)
 
 	def test_FindWordsInBracketsAndCurlies(self):
 		self.INLP.FindWordsInBracketsAndCurlies(self.INLP.raw)
@@ -31,11 +31,11 @@ class TestDatabase(unittest.TestCase):
 		target_body = '[fibroma] apple orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} Fibroma'
 		self.INLP.ExtendBrackets(list_of_terms, target_body)
 		self.assertEqual(self.INLP.eboutput, 
-			' [fibroma] [apple] orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} ')
+			' [fibroma] [apple] orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} Fibroma ')
 
 	def test_ExtendCurlys(self):
 		list_of_terms = ['fibroma', 'apple']
-		target_body = 'fibroma {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there]'
+		target_body = 'fibroma {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma]'
 		self.INLP.ExtendCurlys(list_of_terms, target_body)
 		self.assertEqual(self.INLP.ecoutput, ' {fibroma} {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma] ')
 
