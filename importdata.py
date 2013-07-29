@@ -9,7 +9,7 @@ import basefunctions as bf
 class ImportData:
 	def __init__(self):
 
-		self.import_file = open('/Users/law826/Downloads/MSK.txt', 'r')
+		self.import_file = open('/Users/law826/Desktop/MSK (1).txt', 'r')
 
 	def executeimport(self, mainwindow):
 		self.mainwindow = mainwindow

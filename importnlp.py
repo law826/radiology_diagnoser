@@ -21,7 +21,7 @@ class ImportNLP:
 		self.string1 = string1
 		self.string2 = string2
 
-		regex = re.compile(r'\b%s\b' % self.string2, re.IGNORECASE)
+		regex = re.compile(r'\b%s\b' % self.string2)
 		self.raw, self.number_replaced = re.subn(regex, string1, self.raw); #print self.eboutput
 
 	def FindWordsInBracketsAndCurlies(self, body):
@@ -39,17 +39,19 @@ class ImportNLP:
 		self.target_body = target_body
 		self.target_body = ' ' + self.target_body + ' '
 
-		self.dbrackets = [m.span(0) for m in re.finditer(r"\[([\w \(\)\-]+)\]", self.target_body)]
-		self.sbrackets = [m.span(0) for m in re.finditer(r"\{([\w \(\)\-]+)\}", self.target_body)]
+		self.dbrackets = [m.span(0) for m in re.finditer(r"\[([\w \(\)\-\,.]+)\]", self.target_body)]
+		self.sbrackets = [m.span(0) for m in re.finditer(r"\{([\w \(\)\-\,.]+)}", self.target_body)]
 		self.allbrackets = self.dbrackets + self.sbrackets
-
-
 
 		def repl(matchobj):
 			for span in self.allbrackets:
 				if matchobj.start(0) in range(*span):
 					return matchobj.group(0)
-			return (matchobj.group(1) + self.bracketed_term + matchobj.group(2))	
+
+			self.straight_bracket_count += 1
+			return (matchobj.group(1) + self.bracketed_term + matchobj.group(2))
+			
+
 
 		self.straight_bracket_count = 0
 		for i, term in enumerate(list_of_terms):
@@ -58,10 +60,9 @@ class ImportNLP:
 			regex = re.compile(r"([^\[\w])%s([^\]\w])" %term, re.IGNORECASE)
 
 			if i ==0:
-				self.eboutput, this_count = re.subn(regex, repl, self.target_body)#; print this_count
+				self.eboutput = re.sub(regex, repl, self.target_body)
 			else:
-				self.eboutput, this_count = re.subn(regex, repl, self.eboutput)#; print this_count
-			self.straight_bracket_count += this_count
+				self.eboutput = re.sub(regex, repl, self.eboutput)
 
 		self.eboutput = self.eboutput[1:-1]
 
@@ -74,8 +75,8 @@ class ImportNLP:
 		"""
 		self.target_body = ' ' + target_body + ' '
 
-		self.dbrackets = [m.span(0) for m in re.finditer(r"\[([\w \(\)\-]+)\]", self.target_body)]
-		self.sbrackets = [m.span(0) for m in re.finditer(r"\{([\w \(\)\-]+)\}", self.target_body)]
+		self.dbrackets = [m.span(0) for m in re.finditer(r"\[([\w \(\)\-,.]+)\]", self.target_body)]
+		self.sbrackets = [m.span(0) for m in re.finditer(r"\{([\w \(\)\-,.]+)\}", self.target_body)]
 		self.allbrackets = self.dbrackets + self.sbrackets
 
 		def repl(matchobj):
@@ -83,6 +84,7 @@ class ImportNLP:
 				if matchobj.start(0) in range(*span):
 					return matchobj.group(0)
 
+			self.curly_count += 1
 			return (matchobj.group(1) + self.curly_term + matchobj.group(2))
 
 
@@ -92,10 +94,9 @@ class ImportNLP:
 
 			regex = re.compile(r"([^\{\w])%s([^\}\w])" %term, re.IGNORECASE)
 			if i ==0:
-				self.ecoutput, this_count = re.subn(regex, repl, self.target_body); #print self.target_body
+				self.ecoutput = re.sub(regex, repl, self.target_body)
 			else:
-				self.ecoutput, this_count = re.subn(regex, repl, self.ecoutput); #print self.ecoutput
-			self.curly_count += this_count
+				self.ecoutput = re.sub(regex, repl, self.ecoutput)
 
 		self.ecoutput = self.ecoutput[1:-1]
 

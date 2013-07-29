@@ -31,13 +31,13 @@ class TestDatabase(unittest.TestCase):
 		target_body = '[fibroma] apple orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} Fibroma'
 		self.INLP.ExtendBrackets(list_of_terms, target_body)
 		self.assertEqual(self.INLP.eboutput, 
-			' [fibroma] [apple] orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} Fibroma ')
+			'[fibroma] [apple] orange xxfibromaxxx xxfibroma [big fibroma there] {big fibroma there} [fibroma]')
 
 	def test_ExtendCurlys(self):
 		list_of_terms = ['fibroma', 'apple']
 		target_body = 'fibroma {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma]'
 		self.INLP.ExtendCurlys(list_of_terms, target_body)
-		self.assertEqual(self.INLP.ecoutput, ' {fibroma} {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma] ')
+		self.assertEqual(self.INLP.ecoutput, '{fibroma} {apple} orange xxfibromaxxx xxfibroma {big fibroma there} [big fibroma there] [fibroma]')
 
 	# def test_ExtendBracketsInFile(self):
 	# 	self.INLP.ExtendBracketsInFile()

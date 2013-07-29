@@ -24,14 +24,17 @@ class SaveData:
 		pass
 
 	def Save(self):
-		cPickle.dump(self, open('search_replace_save_data.p', 'wb'))
+		cPickle.dump(self, open('SearchReplace/search_replace_save_data.p', 'wb'))
 
 class SearchReplaceGUI:
 	def __init__(self):
+		self.LoadUserSettings()
+
+	def main(self):
 		self.root = Tk()
 		self.root.title('Search and Replace Terms')
 
-		self.LoadUserSettings()
+		
 
 		gui_elements = [self.EntryUI,
 						self.CurrentFileUI,
@@ -51,7 +54,7 @@ class SearchReplaceGUI:
 
 	def LoadUserSettings(self):
 		try: 
-			self.sd = cPickle.load(open('search_replace_save_data.p', 'rb')) # Pickle with dict of current directory mapped with save directories.
+			self.sd = cPickle.load(open('SearchReplace/search_replace_save_data.p', 'rb')) # Pickle with dict of current directory mapped with save directories.
 			if os.getcwd() in self.sd.user_settings:
 				self.doc_path = self.sd.user_settings[os.getcwd()]
 			else:
@@ -63,7 +66,7 @@ class SearchReplaceGUI:
 			self.SetFile()
 
 	def SetFile(self):
-		self.doc_path = tkFileDialog.askopenfilename(parent = self.root, title = 'Please choose a save directory')
+		self.doc_path = tkFileDialog.askopenfilename(title = 'Please choose a save directory')
 		self.sd.user_settings[os.getcwd()] = self.doc_path
 		self.sd.Save()
 
@@ -168,12 +171,6 @@ class SearchReplaceGUI:
 		self.sd.Save()
 
 ###########
-
-
-
-
-
-
 
 if __name__ == '__main__':
 		srg = SearchReplaceGUI()

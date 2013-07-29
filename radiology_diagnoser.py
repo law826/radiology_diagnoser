@@ -36,6 +36,9 @@ import basefunctions as bf
 import database_for_gui
 import mergewindow
 import importdata
+sys.path.append(os.path.realpath('./SearchReplace'))
+from SearchReplaceGUI import SearchReplaceGUI
+from SearchReplaceGUI import SaveData
 
 
 class MainWindow:
@@ -48,6 +51,7 @@ class MainWindow:
 		self.DB = database_for_gui.DataBaseForGUI(self) # Instantiated here at the end because of parent window issues for ask directory widget.
 		self.mw = mergewindow.MergeWindow()
 		self.id = importdata.ImportData()
+		self.srg = SearchReplaceGUI()
 
 		gui_elements = [self.LabelEntryUI,
 						self.ResetButton,
@@ -95,45 +99,55 @@ class MainWindow:
 		self.searched_term_label = Label(self.root, text="")
 		self.searched_term_label.grid(row=startingrow, columnspan=2)
 
-	def DiagnosesListBox(self, startingrow=None):	
+	def DiagnosesListBox(self, startingrow=None):
 		self.lbframe = Frame(self.root)
 		self.lbframe.grid(row = startingrow, columnspan = 2)
 		self.diagnosisLabel = Label(self.lbframe)
 		self.diagnosisLabel["text"] = "Diagnoses"
 		self.diagnosisLabel.grid(row=0,column=0)
-
-		self.dlistbox = Listbox(self.lbframe, width=40)
+		self.dlistbox = Listbox(self.lbframe, width=40, selectmode=EXTENDED)
+		self.dfunc_id = self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
+			
 		self.dlistbox.grid(row=1,column=0)
+
 		try: 
-			for concept in self.DB.g.vs:
-				if concept["type"] == 'diagnosis':
-					self.dlistbox.insert(END, concept["name"])
+			sorted_list = self.DB.g.vs['name']
+			sorted_list.sort(lambda x, y:cmp(x.lower(),y.lower()))
+			for concept in sorted_list:
+				vertex = self.DB.g.vs.find(name=concept)
+				if vertex["type"] == 'diagnosis':
+					self.dlistbox.insert(END, concept)
 		except AttributeError:
 		# If there are no items yet.
 			pass
-		self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
 
 	def SymptomsListBox(self, startingrow=None):	
 		self.symptomsLabel = Label(self.lbframe)
 		self.symptomsLabel["text"] = "Symptoms"
 		self.symptomsLabel.grid(row=0,column=1)
-		self.slistbox = Listbox(self.lbframe, width=40)
+		self.slistbox = Listbox(self.lbframe, width=40, selectmode=EXTENDED)
+		self.sfunc_id = self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
+
 		self.slistbox.grid(row=1,column=1)
+
 		try: 
-			for concept in self.DB.g.vs:
-				if concept["type"] == 'symptom':
-					self.slistbox.insert(END, concept["name"])
+			sorted_list = self.DB.g.vs['name']
+			sorted_list.sort(lambda x, y:cmp(x.lower(),y.lower()))
+			for concept in sorted_list:
+				vertex = self.DB.g.vs.find(name=concept)
+				if vertex["type"] == 'symptom':
+					self.slistbox.insert(END, concept)
 		except AttributeError:
 		# If there are no items yet.
 			pass
-
-		self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
 
 	def UpdateListBox(self, listbox, list, row, column):
 		listbox.grid_forget()
 		listbox.delete(0, END)
 		try: 
-			for concept in list:
+			sorted_list = list
+			sorted_list.sort(lambda x, y:cmp(x.lower(),y.lower()))
+			for concept in sorted_list:
 				listbox.insert(END, concept)
 		except AttributeError:
 		# If there are no items yet.
@@ -186,6 +200,7 @@ class MainWindow:
 		button_labels = [
 			"Add Diagnosis",
 			"Import",
+			"SearchReplaceGUI",
 			"Merge Items",
 			"Debug Mode", 
 			"Delete Item"
@@ -194,6 +209,7 @@ class MainWindow:
 		button_commands = [ 
 			self.AddDiagnosisButtonPressed,
 			self.ImportButtonPressed,
+			self.SearchReplaceGUIButtonPressed,
 			self.MergeButtonPressed,
 			self.DebugModeButtonPressed, 
 			self.DeleteItem
@@ -207,7 +223,6 @@ class MainWindow:
 	def RadiographUI(self, startingrow):
 		self.radframe = Frame(self.root)
 		self.radframe.grid(row = startingrow, columnspan = 2)
-
 
 		image = Image.open('/Users/law826/Desktop/test.jpg')
 		photo = ImageTk.PhotoImage(image)
@@ -231,8 +246,82 @@ class MainWindow:
 	def ImportButtonPressed(self):
 		self.id.executeimport(self)
 
+	def SearchReplaceGUIButtonPressed(self):
+		self.srg.main()
+
 	def MergeButtonPressed(self):
-		self.mw.ExecuteMerge(self)
+		self.dlistbox.unbind("<ButtonRelease-1>", self.dfunc_id)
+		self.slistbox.unbind("<ButtonRelease-1>", self.sfunc_id)
+		self.bottom_buttons_frame.grid_forget()
+
+		self.mbuttons_frame = Frame(self.root)
+		self.mbuttons_frame.grid(row=self.gui_element_dict[self.ButtonsUI], columnspan=2)
+
+		button_labels = [
+			"Merge Selected Items",
+			"Exit Merge Mode"
+			]
+
+		button_commands = [  
+			self.MergeSelectedItems,
+			self.ExitButtonPressed,
+			]
+
+		for button_number, label in enumerate(button_labels):
+			b = Button(self.mbuttons_frame, text=label, default="normal", command=button_commands[button_number]).pack(side = LEFT)
+		
+	def MergeSelectedItems(self):
+		selected_indices = self.dlistbox.curselection()
+		list_chosen = 'diagnoses'
+		if selected_indices == ():
+			selected_indices = self.slistbox.curselection()
+			list_chosen = 'symptoms'
+		if len(selected_indices) != 2:
+			tkMessageBox.showerror("Tkinter Entry Widget", "Please select two items to merge")
+			return
+
+		if list_chosen == 'diagnoses':
+			self.merge_items = [self.dlistbox.get(selected_index) for selected_index in selected_indices]
+		elif list_chosen == 'symptoms':
+			self.merge_items = [self.slistbox.get(selected_index) for selected_index in selected_indices]
+
+
+
+		result = tkMessageBox.askquestion("Delete", "Press yes to keep %s and press no to keep %s" %(self.merge_items[0], self.merge_items[1]), icon='warning')
+		if result == 'yes':
+			pass
+		else:
+			self.merge_items.reverse()
+
+		# At this point self.merge_items will the item to keep in first position and the one to delete in second position.
+
+		# Confirm merge
+		result = tkMessageBox.askquestion("Delete", "Are you sure you want to keep %s and merge %s? Press yes to continue." %(self.merge_items[0], self.merge_items[1]), icon='warning')
+		if result == 'yes':
+			self.DB.MergeNodes(self.merge_items[0], self.merge_items[1]) 
+			self.DB.SaveGraph()
+			tkMessageBox.showinfo("Merged", "'%s' and '%s' have been merged, keeping '%s'." %(self.merge_items[0], self.merge_items[1], self.merge_items[0]))
+			self.ResetButtonPressed()
+
+			# Make modifications to import NLP pickle.
+			self.srg.sd.replacement_tuples.append(tuple(self.merge_items))
+			self.srg.sd.Save()
+
+		else:
+			return
+
+
+		
+
+
+		
+
+	def ExitButtonPressed(self):
+		self.mbuttons_frame.grid_forget()
+		self.ButtonsUI(startingrow=self.gui_element_dict[self.ButtonsUI])
+		self.dfunc_id = self.dlistbox.bind("<ButtonRelease-1>", self.DiagnosisListPressed)
+		self.sfunc_id = self.slistbox.bind("<ButtonRelease-1>", self.SymptomListPressed)
+		# self.mw.ExecuteMerge(self)
 
 	def DebugModeButtonPressed(self):
 		import pdb; pdb.set_trace()
