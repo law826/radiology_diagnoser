@@ -78,19 +78,51 @@ a(S'3-5 years before hematologic evidence of myeloma'
 S'3-5 years before hematologic evidence'
 tp28
 a(S'abuts articular surface'
-p29
 S'abuts the articular surface'
-p30
+tp29
+a(S'younger than 30'
+S'less than 30'
+tp30
+a(S'younger than 30'
+S'younger than age 30'
 tp31
+a(S'younger than 30'
+S'younger than age 30'
+tp32
+a(S'plasmacytoma'
+S'plasmacytomas'
+tp33
+a(S'metastatic disease'
+S'metatstatic disease'
+tp34
+a(S'aneurysmal bone cyst'
+S'aneursymal bone cyst'
+tp35
+a(S'tuberculosis'
+S'TB'
+tp36
+a(S'chondromyxoid fibroma'
+S'chondromyxoid'
+tp37
+a(S'abuts articular surface'
+p38
+S'abuts the articular surface'
+p39
+tp40
+a(S'calcifications'
+p41
+S'calcification present'
+p42
+tp43
 asS'user_settings'
-p32
-(dp33
+p44
+(dp45
 S'/Users/law826/github/radiology_diagnoser/SearchReplace'
-p34
+p46
 S'/Users/law826/Desktop/MSK (1).txt'
-p35
+p47
 sS'/Users/law826/github/radiology_diagnoser'
-p36
+p48
 S'/Users/law826/Desktop/MSK (1).txt'
-p37
+p49
 ssb.

@@ -2,6 +2,10 @@
 # encoding: utf-8
 """
 radiology_diagnoser.py
+[] fix merge mode and key bindings of listboxes
+[] make a merge automatically update the relevant text file
+[] search and replace chondromyxoid fibroma problem
+
 
 [] handle import file and merging
 [] handle old matches from the merge window
