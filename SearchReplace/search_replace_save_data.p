@@ -74,55 +74,104 @@ tp26
 a(S'plasmacytoma'
 S'plasmacytomas'
 tp27
-a(S'3-5 years before hematologic evidence of myeloma'
-S'3-5 years before hematologic evidence'
-tp28
 a(S'abuts articular surface'
 S'abuts the articular surface'
-tp29
+tp28
 a(S'younger than 30'
 S'less than 30'
+tp29
+a(S'younger than 30'
+S'younger than age 30'
 tp30
 a(S'younger than 30'
 S'younger than age 30'
 tp31
-a(S'younger than 30'
-S'younger than age 30'
-tp32
 a(S'plasmacytoma'
 S'plasmacytomas'
-tp33
+tp32
 a(S'metastatic disease'
 S'metatstatic disease'
-tp34
+tp33
 a(S'aneurysmal bone cyst'
 S'aneursymal bone cyst'
-tp35
+tp34
 a(S'tuberculosis'
 S'TB'
-tp36
-a(S'chondromyxoid fibroma'
-S'chondromyxoid'
-tp37
+tp35
 a(S'abuts articular surface'
-p38
 S'abuts the articular surface'
-p39
-tp40
+tp36
 a(S'calcifications'
-p41
 S'calcification present'
-p42
+tp37
+a(S'metastasis'
+S'metastatic dz'
+tp38
+a(S'20 - 40 years old'
+S'20-40yo'
+tp39
+a(S'chondromyxoid fibroma'
+S'chondromyxoid fibroma fibroma fibroma fibroma fibroma'
+tp40
+a(S'chondromyxoid fibroma'
+S'chondromyxoid fibroma fibroma fibroma fibroma fibroma fibroma'
+tp41
+a(S'asymptomatic'
+S'asymtomatic'
+tp42
+a(S'20 - 40 years old'
+S'20-40yo'
 tp43
+a(S'3-5 years before hematologic evidence of myeloma'
+S'3-5 years before hematologic evidence of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma'
+tp44
+a(S'3-5 years before hematologic evidence of myeloma'
+S'3-5 years before hematologic evidence of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma of myeloma'
+tp45
+a(S'Brodie abscess'
+S'Brodie Abscess'
+tp46
+a(S'Brodie abscess'
+S'Brodie Abscess'
+tp47
+a(S'older than 40'
+S'older than age 40'
+tp48
+a(S'osteosarcoma'
+S'osteosarcomas'
+tp49
+a(S'Ewing sarcoma'
+S'Ewings sarcoma'
+tp50
+a(S'malignant fibrous histiocytoma'
+S'malignant fibrous histiocytomas'
+tp51
+a(S'chondrosarcoma'
+S'chondrosarcomas'
+tp52
+a(S'fibrosarcoma'
+S'fibrosarcomas'
+tp53
+a(S'metastatic disease'
+S'metastasis'
+tp54
+a(S'older than 40'
+S'older than age 40'
+tp55
+a(S'older than 40'
+p56
+S'greater than 40 years old'
+p57
+tp58
 asS'user_settings'
-p44
-(dp45
+p59
+(dp60
 S'/Users/law826/github/radiology_diagnoser/SearchReplace'
-p46
+p61
 S'/Users/law826/Desktop/MSK (1).txt'
-p47
+p62
 sS'/Users/law826/github/radiology_diagnoser'
-p48
-S'/Users/law826/Desktop/MSK (1).txt'
-p49
+p63
+S'/Users/law826/Desktop/MSK.txt'
+p64
 ssb.

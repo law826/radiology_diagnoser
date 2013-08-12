@@ -94,8 +94,12 @@ class SearchReplaceGUI:
 		self.CFU_frame.grid(row = startingrow, columnspan = 2)
 
 	def CurrentFileUIUpdate(self):
-		self.CFU_label.pack_forget()
+		try:
+			self.CFU_label.pack_forget()
+		except AttributeError:
+			pass
 		self.CFU_label = Label(self.CFU_frame, text=self.doc_path).pack()
+
 ###########
 	def ListboxUI(self, startingrow=0, updatemode=False):
 		if updatemode == False:
@@ -123,14 +127,16 @@ class SearchReplaceGUI:
 						"Extend Brackets",
 						"Debug Mode",
 						"SetFile",
-						"Delete Item"
+						"Delete Item",
+						"Open File"
 			]
 
 		button_commands = [self.UpdateFileButtonPressed,
 							self.ExtendBracketsButtonPressed,
 							self.DebugModeButtonPressed,
 							self.SetFileButtonPressed,
-							self.DeleteItemButtonPressed
+							self.DeleteItemButtonPressed,
+							self.OpenFileButtonPressed
 			]
 
 		for button_number, label in enumerate(button_labels):
@@ -169,6 +175,9 @@ class SearchReplaceGUI:
 		del self.sd.replacement_tuples[selected_index]
 		self.ListboxUI(startingrow = self.gui_element_dict[self.ListboxUI], updatemode=True)
 		self.sd.Save()
+
+	def OpenFileButtonPressed(self):
+		os.system("open " + self.doc_path)
 
 ###########
 

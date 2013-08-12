@@ -101,18 +101,19 @@ class DataBaseForGUI:
 
 	def FindNeighborsOfNode(self, nodename):
 		"""
-		Take the name of a node and returns a list of the names of the neighboring nodes of type diagnosis and of type symptom. 
+		Take the name of a node and returns a list of the names of the neighboring nodes of type diagnosis and of type symptom and type image. 
 		"""
 		try:
 			node = self.g.vs.find(name=nodename)
 			dneighbors = [x["name"] for x in node.neighbors() if x["type"]=="diagnosis"]
 			sneighbors = [x["name"] for x in node.neighbors() if x["type"]=="symptom"]
+			images = [x["name"] for x in node.neighbors() if x["type"]=="image"]
 		except (NameError, ValueError):
 			tkMessageBox.showinfo("Term Not Found", "%s is not in the database" %nodename)
 			dneighbors = None
 			sneighbors = None
 
-		return dneighbors, sneighbors
+		return dneighbors, sneighbors, images
 
 	def SetPath(self):
 		self.save_path = tkFileDialog.askdirectory(parent = self.mainwindow.root, title = 'Please choose a save directory')
@@ -144,7 +145,7 @@ class DataBaseForGUI:
 		"""
 
 		# Find neighbors of node 2.
-		dneighbors, sneighbors = self.FindNeighborsOfNode(nodename2)
+		dneighbors, sneighbors, images = self.FindNeighborsOfNode(nodename2)
 		everyone = dneighbors+sneighbors+[nodename1]
 
 		everyone_indices = [self.g.vs.find(name=nodename).index for nodename in everyone]

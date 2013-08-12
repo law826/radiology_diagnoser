@@ -2,13 +2,11 @@
 # encoding: utf-8
 """
 radiology_diagnoser.py
-[] fix merge mode and key bindings of listboxes
-[] make a merge automatically update the relevant text file
-[] search and replace chondromyxoid fibroma problem
+[] search and replace chondromyxoid fibroma fibroma fibroma problem
+[] keep merge mode after merging
+[] report load file upon import (so that program automatically updates from a newly saved textfile)
+[] IndicesForVertexNeighborsToo for imported items
 
-
-[] handle import file and merging
-[] handle old matches from the merge window
 [] connect higher order term to everything
 [] order symptoms in terms of best algorithm to get to specific diagnosis
 [] expand width of windows
@@ -54,8 +52,9 @@ class MainWindow:
 		# Instantiation of other modules.
 		self.DB = database_for_gui.DataBaseForGUI(self) # Instantiated here at the end because of parent window issues for ask directory widget.
 		self.mw = mergewindow.MergeWindow()
-		self.id = importdata.ImportData()
 		self.srg = SearchReplaceGUI()
+		self.id = importdata.ImportData(self.srg.doc_path)
+		
 
 		gui_elements = [self.LabelEntryUI,
 						self.ResetButton,
@@ -82,7 +81,10 @@ class MainWindow:
 		self.textFrame = Frame(self.root)		
 				
 		self.entryLabel = bf.Label(self.textFrame, "Enter a diagnosis or symptom")
-		self.entryWidget = bf.Entry(self.textFrame, self.SearchEntrySubmitted, completion_list=self.DB.g.vs["name"])
+		try:
+			self.entryWidget = bf.Entry(self.textFrame, self.SearchEntrySubmitted, completion_list=self.DB.g.vs["name"])
+		except AttributeError:
+			pass
 
 		self.textFrame.grid(row=startingrow, columnspan=2)
 	
@@ -161,13 +163,14 @@ class MainWindow:
 	def SearchEntrySubmitted(self, event=0, list_clicked=False, selected_concept=None):
 		if list_clicked:
 			self.entrystring = selected_concept
-			dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+			dneighbors, sneighbors, images = self.DB.FindNeighborsOfNode(self.entrystring)
 		else:
 			if self.entryWidget.get().strip() == "":
 				tkMessageBox.showerror("Tkinter Entry Widget", "Enter a term")
 			else:
 				self.entrystring = self.entryWidget.get().strip()
-				dneighbors, sneighbors = self.DB.FindNeighborsOfNode(self.entrystring)
+				self.selected_concept = self.entrystring
+				dneighbors, sneighbors, images = self.DB.FindNeighborsOfNode(self.entrystring)
 				
 
 		if (dneighbors == None) and (sneighbors == None):
@@ -180,6 +183,8 @@ class MainWindow:
 			self.UpdateSearchedTerm(startingrow=self.gui_element_dict[self.SearchedTermUI])
 			self.entryWidget.delete(0, END)
 
+		self.RadiographUI(self.gui_element_dict[self.RadiographUI], update_mode=True)
+
 	def ResetButtonPressed(self):
 		self.diagnosisLabel.grid_forget()
 		self.symptomsLabel.grid_forget()
@@ -189,14 +194,16 @@ class MainWindow:
 
 	def DiagnosisListPressed(self, event=0):
 		selected_index = self.dlistbox.curselection()
-		selected_concept = self.dlistbox.get(selected_index)
-		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+		self.selected_concept = self.dlistbox.get(selected_index)
+		self.SearchEntrySubmitted(list_clicked=True, selected_concept=self.selected_concept)
+		self.RadiographUI(self.gui_element_dict[self.RadiographUI], update_mode=True)
 		self.ListFocus = "diagnosis"
 
 	def SymptomListPressed(self, event=0):
 		selected_index = self.slistbox.curselection()
-		selected_concept = self.slistbox.get(selected_index)
-		self.SearchEntrySubmitted(list_clicked=True, selected_concept=selected_concept)
+		self.selected_concept = self.slistbox.get(selected_index)
+		self.SearchEntrySubmitted(list_clicked=True, selected_concept=self.selected_concept)
+		self.RadiographUI(self.gui_element_dict[self.RadiographUI], update_mode=True)
 		self.ListFocus = "symptom"
 
 	def ButtonsUI(self, startingrow=None):
@@ -224,21 +231,31 @@ class MainWindow:
 
 		self.bottom_buttons_frame.grid(row=startingrow, columnspan=2)
 
-	def RadiographUI(self, startingrow):
-		self.radframe = Frame(self.root)
-		self.radframe.grid(row = startingrow, columnspan = 2)
+	def RadiographUI(self, startingrow, update_mode=False):
 
-		image = Image.open('/Users/law826/Desktop/test.jpg')
+		if update_mode==False:
+			self.radframe = Canvas(self.root, height=100)
+			self.radframe.grid(row = startingrow, columnspan = 2)
+			image = Image.open('/Users/law826/Dropbox/Anki_Pub/collection.media/figure_40.1.jpg')
+			self.media_dir = '/Users/law826/Dropbox/Anki_Pub/collection.media'
+			self.caption = Label(self.radframe, wraplength = 500)
+		elif update_mode==True:
+			self.radiograph.pack_forget()
+			dneighbors, sneighbors, links = self.DB.FindNeighborsOfNode(self.selected_concept)
+			self.link = links[0]
+			self.full_link = self.media_dir+os.sep+self.link
+			image = Image.open(self.full_link)
+			self.caption.pack_forget()
+			self.caption_text = [neighbor for neighbor in self.DB.g.vs.find(name=self.link).neighbors() if neighbor['type']=='caption'][0]['name']
+			self.caption["text"] = self.caption_text[0].capitalize()+self.caption_text[1:] # Only first letter is capitalized.
+
+
+		image = image.resize((500, 500), Image.ANTIALIAS)
 		photo = ImageTk.PhotoImage(image)
-		radiograph = Label(self.radframe, image=photo)
-		radiograph.image = photo
-		radiograph.pack()
-
-		caption = Label(self.radframe)
-		caption["text"] = "this is a test caption"
-		caption.pack()
-
-
+		self.radiograph = Label(self.radframe, image=photo)
+		self.radiograph.image = photo
+		self.caption.pack()
+		self.radiograph.pack()
 
 	def AddDiagnosisButtonPressed(self):
 		dcw = DiagnosisCharWin(self)

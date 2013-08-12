@@ -3,4 +3,8 @@ S'/Users/law826/github/radiology_diagnoser'
 p2
 S'/Users/law826/github/radiology_diagnoser'
 p3
+sS'/Users/ln30/Git/radiology_diagnoser'
+p4
+S'/Users/ln30/Git/radiology_diagnoser'
+p5
 s.
