@@ -1,28 +1,5 @@
-<<<<<<< HEAD
-import nltk
-
-text = nltk.word_tokenize('The differential diagnosis of COP includes bronchoalveolar cell carcinoma, lymphoma, and vasculitis.')
-text = nltk.word_tokenize('AIP is a rapidly progressive form of interstitial pneumonia characterized histologically by hyaline membranes within the alveoli and diffuse, active interstitial ﬁbrosis indistinguishable from the histologic pattern found in acute respiratory distress syndrome caused by sepsis and shock.')
-
-
-def simple_verb_parse(text):
-	pos = nltk.pos_tag(text)
-	first_verb_index = next(i for i, x in enumerate(pos) if x[1] == 'VBZ')
-	question_list = [x[0] for x in pos[0:first_verb_index+1]]
-	question_list.append('what?')
-	question_string = ' '.join(question_list)
-
-
-	answer_list = [x[0] for x in pos[first_verb_index+1:]]
-	answer_string = ' '.join(answer_list)
-
-	print 'Question: %s' %question_string
-	print 'Answer: %s' %answer_string
-
-simple_verb_parse(text)
-=======
 """
-problem_solver.py
+question_generator.py
 """
 import kivy
 from random import choice
@@ -110,8 +87,9 @@ Builder.load_string("""
 
 <SettingsScreen>:
     settings_screen: self
-    list_view: list_view_id
     text_input: text_input_id
+    question_box: question_box_id
+    answer_box: answer_box_id
     on_pre_enter: root.initiate_label()
     add_button: add_button_id
 
@@ -124,26 +102,22 @@ Builder.load_string("""
             multiline: True
             on_text_validate: root.AddTerm(self.text); self.text= ''; self.focus= True
             focus: True
-        ListView:
-            id: list_view_id
-            adapter:
-                la.ListAdapter(
-                data=root.list_contents, 
-                selection_mode = 'single',
-                allow_empty_selection = False,
-                cls = ListItemButton)
+        TextInput:
+            id: question_box_id
+        TextInput:
+            id: answer_box_id
         BoxLayout:
             orientation: 'horizontal'
             Button: 
                 id: add_button_id
-                text: 'Add Term'
-                on_press: root.AddTerm(text_input_id.text); self.focus= True
-            Button: 
-                text: 'Change Theme'
-                on_press: root.change_theme()
+                text: 'Next Sentence'
+                on_press: root.NextSentence(text_input_id.text); self.focus= True
             Button:
                 text: 'Insert What'
                 on_press: root.InsertWhat()
+            Button: 
+                text: 'Submit as Anki Card'
+                on_press: root.SubmitCard()
             Button:
                 text: 'Back to Main'
                 on_press: root.manager.current = 'main'
@@ -175,7 +149,8 @@ class MainScreen(Screen):
 class SettingsScreen(Screen):
     list_contents = ListProperty(db.sd.dbdict[db.sd.theme])
     add_button = ObjectProperty(None)
-    theme = StringProperty(db.sd.theme)
+    question_box = ObjectProperty(None)
+    answer_box = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
@@ -185,30 +160,24 @@ class SettingsScreen(Screen):
     def initiate_label(self):
         self.theme = db.sd.theme
 
-    # def selection_changed(self, *args):
-    #     self.selected_item = args[0].selection[0].text
-
-    def AddTerm(self, strat):
+    def NextSentence(self, strat):
         ss.text_input.insert_text('The differential diagnosis of COP includes bronchiolalveolar cell carcinoma, lymphoma, vasculitis, sarcoidosis, chronic eosinophilic pneumonia, and infectious pneumonia.')
 
     def InsertWhat(self):
         ss.text_input.insert_text('what? ')
-        import pdb; pdb.set_trace()
         ss.text_input.select_text(0, ss.text_input.cursor_index())
+        ss.question_box.insert_text(ss.text_input.selection_text)
+        start_of_answer = ss.text_input.cursor_index()
+        ss.text_input.do_cursor_movement('cursor_pgdown')
+        ss.text_input.do_cursor_movement('cursor_end')
+        ss.text_input.select_text(start_of_answer, ss.text_input.cursor_index()) 
+        ss.answer_box.insert_text(ss.text_input.selection_text)
 
-    def change_theme(self):
-        if self.cm == True:
-            self.cm = False
-            db.sd.theme = self.list_view.adapter.selection[0].text
-            self.theme = db.sd.theme
-            self.list_contents = db.sd.dbdict[db.sd.theme]
-            self.add_button.text = 'Add Term'
-        elif self.cm == False:
-            self.cm = True
-            self.list_contents = db.sd.dbdict.keys()
-            self.add_button.text = 'Add Theme'
-       # self.list_view.adapter.bind(on_selection_change=self.selection_changed)
-        db.Save()
+    def SubmitCard(self):
+        anki_line = ss.question_box.text+'\t'+ss.answer_box.text+'\n'
+        with open('/Users/law826/Desktop/test.txt', 'a') as f:
+            f.write(anki_line)
+
 
 class MyPopup(Popup):
     def __init__(self, **kwargs):
@@ -239,4 +208,3 @@ if __name__ == '__main__':
     ProbSolApp().run()
 #####
 
->>>>>>> fe2fa0d36ceeab0dfbdcc3d05f940def9089bd76
