@@ -9,12 +9,14 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
+from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty, ListProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.listview import ListView, ListItemButton
 from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.screenmanager import ScreenManager, Screen
+
 
 from random import choice
 import cPickle, getpass, os, sys, nltk
@@ -73,6 +75,7 @@ Builder.load_string("""
 
         Label:
             text: root.counter
+            size_hint: (1,0.3)
         TextInput:
             id: sentence_box_id
             multiline: True
@@ -83,26 +86,44 @@ Builder.load_string("""
         TextInput:
             id: answer_box_id
         BoxLayout:
-            orientation: 'horizontal'
-            Button: 
-                id: next_sentence_id
-                text: 'Next Sentence'
-                on_press: root.NextSentence(sentence_box_id.text); self.focus= True
-            Button:
-                text: 'Go Back'
-                on_press:root.GoBack()
-            Button:
-                text: 'Insert What'
-                on_press: root.InsertWhat()
-            Button:
-                text: 'Insert Blank'
-                on_press: root.InsertBlank()
-            Button: 
-                text: 'Submit as Card'
-                on_press: root.SubmitCard()
-            Button:
-                text: 'Reset Counter'
-                on_press: root.reset_counter()
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'Go Back'
+                    on_press:root.GoBack()
+                    background_color: [0.7, 0, 0, 0.9]
+                    size_hint: (0.5, 1)
+                Button: 
+                    id: next_sentence_id
+                    text: 'Next Sentence'
+                    on_press: root.NextSentence(sentence_box_id.text); self.focus= True
+                    background_color: [0, 0.9, 0, 0.9]
+                Button:
+                    text: 'Insert What'
+                    on_press: root.InsertWhat()
+                    background_color: [0.9, 0.7, 0, 0.9]
+                Button:
+                    text: 'Insert Blank'
+                    on_press: root.InsertBlank()
+                    background_color: [0, 0, 0.5, 0.9]
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'Reset Counter'
+                    on_press: root.reset_counter()
+                    size_hint: (0.5, 1)
+                Button:
+                    text: 'Set New Topic'
+                    on_press: root.NewTopic()
+                Button:
+                    text: root.topic
+                    halign: 'center'
+                    on_press: root.InsertNewTopic()
+                Button: 
+                    text: 'Submit as Card'
+                    on_press: root.SubmitCard()
+                    background_color: [0, 0.9, 0, 0.9]
 """)
 
 ## Declaration of screens.
@@ -114,7 +135,8 @@ class MainScreen(Screen):
     sentence_box = ObjectProperty(None)
     question_box = ObjectProperty(None)
     answer_box = ObjectProperty(None)
-    counter = StringProperty()
+    counter = StringProperty('Welcome! Click Next Sentence to get started.')
+    topic = StringProperty('Insert Current topic:\nNone')
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -126,24 +148,24 @@ class MainScreen(Screen):
             self.ClearAllBoxes()
             db.sd.sentence_counter += 1
             sentence = db.st[db.sd.sentence_counter]
-            ss.sentence_box.insert_text(sentence)
+            self.sentence_box.insert_text(sentence)
             self.counter = str(db.sd.sentence_counter+1)+'/'+str(len(db.st))
             db.Save()
 
     def InsertWhat(self):
         if self.sentence_box.focus == True:
-            ss.sentence_box.select_text(0, ss.sentence_box.cursor_index())
+            self.sentence_box.select_text(0, ss.sentence_box.cursor_index())
             self.first_q_stem = ss.sentence_box.selection_text
             self.sentence_box.cancel_selection()
-            ss.sentence_box.insert_text('what? ')
-            ss.sentence_box.select_text(0, ss.sentence_box.cursor_index())
-            ss.question_box.insert_text(ss.sentence_box.selection_text)
+            self.sentence_box.insert_text('what? ')
+            self.sentence_box.select_text(0, ss.sentence_box.cursor_index())
+            self.question_box.insert_text(ss.sentence_box.selection_text)
             start_of_answer = ss.sentence_box.cursor_index()
-            ss.sentence_box.do_cursor_movement('cursor_pgdown')
-            ss.sentence_box.do_cursor_movement('cursor_end')
-            ss.sentence_box.select_text(start_of_answer, ss.sentence_box.cursor_index()) 
-            ss.answer_box.insert_text(ss.sentence_box.selection_text)
-            ss.sentence_box.cancel_selection()
+            self.sentence_box.do_cursor_movement('cursor_pgdown')
+            self.sentence_box.do_cursor_movement('cursor_end')
+            self.sentence_box.select_text(start_of_answer, ss.sentence_box.cursor_index()) 
+            self.answer_box.insert_text(ss.sentence_box.selection_text)
+            self.sentence_box.cancel_selection()
         elif self.answer_box.focus == True:
             # Process second answer.
             self.second_q_clause = ss.answer_box.selection_text
@@ -194,22 +216,48 @@ class MainScreen(Screen):
             db.Save()
 
     def ClearAllBoxes(self):
-        ss.sentence_box.select_all()
-        ss.sentence_box.delete_selection()
-        ss.question_box.select_all()
-        ss.question_box.delete_selection()
-        ss.answer_box.select_all()
-        ss.answer_box.delete_selection()
+        self.sentence_box.select_all()
+        self.sentence_box.delete_selection()
+        self.question_box.select_all()
+        self.question_box.delete_selection()
+        self.answer_box.select_all()
+        self.answer_box.delete_selection()
+
+    def SetNewTopic(instance, value):
+        ss.topic = 'Insert Current topic:\n%s' %(value.text)
+        ss.topic_raw = value.text
+        ss.popup.dismiss()
+
+    def NewTopic(self):
+        if self.sentence_box.selection_text == '':
+            textinput = TextInput(multiline=False, focus=True)
+            textinput.bind(on_text_validate=self.SetNewTopic)
+
+            self.popup = Popup(title='Please enter the current topic.',
+                            content=textinput,
+                            size_hint=(.5, .5))
+            self.popup.open()
+        else:
+            self.topic = 'Insert Current topic:\n%s' %(self.sentence_box.selection_text)
+            self.topic_raw = self.sentence_box.selection_text
+
+    def InsertNewTopic(self):
+        self.question_box.do_cursor_movement('cursor_home')
+        try:
+            self.question_box.insert_text('For %s, ' %self.topic_raw)
+        except AttributeError:
+            pass
 
     def reset_counter(self):
         db.sd.sentence_counter = 0
         self.counter = str(db.sd.sentence_counter+1)+'/'+str(len(db.st))
         sentence = db.st[db.sd.sentence_counter]
-        ss.sentence_box.insert_text(sentence)
+        self.sentence_box.insert_text(sentence)
 
 class MyPopup(Popup):
     def __init__(self, **kwargs):
         super(MyPopup, self).__init__(**kwargs)
+
 
 
 #####

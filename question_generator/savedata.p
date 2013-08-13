@@ -4,5 +4,5 @@ p1
 (dp2
 S'sentence_counter'
 p3
-I4
+I2
 sb.
