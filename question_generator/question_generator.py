@@ -2,6 +2,7 @@
 question_generator.py
 """
 import kivy
+import pdb; pdb.set_trace()
 kivy.require('1.0.7')
 from functools import partial
 from kivy.app import App
