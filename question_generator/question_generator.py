@@ -1,3 +1,4 @@
+#!/usr/bin/env kivy
 """
 question_generator.py
 """
