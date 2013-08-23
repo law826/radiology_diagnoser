@@ -19,9 +19,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 from random import choice
-
-try:
-    sys
 import cPickle, getpass, os, sys, nltk, string
 
 class SaveData:
