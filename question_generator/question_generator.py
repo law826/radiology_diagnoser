@@ -2,7 +2,6 @@
 question_generator.py
 """
 import kivy
-import pdb; pdb.set_trace()
 kivy.require('1.0.7')
 from functools import partial
 from kivy.app import App
@@ -20,6 +19,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 from random import choice
+
+try:
+    sys
 import cPickle, getpass, os, sys, nltk, string
 
 class SaveData:
