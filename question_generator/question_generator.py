@@ -19,7 +19,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 from random import choice
-import cPickle, getpass, os, sys, nltk
+import cPickle, getpass, os, sys, nltk, string
 
 class SaveData:
         pass
@@ -49,6 +49,8 @@ class Database:
     def open_and_parse_input(self):
         with open(self.in_file, 'r') as f:
             raw = f.read()
+            raw = raw.replace('\n', '')
+            raw = filter(lambda x: x in string.printable, raw)
             self.st = nltk.sent_tokenize(raw)
 
 # Create database instance.
@@ -218,10 +220,13 @@ class MainScreen(Screen):
     def ClearAllBoxes(self):
         self.sentence_box.select_all()
         self.sentence_box.delete_selection()
+        self.sentence_box.select_text(0,0)
         self.question_box.select_all()
         self.question_box.delete_selection()
+        self.question_box.select_text(0,0)
         self.answer_box.select_all()
         self.answer_box.delete_selection()
+        self.answer_box.select_text(0,0)
 
     def SetNewTopic(instance, value):
         ss.topic = 'Insert Current topic:\n%s' %(value.text)

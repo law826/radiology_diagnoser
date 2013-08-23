@@ -14,7 +14,7 @@ sentences = ['The differential diagnosis of COP includes bronchiolalveolar cell 
             'Ground glass opacities are present in about 60 percent of cases.',
             'The term AIP is reserved for diffuse alveolar damage of unknown origin.',
             'Patients with AIP present with respiratory failure developing over days or weeks.',
-            'Air bronchograms, with mild cylindric bronchial dilatation are common.',
+            'Air bronchograms, with mild cylindric bronchial dilatation, are common.',
             'The upper lung refers to the upper one third of the lung, which includes the majority of the upper lobes and the uppermost portion of the superior segments of the lower lobes.'
 ]
 #chunks = nltk.ne_chunk(tagged)
