@@ -20,7 +20,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 from random import choice
-import cPickle, getpass, os, sys, nltk, string
+import cPickle, getpass, os, sys, nltk, string, re
 
 class SaveData:
         pass
@@ -30,8 +30,8 @@ class Database:
         self.sd = SaveData()
         username = getpass.getuser()
         maindir = '/Users/%s/Dropbox/question_generator/' %username
-        self.out_file = maindir + os.sep + 'output.txt'
-        self.in_file = maindir + os.sep + 'input.txt'
+        self.out_file = maindir + os.sep + 'output1.txt'
+        self.in_file = maindir + os.sep + 'input1.txt'
         self.open_and_parse_input()
 
         try:
@@ -52,7 +52,44 @@ class Database:
             raw = f.read()
             raw = raw.replace('\n', '')
             raw = filter(lambda x: x in string.printable, raw)
-            self.st = nltk.sent_tokenize(raw)
+            self.pre_st = nltk.sent_tokenize(raw)
+            self.st = []
+            for presentence in self.pre_st:
+
+                # Compile an expression that further splits into sentences alphabetical characters followed by a period.
+                regex = re.compile(r'([A-Za-z]\.[0-9]+ |\?)')
+                pre_split = regex.split(presentence) 
+                split = []
+
+                # If there is not splitting, then just skip all the mess below and just add the item. 
+                if len(pre_split) == 1:
+                    split.append(pre_split)
+                else:
+                    for i, element in enumerate(pre_split):
+                        # The instances to consider are periods followed by numbers and question marks not followed by spaces.
+                        # Make sure we can index the below.
+                        try:
+                            element[1]
+                            if (len(element) < 6 and element[1] == "."):
+                                del split[-1]
+                                split.append(pre_split[i-1]+element[:2])
+                            # If the sentence ends in a question mark:
+                            elif element == '?':
+                                # Get rid of the previous so that we can combined these two.
+                                del split[-1] 
+
+                                # Combine the two previous but now combine the whole question mark.
+                                split.append(pre_split[i-1]+element) 
+
+                            else:
+                                # If nothing needs to be done to the sentence.
+                                split.append(element)
+                        except IndexError:
+                            pass
+
+                    # Append to the final output which will be self.st.
+                    self.st.append(split)
+            import pdb; pdb.set_trace()
 
 # Create database instance.
 db = Database()

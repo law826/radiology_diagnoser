@@ -1,0 +1,529 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Diagnoses",
+				"DiagnosesListBox"
+			],
+			[
+				"Update",
+				"UpdateFileButtonPressed"
+			],
+			[
+				"Search",
+				"SearchReplaceGUI"
+			],
+			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"DiagnosisChar",
+				"DiagnosisCharWin"
+			],
+			[
+				"gui_elem",
+				"gui_element_dict"
+			],
+			[
+				"Neurosyn",
+				"Neurosynth_SNA"
+			],
+			[
+				"ResetButton",
+				"ResetButtonPressed"
+			],
+			[
+				"diagno",
+				"diagnosisLabel"
+			],
+			[
+				"symptoms",
+				"symptomsLabel"
+			],
+			[
+				"Sympto",
+				"SymptomsListBox"
+			],
+			[
+				"Diagnosis",
+				"DiagnosesListBox"
+			],
+			[
+				"Present",
+				"PresentButtonPressed"
+			],
+			[
+				"column",
+				"columnspan"
+			],
+			[
+				"entry",
+				"entrystring"
+			],
+			[
+				"diagnosis",
+				"diagnosis_vertex"
+			],
+			[
+				"number_of",
+				"number_of_vertices"
+			],
+			[
+				"concate",
+				"concatenate_data"
+			],
+			[
+				"focus",
+				"focus_set"
+			],
+			[
+				"update_",
+				"update_comment"
+			],
+			[
+				"save",
+				"save_graph"
+			],
+			[
+				"ini",
+				"__init__	magic"
+			],
+			[
+				"Set",
+				"SetPath"
+			],
+			[
+				"Debug",
+				"DebugModeButtonPressed"
+			],
+			[
+				"load_",
+				"load_user_settings"
+			],
+			[
+				"SetPath",
+				"SetPathButtonPressed"
+			],
+			[
+				"max_be",
+				"max_betweenness_vertex_list_pos"
+			],
+			[
+				"non_zero",
+				"non_zero_graph"
+			],
+			[
+				"non_ze",
+				"non_zero_graph"
+			],
+			[
+				"non_zo",
+				"non_zero_normed_edgeseq"
+			],
+			[
+				"update_edge",
+				"update_edge_norm_database"
+			],
+			[
+				"list",
+				"list_of_vertices"
+			],
+			[
+				"ran",
+				"random_with_count_weight_fail_gate"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "text_parser.py",
+			"settings":
+			{
+				"buffer_size": 1995,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 227.0,
+		"selected_items":
+		[
+			[
+				"packages",
+				"Preferences: Browse Packages"
+			],
+			[
+				"package",
+				"Package Control: Discover Packages"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"funct",
+				"Snippet: Function"
+			],
+			[
+				"git",
+				"Git: Gui"
+			],
+			[
+				"git diff",
+				"Git: Diff All"
+			],
+			[
+				"git dif",
+				"Git: Diff All"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/law826/Calibre Library/Stern, Eric J_/Chest Radiology_ The Essentials (14)/Chest Radiology_ The Essentials - Stern, Eric J_.txt",
+		"/Users/law826/github/radiology_diagnoser/question_generator/question_generator.py",
+		"/Users/law826/Calibre Library/Stern, Eric J_/Chest Radiology_ The Essentials (14)/cr.txt",
+		"/Users/law826/github/radiology_diagnoser/question_generator/text_parser.py",
+		"/Users/law826/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/law826/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/law826/Dropbox/question_generator/out2.txt",
+		"/Users/law826/github/radiology_diagnoser/question_generator/question_generator_old.py",
+		"/Users/law826/github/problem_solver/probsol.py",
+		"/Users/law826/github/Neurosynth_SNA/NSNA_GUI/NSNA_GUI.py",
+		"/Users/law826/github/radiology_diagnoser/importdata.py",
+		"/Users/law826/github/Neurosynth_SNA/NSNA_GUI/db_for_gui_nsna.py",
+		"/Users/law826/github/radiology_diagnoser/question_generator/question_generator_test.py",
+		"/Users/law826/Downloads/pytesser_v0.0.1/pytesser.py",
+		"/Users/law826/github/radiology_diagnoser/SearchReplace/SearchReplaceGUI.py",
+		"/Users/law826/github/radiology_diagnoser/database_for_gui.py",
+		"/Users/law826/github/radiology_diagnoser/importnlp.py",
+		"/Users/law826/Dropbox/Anki_Pub/collection.media/figure_40.5.jpg",
+		"/Users/law826/github/radiology_diagnoser/database.py",
+		"/Users/law826/github/radiology_diagnoser/test_importnlp.py",
+		"/Users/law826/github/radiology_diagnoser/mergewindow.py",
+		"/Users/law826/github/radiology_diagnoser/radiology_diagnoser.py",
+		"/Users/law826/github/Neurosynth_SNA/tests/test_CategorizeNodes.py",
+		"/Users/law826/Desktop/MSK.txt",
+		"/Users/law826/Desktop/MSK (1).txt",
+		"/Users/law826/github/Neurosynth_SNA/tests/test_Neurosynth_SNA.py",
+		"/Users/law826/github/radiology_diagnoser/basefunctions.py",
+		"/Users/law826/github/radiology_diagnoser/SearchReplaceGUI.py",
+		"/Users/law826/Downloads/MSK (1).txt",
+		"/Users/law826/github/Neurosynth_SNA/tests/test_database.py",
+		"/Users/law826/neurosynthgit/examples/create_a_full_set_of_meta_analysis_images.py",
+		"/Users/law826/neurosynthgit/examples/create_a_new_dataset_and_load_features.py",
+		"/Users/law826/github/Neurosynth_SNA/ListClass.py",
+		"/Users/law826/github/Neurosynth_SNA/Neurosynth_SNA.py",
+		"/Users/law826/github/Neurosynth_SNA/database.py",
+		"/Users/law826/Library/Application Support/Sublime Text 2/Packages/User/asserteequals.sublime-snippet",
+		"/Users/law826/Dropbox/Personal/physicians.py",
+		"/Users/law826/Downloads/MSK.txt",
+		"/Users/law826/github/ideas_generator/IG.py",
+		"/Users/law826/github/radiology_diagnoser/sample_diagnoses.txt",
+		"/Users/law826/github/radiology_diagnoser/tkentrycomplete.py",
+		"/Users/law826/github/radiology_diagnoser.py",
+		"/Users/law826/Dropbox/Personal/ideas_generator/IG.py",
+		"/Users/law826/Library/Application Support/Sublime Text 2/Packages/User/pdb_set_trace.sublime-snippet"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ch1",
+			"jj",
+			"self",
+			"chapter 1",
+			"list_view_id",
+			"set",
+			"entry",
+			"FindNeighborsOfNode",
+			"self.link",
+			"listbox",
+			"full_link",
+			"link",
+			"caption",
+			"radiograph",
+			"dneighbors",
+			"dNeighbors",
+			"dneighbors",
+			"addedge",
+			"dneighbors",
+			"findneighborsofnode",
+			"self.selected_concept",
+			"selected_concept",
+			"urllib",
+			"addnode",
+			"IndicesOfVertexNeighborsToo",
+			"/>",
+			"img",
+			"imag",
+			"/>",
+			"of myeloma",
+			"myeloma",
+			"of myeloma",
+			"fibroma fibr",
+			"self.doc_path",
+			"open",
+			"searchreplacegui",
+			"tkmessage",
+			"error",
+			"selected_concept",
+			"listbox.bind",
+			"bind",
+			"SymptomsList",
+			"mode",
+			"UpdateListBox",
+			"DiagnosesListBox",
+			"			\n",
+			"dlistbox",
+			"diagnosisLabel",
+			"listbox",
+			"set_trace",
+			"search_replace_save_data.p",
+			"set_trace",
+			"hyperparathyroidism",
+			"print",
+			"not painful",
+			"SearchReplace",
+			"osteoblastoma",
+			"print",
+			"target_body",
+			"replaced",
+			"target_body",
+			"eboutput",
+			"ecoutput",
+			"self.target_body",
+			"target_body",
+			", re.IGNORECASE",
+			"re.IGNORECASE",
+			"IGNORECASE",
+			"string1",
+			"keep",
+			"set_trace",
+			"inlp",
+			"SearchReplace",
+			"selected",
+			"es_split",
+			"append",
+			"updatemode",
+			"self.sd",
+			"self.sd ",
+			"self",
+			"dump",
+			"user_settings",
+			"0",
+			"New User/Computer Detected. Please choose a save directory.",
+			"SetPath",
+			"var",
+			"save_path",
+			"dbrackets",
+			"curly_term",
+			"A-Za-z0-9_ ",
+			"test",
+			"dbrackets",
+			"target_body",
+			"file_name",
+			"label",
+			"Label",
+			"label",
+			"DCWLabelEntryUI",
+			"Listboxes",
+			"listbox_row",
+			"searched_term_row",
+			"UpdateListBox",
+			"self.root",
+			"root",
+			"self.root",
+			"outpath",
+			"npath",
+			"pickle_path",
+			"set_trace",
+			"path",
+			"feature_list",
+			"dataset",
+			"ExtendBrackets",
+			"bracketed_term",
+			"['",
+			"FindWordsInBrackets",
+			"Brackets",
+			"print",
+			"INLP",
+			"mergewinow",
+			"kept_node",
+			"mw",
+			"mergewindow",
+			"selected_concept",
+			"DB",
+			"mainwindow",
+			"osteoblastomas",
+			"less than 30 years old"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"osteoblastoma",
+			"less than 30",
+			"posterior elements of vertebral bodies",
+			"younger than age 30",
+			"metastatic disease",
+			"nonossifying fibroma",
+			"enchondroma",
+			"aneurysmal bone cyst",
+			"nonossifying fibromas",
+			"listbox_row",
+			"KeyRelease"
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "text_parser.py",
+					"settings":
+					{
+						"buffer_size": 1995,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 330.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 112.0
+	},
+	"output.git":
+	{
+		"height": 112.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 303.0,
+	"status_bar_visible": true
+}
