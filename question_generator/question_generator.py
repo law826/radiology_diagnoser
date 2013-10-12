@@ -54,6 +54,7 @@ class Database:
             raw = filter(lambda x: x in string.printable, raw)
             self.pre_st = nltk.sent_tokenize(raw)
             self.st = []
+            import pdb; pdb.set_trace()
             for presentence in self.pre_st:
 
                 # Compile an expression that further splits into sentences alphabetical characters followed by a period.

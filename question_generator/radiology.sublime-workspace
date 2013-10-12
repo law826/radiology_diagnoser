@@ -139,14 +139,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "text_parser.py",
-			"settings":
-			{
-				"buffer_size": 1995,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -204,8 +196,13 @@
 	},
 	"file_history":
 	[
-		"/Users/law826/Calibre Library/Stern, Eric J_/Chest Radiology_ The Essentials (14)/Chest Radiology_ The Essentials - Stern, Eric J_.txt",
 		"/Users/law826/github/radiology_diagnoser/question_generator/question_generator.py",
+		"/Users/law826/Dropbox/question_generator/step2/step2.txt",
+		"/Users/law826/Dropbox/question_generator/step2/step2_text_parser.py",
+		"/Users/law826/Dropbox/question_generator/peds/Pediatric Imaging_ The Fundamentals - Donnelly, Lane F_.txt",
+		"/Users/law826/github/radiology_diagnoser/question_generator/peds_text_parser.py",
+		"/Users/law826/Dropbox/question_generator/peds/ch7.txt",
+		"/Users/law826/Calibre Library/Stern, Eric J_/Chest Radiology_ The Essentials (14)/Chest Radiology_ The Essentials - Stern, Eric J_.txt",
 		"/Users/law826/Calibre Library/Stern, Eric J_/Chest Radiology_ The Essentials (14)/cr.txt",
 		"/Users/law826/github/radiology_diagnoser/question_generator/text_parser.py",
 		"/Users/law826/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
@@ -266,6 +263,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"string",
+			"line",
+			"chapter",
 			"ch1",
 			"jj",
 			"self",
@@ -390,10 +390,7 @@
 			"mw",
 			"mergewindow",
 			"selected_concept",
-			"DB",
-			"mainwindow",
-			"osteoblastomas",
-			"less than 30 years old"
+			"DB"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -422,37 +419,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "text_parser.py",
-					"settings":
-					{
-						"buffer_size": 1995,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 330.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -523,7 +491,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 303.0,
 	"status_bar_visible": true
 }
